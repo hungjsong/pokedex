@@ -1,11 +1,16 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { loadPokemonDetails } from '../features/pokedex/pokedexSlice';
 
 function PokedexEntry() {
   const dispatch = useDispatch();
+  // const pokedexEntry = useSelector((state: any) => state.pokedex.pokemonData);
   const [pokemonID, setPokemonID] = useState(1);
+
+  useEffect(() => {
+    dispatch(loadPokemonDetails(pokemonID));
+  }, []);
 
   const handleChange = (event: any) => {
     setPokemonID(event.target.value);
