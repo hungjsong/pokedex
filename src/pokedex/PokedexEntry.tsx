@@ -36,20 +36,17 @@ function PokedexEntry() {
     setPokemonID(event.target.pokemonID.value);
   };
 
+  if (pokedexEntry.name === undefined || speciesDetails.genera === undefined) {
+    return <h1></h1>;
+  }
+
   return (
     <div>
       <>
         <h1>
-          {pokedexEntry.name === undefined
-            ? 'Bulbasaur'
-            : capitalize(pokedexEntry.name)}{' '}
-          #{('00' + pokedexEntry.id).slice(-3)}
+          {capitalize(pokedexEntry.name)} #{('00' + pokedexEntry.id).slice(-3)}
         </h1>
-        <h3>
-          {speciesDetails.genera === undefined
-            ? 'Seed Pokemon'
-            : speciesDetails.genera[7].genus}
-        </h3>
+        <h3>{speciesDetails.genera[7].genus}</h3>
       </>
       <>
         <img
