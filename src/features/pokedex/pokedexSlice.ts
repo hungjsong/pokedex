@@ -1,16 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-const getPokedexEntry = (pokemon: String | number) => {
-  return fetch('https://pokeapi.co/api/v2/pokemon/' + pokemon)
-    .then((response) => response.json())
-    .then((responseJson) => {
-      return responseJson;
-    })
-    .catch((error) => {
-      console.error(error);
-    });
-};
-
 export const pokedexSlice = createSlice({
   name: 'pokedex',
   initialState: {
