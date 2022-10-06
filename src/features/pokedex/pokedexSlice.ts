@@ -3,12 +3,18 @@ import { createSlice } from '@reduxjs/toolkit';
 export const pokedexSlice = createSlice({
   name: 'pokedex',
   initialState: {
-    pokemonID: 1,
+    pokemonEntry: {},
+    speciesDetails: {},
   },
   reducers: {
-    loadPokemonDetails: (state) => {},
+    setPokemonEntry: (state, action) => {
+      state.pokemonEntry = action.payload;
+    },
+    setSpeciesDetails: (state, action) => {
+      state.speciesDetails = action.payload;
+    },
   },
 });
 
-export const { loadPokemonDetails } = pokedexSlice.actions;
+export const { setPokemonEntry, setSpeciesDetails } = pokedexSlice.actions;
 export default pokedexSlice.reducer;
