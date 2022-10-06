@@ -1,19 +1,23 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { loadPokemonDetails } from '../features/pokedex/pokedexSlice';
+import { setPokemonEntry } from '../features/pokedex/pokedexSlice';
+import { getPokedexEntry } from '../pokemon';
 
 function PokedexEntry() {
   const dispatch = useDispatch();
-  const [pokemonID, setPokemonID] = useState(1);
+  const pokedexEntry = useSelector((state: any) => state.pokedex.pokemonEntry);
+  const [pokemonID, setPokemonID] = useState('bulbasaur');
 
-  const handleChange = (event: any) => {
-    setPokemonID(event.target.value);
-  };
+  useEffect(() => {
+    getPokedexEntry(pokemonID).then((pokedexEntry) => {
+      dispatch(setPokemonEntry(pokedexEntry));
+    });
+  }, [pokemonID]);
 
   const handleSubmit = (event: any) => {
     event.preventDefault();
-    dispatch(loadPokemonDetails(pokemonID));
+    setPokemonID(event.target.pokemonID.value);
   };
 
   return (
@@ -23,8 +27,9 @@ function PokedexEntry() {
       <form onSubmit={handleSubmit}>
         <label>
           Enter Pokemon Number or Name
-          <input type="text" name="pokemonID" onChange={handleChange} />
+          <input type="text" name="pokemonID" />
         </label>
+        <input type="submit" value="Submit" />
       </form>
       <nav>
         <Link to="/">Home</Link>
