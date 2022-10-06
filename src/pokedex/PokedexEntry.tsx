@@ -1,15 +1,30 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { setPokemonEntry } from '../features/pokedex/pokedexSlice';
-import { getPokedexEntry } from '../pokemon';
+import { Link } from 'react-router-dom';
+import {
+  setPokemonEntry,
+  setSpeciesDetails,
+} from '../features/pokedex/pokedexSlice';
+import {
+  getPokedexEntry,
+  getPokemonTypes,
+  getSpeciesDetails,
+} from '../pokemon';
+import { capitalize } from '../utilityFunctions';
 
 function PokedexEntry() {
   const dispatch = useDispatch();
+  const [pokemonID, setPokemonID] = useState(1);
   const pokedexEntry = useSelector((state: any) => state.pokedex.pokemonEntry);
-  const [pokemonID, setPokemonID] = useState('bulbasaur');
+  const speciesDetails = useSelector(
+    (state: any) => state.pokedex.speciesDetails
+  );
 
   useEffect(() => {
+    getSpeciesDetails(pokemonID).then((speciesDetails) => {
+      dispatch(setSpeciesDetails(speciesDetails));
+    });
+
     getPokedexEntry(pokemonID).then((pokedexEntry) => {
       dispatch(setPokemonEntry(pokedexEntry));
     });
@@ -22,8 +37,39 @@ function PokedexEntry() {
 
   return (
     <div>
-      <h1>Bulbasaur #001</h1>
-      <p>Grass/Poison</p>
+      <>
+        <h1>
+          {pokedexEntry.name === undefined
+            ? 'Bulbasaur'
+            : capitalize(pokedexEntry.name)}{' '}
+          #{('00' + pokedexEntry.id).slice(-3)}
+        </h1>
+        <h3>
+          {speciesDetails.genera === undefined
+            ? 'Seed Pokemon'
+            : speciesDetails.genera[7].genus}
+        </h3>
+      </>
+      <>
+        <img
+          src={
+            pokedexEntry.sprites === undefined
+              ? 'https://archives.bulbagarden.net/media/upload/8/8e/Spr_3r_000.png'
+              : pokedexEntry.sprites.front_default
+          }
+          height="10%"
+          width="10%"
+        />
+      </>
+      <>
+        <h3>Type</h3>
+        {<p>{getPokemonTypes(pokedexEntry.types)}</p>}
+      </>
+      <>
+        <h3>Height/Weight</h3>
+        {(pokedexEntry.height * 0.1).toFixed(1) + 'm'}{' '}
+        {(pokedexEntry.weight * 0.1).toFixed(1) + 'kg'}
+      </>
       <form onSubmit={handleSubmit}>
         <label>
           Enter Pokemon Number or Name
