@@ -21,7 +21,7 @@ export const getPokemonTypes = (types: any) => {
   return pokemonTypes.join('/');
 };
 
-export const getSpeciesDetails = (pokemonID: number) => {
+export const getSpeciesDetails = (pokemonID: String | number) => {
   return fetch('https://pokeapi.co/api/v2/pokemon-species/' + pokemonID)
     .then((response) => response.json())
     .catch((error) => {
