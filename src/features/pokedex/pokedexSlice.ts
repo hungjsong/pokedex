@@ -7,7 +7,6 @@ export const pokedexSlice = createSlice({
     speciesDetails: {},
   },
   reducers: {
-    //API documentation can be found here: https://pokeapi.co/docs/v2
     setPokemonEntry: (state, action) => {
       state.pokemonEntry = action.payload;
     },

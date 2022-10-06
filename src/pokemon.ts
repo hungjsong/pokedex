@@ -1,5 +1,6 @@
 import { capitalize } from './utilityFunctions';
 
+//API documentation can be found here: https://pokeapi.co/docs/v2
 export const getPokedexEntry = (pokemon: String | number) => {
   return fetch('https://pokeapi.co/api/v2/pokemon/' + pokemon)
     .then((response) => response.json())
