@@ -5,12 +5,8 @@ import {
   setPokemonEntry,
   setSpeciesDetails,
 } from '../features/pokedex/pokedexSlice';
-import {
-  getPokedexEntry,
-  getPokemonTypes,
-  getSpeciesDetails,
-} from '../pokemon';
-import { capitalize } from '../utilityFunctions';
+import { getPokedexEntry, getSpeciesDetails } from '../pokemon';
+import { capitalize, getPokemonTypes } from '../utilityFunctions';
 
 function PokedexEntry() {
   const dispatch = useDispatch();
