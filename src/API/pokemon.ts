@@ -1,4 +1,4 @@
-import { capitalize } from './utilityFunctions';
+import { capitalize } from '../utilityFunctions';
 
 //API documentation can be found here: https://pokeapi.co/docs/v2
 export const getPokedexEntry = (pokemon: string | number) => {
@@ -7,19 +7,6 @@ export const getPokedexEntry = (pokemon: string | number) => {
     .catch((error) => {
       console.error(error);
     });
-};
-
-export const getPokemonTypes = (types: any) => {
-  if (types === undefined) {
-    return '';
-  }
-  const pokemonTypes: string[] = [];
-  types.forEach((type: any) => {
-    const capitalizedType = capitalize(type.type.name);
-    pokemonTypes.push(capitalizedType);
-  });
-
-  return pokemonTypes.join('/');
 };
 
 export const getSpeciesDetails = (pokemonID: string | number) => {

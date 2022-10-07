@@ -5,7 +5,7 @@ import {
   setPokemonEntry,
   setSpeciesDetails,
 } from '../features/pokedex/pokedexSlice';
-import { getPokedexEntry, getSpeciesDetails } from '../pokemon';
+import { getPokedexEntry, getSpeciesDetails } from '../API/pokemon';
 import { capitalize, getPokemonTypes } from '../utilityFunctions';
 
 function PokedexEntry() {
