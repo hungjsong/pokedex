@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import {
@@ -9,6 +10,7 @@ import { getPokedexEntry, getSpeciesDetails } from '../API/pokemon';
 import { capitalize, getPokemonTypes } from '../utilityFunctions';
 
 function PokedexEntry() {
+  const { t } = useTranslation();
   const dispatch = useDispatch();
   const [pokemonID, setPokemonID] = useState(1);
   const pokedexEntry = useSelector((state: any) => state.pokedex.pokemonEntry);
@@ -55,23 +57,23 @@ function PokedexEntry() {
         />
       </>
       <>
-        <h3>Type</h3>
+        <h3>{t('type')}</h3>
         {<p>{getPokemonTypes(pokedexEntry.types)}</p>}
       </>
       <>
-        <h3>Height/Weight</h3>
+        <h3>{t('biometrics')}</h3>
         {(pokedexEntry.height * 0.1).toFixed(1) + 'm'}{' '}
         {(pokedexEntry.weight * 0.1).toFixed(1) + 'kg'}
       </>
       <form onSubmit={handleSubmit}>
         <label>
-          Enter Pokemon Number or Name
+          {t('inputPrompt')}
           <input type="text" name="pokemonID" />
         </label>
         <input type="submit" value="Submit" />
       </form>
       <nav>
-        <Link to="/">Home</Link>
+        <Link to="/">{t('home')}</Link>
       </nav>
     </div>
   );

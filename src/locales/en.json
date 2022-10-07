@@ -1,3 +1,8 @@
 {
-  "learn_react": "Learn React"
+  "pokedex": "Pokédex",
+  "biometrics": "Height/Weight",
+  "type": "Type",
+  "inputPrompt": "Enter Pokemon Number or Name",
+  "home": "Home",
+  "viewPokedex": "View Pokédex Entries"
 }
