@@ -14,7 +14,6 @@ import { capitalize } from '../utilityFunctions';
 
 function PokedexEntry() {
   const dispatch = useDispatch();
-  // const pokedexEntry = useSelector((state: any) => state.pokedex.pokemonData);
   const [pokemonID, setPokemonID] = useState(1);
   const pokedexEntry = useSelector((state: any) => state.pokedex.pokemonEntry);
   const speciesDetails = useSelector(
