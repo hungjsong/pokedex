@@ -13,6 +13,7 @@ function PokedexEntry() {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const [pokemonID, setPokemonID] = useState(1);
+  const [errorMessage, setErrorMessage] = useState('');
   const pokedexEntry = useSelector((state: any) => state.pokedex.pokemonEntry);
   const speciesDetails = useSelector(
     (state: any) => state.pokedex.speciesDetails
@@ -20,17 +21,31 @@ function PokedexEntry() {
 
   useEffect(() => {
     getSpeciesDetails(pokemonID).then((speciesDetails) => {
-      dispatch(setSpeciesDetails(speciesDetails));
-    });
+      if (speciesDetails === undefined) {
+        setErrorMessage(t('pokedexEntryNotFound'));
+      } else {
+        setErrorMessage('');
+        dispatch(setSpeciesDetails(speciesDetails));
 
-    getPokedexEntry(pokemonID).then((pokedexEntry) => {
-      dispatch(setPokemonEntry(pokedexEntry));
+        getPokedexEntry(pokemonID).then((pokedexEntry) => {
+          dispatch(setPokemonEntry(pokedexEntry));
+        });
+      }
     });
   }, [pokemonID]);
 
   const handleSubmit = (event: any) => {
     event.preventDefault();
-    setPokemonID(event.target.pokemonID.value);
+    let pokemonID = event.target.pokemonID.value;
+    if (typeof pokemonID === 'string') {
+      pokemonID = pokemonID.toLowerCase();
+    }
+
+    if (pokemonID === '') {
+      setErrorMessage(t('emptyPokedexInput'));
+    } else {
+      setPokemonID(pokemonID);
+    }
   };
 
   if (pokedexEntry === null || speciesDetails === null) {
@@ -65,6 +80,7 @@ function PokedexEntry() {
         {(pokedexEntry.height * 0.1).toFixed(1) + 'm'}{' '}
         {(pokedexEntry.weight * 0.1).toFixed(1) + 'kg'}
       </>
+      {errorMessage !== '' && <p style={{ color: 'red' }}>{errorMessage}</p>}
       <form onSubmit={handleSubmit}>
         <label>
           {t('inputPrompt')}
