@@ -4,5 +4,7 @@
   "type": "Type",
   "inputPrompt": "Enter Pokemon Number or Name",
   "home": "Home",
-  "viewPokedex": "View Pokédex Entries"
+  "viewPokedex": "View Pokédex Entries",
+  "emptyPokedexInput": "*Please enter a Pokémon's number or name",
+  "pokedexEntryNotFound": "*No Pokémon with that dex number or name has been found"
 }
