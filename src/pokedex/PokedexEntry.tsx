@@ -33,7 +33,7 @@ function PokedexEntry() {
     setPokemonID(event.target.pokemonID.value);
   };
 
-  if (pokedexEntry.name === undefined || speciesDetails.genera === undefined) {
+  if (pokedexEntry === null || speciesDetails === null) {
     return <h1></h1>;
   }
 
