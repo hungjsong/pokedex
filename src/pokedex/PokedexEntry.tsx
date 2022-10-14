@@ -65,7 +65,7 @@ function PokedexEntry() {
           src={
             pokedexEntry.sprites === undefined
               ? 'https://archives.bulbagarden.net/media/upload/8/8e/Spr_3r_000.png'
-              : pokedexEntry.sprites.front_default
+              : pokedexEntry.sprites.other['official-artwork'].front_default
           }
           height="10%"
           width="10%"

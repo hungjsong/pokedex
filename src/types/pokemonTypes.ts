@@ -11,6 +11,11 @@ export type PokemonEntry = {
   id: number;
   sprites: {
     front_default: string;
+    other: {
+      'official-artwork': {
+        front_default: string;
+      };
+    };
   };
   types: PokemonType[];
   height: number;
