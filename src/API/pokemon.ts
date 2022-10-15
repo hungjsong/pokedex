@@ -14,3 +14,11 @@ export const getSpeciesDetails = (pokemonID: string | number) => {
       console.error(error);
     });
 };
+
+export const getAllPokemon = () => {
+  return fetch('https://pokeapi.co/api/v2/pokemon?limit=100000&offset=0')
+    .then((response) => response.json())
+    .catch((error) => {
+      console.error(error);
+    });
+};
