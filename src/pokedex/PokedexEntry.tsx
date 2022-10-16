@@ -7,7 +7,11 @@ import {
   setSpeciesDetails,
 } from '../features/pokedex/pokedexSlice';
 import { getPokedexEntry, getSpeciesDetails } from '../API/pokemon';
-import { capitalize, getPokemonTypes } from '../utilityFunctions';
+import {
+  capitalize,
+  getEnglishGenera,
+  getPokemonTypes,
+} from '../utilityFunctions';
 
 function PokedexEntry() {
   const { t } = useTranslation();
@@ -58,7 +62,7 @@ function PokedexEntry() {
         <h1>
           {capitalize(pokedexEntry.name)} #{('00' + pokedexEntry.id).slice(-3)}
         </h1>
-        <h3>{speciesDetails.genera[7].genus}</h3>
+        <h3>{getEnglishGenera(speciesDetails).genus}</h3>
       </>
       <>
         <img
