@@ -18,6 +18,7 @@ export const getSpeciesDetails = (pokemonID: string | number) => {
 export const getAllPokemon = () => {
   return fetch('https://pokeapi.co/api/v2/pokemon?limit=100000&offset=0')
     .then((response) => response.json())
+    .then((allpokemon) => allpokemon.results)
     .catch((error) => {
       console.error(error);
     });
