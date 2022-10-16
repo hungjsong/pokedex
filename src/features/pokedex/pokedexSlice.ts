@@ -4,11 +4,13 @@ import { PokemonEntry, SpeciesDetails } from '../../types/pokemonTypes';
 interface PokedexState {
   pokemonEntry: PokemonEntry | null;
   speciesDetails: SpeciesDetails | null;
+  pokemonList: any | null;
 }
 
 const initialState: PokedexState = {
   pokemonEntry: null,
   speciesDetails: null,
+  pokemonList: null,
 };
 
 export const pokedexSlice = createSlice({
@@ -21,8 +23,12 @@ export const pokedexSlice = createSlice({
     setSpeciesDetails: (state, action) => {
       state.speciesDetails = action.payload;
     },
+    setPokemonList: (state, action) => {
+      state.pokemonList = action.payload;
+    },
   },
 });
 
-export const { setPokemonEntry, setSpeciesDetails } = pokedexSlice.actions;
+export const { setPokemonEntry, setSpeciesDetails, setPokemonList } =
+  pokedexSlice.actions;
 export default pokedexSlice.reducer;
