@@ -36,16 +36,16 @@ export type Move = {
 };
 
 export type Pokemon = {
-  name: string;
-  id: number;
+  name: string | null;
+  id: number | null;
   moves: Move[];
-  item: string;
-  level: number;
-  gender: string;
-  happiness: number;
-  shiny: boolean;
-  types: PokemonType[];
-  nature: string;
+  item: string | null;
+  level: number | null;
+  gender: string | null;
+  happiness: number | null;
+  shiny: boolean | null;
+  types: PokemonType[] | null;
+  nature: string | null;
   iv: {
     hp: number;
     atk: number;
