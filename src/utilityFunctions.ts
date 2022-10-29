@@ -1,4 +1,4 @@
-import { PokemonType } from './types/pokemonTypes';
+import { Genus, PokemonType, SpeciesDetails } from './types/pokemonTypes';
 
 export const capitalize = (word: string) => {
   return word.charAt(0).toUpperCase() + word.slice(1);
@@ -15,4 +15,10 @@ export const getPokemonTypes = (types: PokemonType[]) => {
   });
 
   return pokemonTypes.join('/');
+};
+
+export const getEnglishGenera = (speciesDetails: SpeciesDetails): Genus => {
+  return speciesDetails.genera.filter(
+    (genus) => genus.language.name === 'en'
+  )[0];
 };

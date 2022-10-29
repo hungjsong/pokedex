@@ -7,7 +7,11 @@ import {
   setSpeciesDetails,
 } from '../features/pokedex/pokedexSlice';
 import { getPokedexEntry, getSpeciesDetails } from '../API/pokemon';
-import { capitalize, getPokemonTypes } from '../utilityFunctions';
+import {
+  capitalize,
+  getEnglishGenera,
+  getPokemonTypes,
+} from '../utilityFunctions';
 
 function PokedexEntry() {
   const { t } = useTranslation();
@@ -58,14 +62,14 @@ function PokedexEntry() {
         <h1>
           {capitalize(pokedexEntry.name)} #{('00' + pokedexEntry.id).slice(-3)}
         </h1>
-        <h3>{speciesDetails.genera[7].genus}</h3>
+        <h3>{getEnglishGenera(speciesDetails).genus}</h3>
       </>
       <>
         <img
           src={
             pokedexEntry.sprites === undefined
               ? 'https://archives.bulbagarden.net/media/upload/8/8e/Spr_3r_000.png'
-              : pokedexEntry.sprites.front_default
+              : pokedexEntry.sprites.other['official-artwork'].front_default
           }
           height="10%"
           width="10%"

@@ -1,0 +1,53 @@
+{
+  "payload": [
+    { "name": "hardy", "increased_stat": null, "decreased_stat": null },
+    { "name": "lonely", "increased_stat": "Attack", "decreased_stat": null },
+    { "name": "brave", "increased_stat": "Attack", "decreased_stat": null },
+    { "name": "adamant", "increased_stat": "Attack", "decreased_stat": null },
+    { "name": "naughty", "increased_stat": "Attack", "decreased_stat": null },
+    { "name": "bold", "increased_stat": "Defense", "decreased_stat": null },
+    { "name": "docile", "increased_stat": null, "decreased_stat": null },
+    { "name": "relaxed", "increased_stat": "Defense", "decreased_stat": null },
+    { "name": "impish", "increased_stat": "Defense", "decreased_stat": null },
+    { "name": "lax", "increased_stat": "Defense", "decreased_stat": null },
+    { "name": "timid", "increased_stat": "Speed", "decreased_stat": null },
+    { "name": "hasty", "increased_stat": "Speed", "decreased_stat": null },
+    { "name": "serious", "increased_stat": null, "decreased_stat": null },
+    { "name": "jolly", "increased_stat": "Speed", "decreased_stat": null },
+    { "name": "naive", "increased_stat": "Speed", "decreased_stat": null },
+    {
+      "name": "modest",
+      "increased_stat": "Sp. Attack",
+      "decreased_stat": null
+    },
+    { "name": "mild", "increased_stat": "Sp. Attack", "decreased_stat": null },
+    {
+      "name": "quiet",
+      "increased_stat": "Sp. Attack",
+      "decreased_stat": null
+    },
+    { "name": "bashful", "increased_stat": null, "decreased_stat": null },
+    { "name": "rash", "increased_stat": "Sp. Attack", "decreased_stat": null },
+    {
+      "name": "calm",
+      "increased_stat": "Sp. Defense",
+      "decreased_stat": null
+    },
+    {
+      "name": "gentle",
+      "increased_stat": "Sp. Defense",
+      "decreased_stat": null
+    },
+    {
+      "name": "sassy",
+      "increased_stat": "Sp. Defense",
+      "decreased_stat": null
+    },
+    {
+      "name": "careful",
+      "increased_stat": "Sp. Defense",
+      "decreased_stat": null
+    },
+    { "name": "quirky", "increased_stat": null, "decreased_stat": null }
+  ]
+}
