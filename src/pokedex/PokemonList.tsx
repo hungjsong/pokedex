@@ -14,13 +14,13 @@ function PokemonList(props: any) {
 
   useEffect(() => {
     getAllPokemon().then((allPokemon) => dispatch(setPokemonList(allPokemon)));
-  }, [pokemonID]);
+  }, []);
 
   function handleChange(event: any) {
     setPokemonID(event.target.value);
   }
 
-  function displayListOfPokemon(position: number) {
+  function displayListOfPokemon(slotNumber: number) {
     return (
       <ul>
         {pokedexEntry
@@ -33,10 +33,10 @@ function PokemonList(props: any) {
                   dispatch(
                     setPokemon({
                       name: element.name,
-                      teamPosition: position,
+                      slotNumber: slotNumber,
                     })
                   );
-                  setPokemonID(capitalize(element.name));
+                  setPokemonID(element.name);
                 }}
               >
                 <img
@@ -57,7 +57,7 @@ function PokemonList(props: any) {
   return (
     <>
       <div>
-        <h3>Slot {props.position + 1}</h3>
+        <h3>Slot {props.slotNumber + 1}</h3>
         <input
           type="search"
           autoComplete="off"
@@ -76,7 +76,7 @@ function PokemonList(props: any) {
             );
           }}
         />
-        {displayList && displayListOfPokemon(props.position)}
+        {displayList && displayListOfPokemon(props.slotNumber)}
       </div>
     </>
   );

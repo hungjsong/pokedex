@@ -9,12 +9,12 @@ function TeamBuilder() {
   return (
     <div>
       <h1>{t('teamBuilder')}</h1>
-      <PokemonSlot position={0} />
-      <PokemonSlot position={1} />
-      <PokemonSlot position={2} />
-      <PokemonSlot position={3} />
-      <PokemonSlot position={4} />
-      <PokemonSlot position={5} />
+      <PokemonSlot slotNumber={0} />
+      <PokemonSlot slotNumber={1} />
+      <PokemonSlot slotNumber={2} />
+      <PokemonSlot slotNumber={3} />
+      <PokemonSlot slotNumber={4} />
+      <PokemonSlot slotNumber={5} />
       <nav>
         <Link to="/">{t('home')}</Link>
       </nav>

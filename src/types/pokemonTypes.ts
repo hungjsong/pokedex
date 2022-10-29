@@ -36,17 +36,17 @@ export type Move = {
 };
 
 export type Pokemon = {
-  name: string | null;
-  id: number | null;
-  moves: Move[];
-  item: string | null;
-  level: number | null;
-  gender: string | null;
-  happiness: number | null;
-  shiny: boolean | null;
-  types: PokemonType[] | null;
-  nature: string | null;
-  iv: {
+  name?: string;
+  id?: number;
+  moves?: Move[];
+  item?: string;
+  level?: number;
+  gender?: string;
+  happiness?: number;
+  shiny?: boolean;
+  types?: PokemonType[];
+  nature?: string;
+  iv?: {
     hp: number;
     atk: number;
     def: number;
@@ -54,7 +54,7 @@ export type Pokemon = {
     spDef: number;
     speed: number;
   };
-  ev: {
+  ev?: {
     hp: number;
     atk: number;
     def: number;
@@ -74,4 +74,10 @@ export type Genus = {
 
 export type SpeciesDetails = {
   genera: Genus[];
+};
+
+export type PokemonNature = {
+  name: string;
+  increased_stat: string | null;
+  decreased_stat: string | null;
 };
