@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { GetAllPokemonResults } from '../API/pokemon';
 import { PokemonEntry, SpeciesDetails } from '../types/pokemonTypes';
 
@@ -18,7 +18,7 @@ export const pokedexSlice = createSlice({
   name: 'pokedex',
   initialState,
   reducers: {
-    setPokemonEntry: (state, action) => {
+    setPokemonEntry: (state, action: PayloadAction<PokemonEntry>) => {
       state.pokemonEntry = action.payload;
     },
     setSpeciesDetails: (state, action) => {
