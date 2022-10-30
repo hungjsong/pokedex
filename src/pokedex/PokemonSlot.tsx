@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import PokemonList from './PokemonList';
 import { capitalize } from '../utilityFunctions';
 import EVSlider from './EVSlider';
@@ -19,7 +19,7 @@ function PokemonSlot(props: any) {
   const [spAtkEV, setSpAtkEV] = useState(0);
   const [spDefEV, setSpDefEV] = useState(0);
   const [spdEV, setSpdEV] = useState(0);
-  const team = useSelector((state: any) => state.teamBuilder.team);
+  //const team = useSelector((state: any) => state.teamBuilder.team);
 
   useEffect(() => {
     getPokemonNatures().then((response) => {
@@ -36,7 +36,7 @@ function PokemonSlot(props: any) {
       <ul>
         {pokemonNatures
           .filter((nature: any) => nature.name.includes(inputNature))
-          .map((nature: any, index: number) => (
+          .map((nature: any) => (
             <>
               <li
                 key={nature.name}
@@ -66,10 +66,10 @@ function PokemonSlot(props: any) {
         autoComplete="off"
         placeholder="Nature"
         value={inputNature}
-        onFocus={(event) => {
+        onFocus={() => {
           setDisplayList(true);
         }}
-        onBlur={(event) => {
+        onBlur={() => {
           setDisplayList(false);
         }}
         onChange={handleChange}

@@ -10,7 +10,7 @@ function PokemonList(props: any) {
   const [pokemonID, setPokemonID] = useState('');
   const dispatch = useDispatch();
   const pokedexEntry = useSelector((state: any) => state.pokedex.pokemonList);
-  const team = useSelector((state: any) => state.teamBuilder.team);
+  //const team = useSelector((state: any) => state.teamBuilder.team);
 
   useEffect(() => {
     getAllPokemon().then((allPokemon) => dispatch(setPokemonList(allPokemon)));
@@ -61,10 +61,10 @@ function PokemonList(props: any) {
           autoComplete="off"
           placeholder="Search Pokémon"
           value={pokemonID}
-          onFocus={(event) => {
+          onFocus={() => {
             setDisplayList(true); //Display list of Pokemon
           }}
-          onBlur={(event) => {
+          onBlur={() => {
             setDisplayList(false); //Hide list of Pokemon
           }}
           onChange={handleChange}
