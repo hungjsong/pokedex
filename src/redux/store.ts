@@ -1,6 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit';
-import pokedexReducer from '../features/pokedex/pokedexSlice';
-import teamBuilderReducer from '../features/pokedex/teamBuilderSlice';
+import pokedexReducer from './pokedexSlice';
+import teamBuilderReducer from './teamBuilderSlice';
 
 const reducer = {
   pokedex: pokedexReducer,

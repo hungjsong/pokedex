@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getAllPokemon } from '../API/pokemon';
-import { setPokemonList } from '../features/pokedex/pokedexSlice';
-import { setPokemon } from '../features/pokedex/teamBuilderSlice';
+import { setPokemonList } from '../redux/pokedexSlice';
+import { setPokemon } from '../redux/teamBuilderSlice';
 import { capitalize } from '../utilityFunctions';
 
 function PokemonList(props: any) {

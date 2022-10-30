@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { PokemonEntry, SpeciesDetails } from '../../types/pokemonTypes';
+import { PokemonEntry, SpeciesDetails } from '../types/pokemonTypes';
 
 interface PokedexState {
   pokemonEntry: PokemonEntry | null;

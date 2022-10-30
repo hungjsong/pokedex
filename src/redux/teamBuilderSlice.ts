@@ -1,9 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import {
-  Pokemon,
-  PokemonEntry,
-  SpeciesDetails,
-} from '../../types/pokemonTypes';
+import { Pokemon, PokemonEntry, SpeciesDetails } from '../types/pokemonTypes';
 
 interface TeamBuilderState {
   team: Pokemon[];

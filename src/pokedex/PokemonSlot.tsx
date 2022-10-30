@@ -2,10 +2,10 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import PokemonList from './PokemonList';
 import { capitalize } from '../utilityFunctions';
-import { setNature } from '../features/pokedex/teamBuilderSlice';
 import EVSlider from './EVSlider';
 import { getPokemonNatures } from '../API/pokemon';
 import { PokemonNature } from '../types/pokemonTypes';
+import { setNature } from '../redux/teamBuilderSlice';
 
 function PokemonSlot(props: any) {
   const dispatch = useDispatch();
