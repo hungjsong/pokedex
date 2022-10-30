@@ -1,11 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
-import {
-  setPokemonEntry,
-  setSpeciesDetails,
-} from '../features/pokedex/pokedexSlice';
+import { setPokemonEntry, setSpeciesDetails } from '../redux/pokedexSlice';
 import { getPokedexEntry, getSpeciesDetails } from '../API/pokemon';
 import {
   capitalize,

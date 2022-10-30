@@ -1,9 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import {
-  Pokemon,
-  PokemonEntry,
-  SpeciesDetails,
-} from '../../types/pokemonTypes';
+import { Pokemon } from '../types/pokemonTypes';
 
 interface TeamBuilderState {
   team: Pokemon[];
@@ -217,7 +213,7 @@ export const teamBuilderSlice = createSlice({
     setPokemon: (state, action) => {
       state.team[action.payload.slotNumber].name = action.payload.name;
     },
-    setMove: (state, action) => {
+    setMove: () => {
       console.log('hi'); //Added console log for now to prevent empty reducer error
     },
     setNature: (state, action) => {
