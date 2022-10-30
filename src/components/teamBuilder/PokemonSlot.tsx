@@ -7,7 +7,11 @@ import { getPokemonNatures } from '../../API/pokemon';
 import { PokemonNature } from '../../types/pokemonTypes';
 import { setNature } from '../../redux/teamBuilderSlice';
 
-function PokemonSlot(props: any) {
+type PokemonSlotProps = {
+  slotNumber: number;
+};
+
+function PokemonSlot(props: PokemonSlotProps) {
   const dispatch = useDispatch();
   const [pokemonNatures, setPokemonNatures] = useState<PokemonNature[]>([]);
   const [inputNature, setInputNature] = useState('');
