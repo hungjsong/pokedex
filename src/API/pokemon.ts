@@ -1,4 +1,4 @@
-import pokemonNatures from '../mockData/pokemonNatures.json';
+import pokemonNatures from './mockData/pokemonNatures.json';
 import { PokemonNature } from '../types/pokemonTypes';
 
 //API documentation can be found here: https://pokeapi.co/docs/v2
