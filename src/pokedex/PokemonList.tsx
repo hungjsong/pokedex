@@ -26,29 +26,27 @@ function PokemonList(props: any) {
         {pokedexEntry
           .filter((pokemon: any) => pokemon.name.includes(pokemonID))
           .map((element: any, index: number) => (
-            <>
-              <li
-                key={element.name}
-                onMouseDown={() => {
-                  dispatch(
-                    setPokemon({
-                      name: element.name,
-                      slotNumber: slotNumber,
-                    })
-                  );
-                  setPokemonID(element.name);
-                }}
-              >
-                <img
-                  src={
-                    'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-viii/icons/' +
-                    (index + 1) +
-                    '.png'
-                  }
-                ></img>
-                {capitalize(element.name)}
-              </li>
-            </>
+            <li
+              key={element.name}
+              onMouseDown={() => {
+                dispatch(
+                  setPokemon({
+                    name: element.name,
+                    slotNumber: slotNumber,
+                  })
+                );
+                setPokemonID(element.name);
+              }}
+            >
+              <img
+                src={
+                  'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-viii/icons/' +
+                  (index + 1) +
+                  '.png'
+                }
+              ></img>
+              {capitalize(element.name)}
+            </li>
           ))}
       </ul>
     );
