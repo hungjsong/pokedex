@@ -1,10 +1,11 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { GetAllPokemonResults } from '../API/pokemon';
 import { PokemonEntry, SpeciesDetails } from '../types/pokemonTypes';
 
 interface PokedexState {
   pokemonEntry: PokemonEntry | null;
   speciesDetails: SpeciesDetails | null;
-  pokemonList: any | null;
+  pokemonList: GetAllPokemonResults | null;
 }
 
 const initialState: PokedexState = {

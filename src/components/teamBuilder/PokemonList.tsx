@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { getAllPokemon } from '../../API/pokemon';
+import { useAppSelector } from '../../hooks';
 import { setPokemonList } from '../../redux/pokedexSlice';
 import { setPokemon } from '../../redux/teamBuilderSlice';
 import { capitalize } from '../../utilityFunctions';
@@ -9,7 +10,7 @@ function PokemonList(props: any) {
   const [displayList, setDisplayList] = useState(false);
   const [pokemonID, setPokemonID] = useState('');
   const dispatch = useDispatch();
-  const pokedexEntry = useSelector((state: any) => state.pokedex.pokemonList);
+  const pokedexEntry = useAppSelector((state) => state.pokedex.pokemonList);
   //const team = useSelector((state: any) => state.teamBuilder.team);
 
   useEffect(() => {
@@ -21,11 +22,15 @@ function PokemonList(props: any) {
   }
 
   function displayListOfPokemon(slotNumber: number) {
+    if (pokedexEntry === null) {
+      return <h1>Loading...</h1>;
+    }
+
     return (
       <ul>
         {pokedexEntry
-          .filter((pokemon: any) => pokemon.name.includes(pokemonID))
-          .map((element: any, index: number) => (
+          .filter((pokemon) => pokemon.name.includes(pokemonID))
+          .map((element, index: number) => (
             <li
               key={element.name}
               onMouseDown={() => {
