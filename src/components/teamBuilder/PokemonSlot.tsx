@@ -1,13 +1,17 @@
-import { useEffect, useState } from 'react';
+import { ChangeEvent, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import PokemonList from './PokemonList';
-import { capitalize } from '../utilityFunctions';
+import { capitalize } from '../../utilityFunctions';
 import EVSlider from './EVSlider';
-import { getPokemonNatures } from '../API/pokemon';
-import { PokemonNature } from '../types/pokemonTypes';
-import { setNature } from '../redux/teamBuilderSlice';
+import { getPokemonNatures } from '../../API/pokemon';
+import { PokemonNature } from '../../types/pokemonTypes';
+import { setNature } from '../../redux/teamBuilderSlice';
 
-function PokemonSlot(props: any) {
+type PokemonSlotProps = {
+  slotNumber: number;
+};
+
+function PokemonSlot(props: PokemonSlotProps) {
   const dispatch = useDispatch();
   const [pokemonNatures, setPokemonNatures] = useState<PokemonNature[]>([]);
   const [inputNature, setInputNature] = useState('');
@@ -27,7 +31,7 @@ function PokemonSlot(props: any) {
     });
   }, []);
 
-  function handleChange(event: any) {
+  function handleChange(event: ChangeEvent<HTMLInputElement>) {
     setInputNature(event.target.value);
   }
 
@@ -35,8 +39,8 @@ function PokemonSlot(props: any) {
     return (
       <ul>
         {pokemonNatures
-          .filter((nature: any) => nature.name.includes(inputNature))
-          .map((nature: any) => (
+          .filter((nature) => nature.name.includes(inputNature))
+          .map((nature) => (
             <>
               <li
                 key={nature.name}

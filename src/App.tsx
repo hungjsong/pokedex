@@ -1,7 +1,7 @@
 import { Routes, Route } from 'react-router-dom';
-import PokedexEntry from './pokedex/PokedexEntry';
-import TeamBuilder from './pokedex/TeamBuilder';
-import Home from './pokedex/Home';
+import PokedexEntry from './components/pokemonEntry/PokedexEntry';
+import TeamBuilder from './components/teamBuilder/TeamBuilder';
+import Home from './components/home/Home';
 import './App.css';
 
 function App() {

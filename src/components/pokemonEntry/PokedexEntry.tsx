@@ -2,13 +2,14 @@ import { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { setPokemonEntry, setSpeciesDetails } from '../redux/pokedexSlice';
-import { getPokedexEntry, getSpeciesDetails } from '../API/pokemon';
+import { setPokemonEntry, setSpeciesDetails } from '../../redux/pokedexSlice';
+import { getPokedexEntry, getSpeciesDetails } from '../../API/pokemon';
 import {
   capitalize,
   getEnglishGenera,
   getPokemonTypes,
-} from '../utilityFunctions';
+} from '../../utilityFunctions';
+import Loader from '../common/Loader';
 
 function PokedexEntry() {
   const { t } = useTranslation();
@@ -50,7 +51,7 @@ function PokedexEntry() {
   };
 
   if (pokedexEntry === null || speciesDetails === null) {
-    return <h1></h1>;
+    return <Loader />;
   }
 
   return (
