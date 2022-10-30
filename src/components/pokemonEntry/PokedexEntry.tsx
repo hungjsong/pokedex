@@ -10,15 +10,16 @@ import {
   getPokemonTypes,
 } from '../../utilityFunctions';
 import Loader from '../common/Loader';
+import { useAppSelector } from '../../hooks';
 
 function PokedexEntry() {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const [pokemonID, setPokemonID] = useState(1);
   const [errorMessage, setErrorMessage] = useState('');
-  const pokedexEntry = useSelector((state: any) => state.pokedex.pokemonEntry);
-  const speciesDetails = useSelector(
-    (state: any) => state.pokedex.speciesDetails
+  const pokedexEntry = useAppSelector((state) => state.pokedex.pokemonEntry);
+  const speciesDetails = useAppSelector(
+    (state) => state.pokedex.speciesDetails
   );
 
   useEffect(() => {
