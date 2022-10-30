@@ -9,6 +9,7 @@ import {
   getEnglishGenera,
   getPokemonTypes,
 } from '../../utilityFunctions';
+import Loader from '../common/Loader';
 
 function PokedexEntry() {
   const { t } = useTranslation();
@@ -50,7 +51,7 @@ function PokedexEntry() {
   };
 
   if (pokedexEntry === null || speciesDetails === null) {
-    return <h1></h1>;
+    return <Loader />;
   }
 
   return (

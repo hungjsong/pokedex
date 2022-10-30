@@ -5,6 +5,7 @@ import { useAppSelector } from '../../hooks';
 import { setPokemonList } from '../../redux/pokedexSlice';
 import { setPokemon } from '../../redux/teamBuilderSlice';
 import { capitalize } from '../../utilityFunctions';
+import Loader from '../common/Loader';
 
 function PokemonList(props: any) {
   const [displayList, setDisplayList] = useState(false);
@@ -23,7 +24,7 @@ function PokemonList(props: any) {
 
   function displayListOfPokemon(slotNumber: number) {
     if (pokedexEntry === null) {
-      return <h1>Loading...</h1>;
+      return <Loader />;
     }
 
     return (
