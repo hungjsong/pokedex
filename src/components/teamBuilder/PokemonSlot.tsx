@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { ChangeEvent, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import PokemonList from './PokemonList';
 import { capitalize } from '../../utilityFunctions';
@@ -31,7 +31,7 @@ function PokemonSlot(props: PokemonSlotProps) {
     });
   }, []);
 
-  function handleChange(event: any) {
+  function handleChange(event: ChangeEvent<HTMLInputElement>) {
     setInputNature(event.target.value);
   }
 
@@ -39,8 +39,8 @@ function PokemonSlot(props: PokemonSlotProps) {
     return (
       <ul>
         {pokemonNatures
-          .filter((nature: any) => nature.name.includes(inputNature))
-          .map((nature: any) => (
+          .filter((nature) => nature.name.includes(inputNature))
+          .map((nature) => (
             <>
               <li
                 key={nature.name}
