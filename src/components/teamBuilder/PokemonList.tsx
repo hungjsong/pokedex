@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getAllPokemon } from '../API/pokemon';
-import { setPokemonList } from '../redux/pokedexSlice';
-import { setPokemon } from '../redux/teamBuilderSlice';
-import { capitalize } from '../utilityFunctions';
+import { getAllPokemon } from '../../API/pokemon';
+import { setPokemonList } from '../../redux/pokedexSlice';
+import { setPokemon } from '../../redux/teamBuilderSlice';
+import { capitalize } from '../../utilityFunctions';
 
 function PokemonList(props: any) {
   const [displayList, setDisplayList] = useState(false);
