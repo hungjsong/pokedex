@@ -1,4 +1,3 @@
-import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 import PokedexEntry from './pokedex/PokedexEntry';
 import TeamBuilder from './pokedex/TeamBuilder';

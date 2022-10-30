@@ -1,4 +1,3 @@
-import React from 'react';
 function EVSlider(props: any) {
   function changeEV(event: any) {
     console.log(event.target.id + ' ' + event.target.value);
