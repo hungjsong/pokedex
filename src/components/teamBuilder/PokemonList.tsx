@@ -7,7 +7,11 @@ import { setPokemon } from '../../redux/teamBuilderSlice';
 import { capitalize } from '../../utilityFunctions';
 import Loader from '../common/Loader';
 
-function PokemonList(props: any) {
+type PokemonListProps = {
+  slotNumber: number;
+};
+
+function PokemonList(props: PokemonListProps) {
   const [displayList, setDisplayList] = useState(false);
   const [pokemonID, setPokemonID] = useState('');
   const dispatch = useDispatch();
@@ -67,10 +71,10 @@ function PokemonList(props: any) {
           placeholder="Search Pokémon"
           value={pokemonID}
           onFocus={() => {
-            setDisplayList(true); //Display list of Pokemon
+            setDisplayList(true);
           }}
           onBlur={() => {
-            setDisplayList(false); //Hide list of Pokemon
+            setDisplayList(false);
           }}
           onChange={handleChange}
           onKeyUp={(event) => {

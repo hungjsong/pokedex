@@ -1,8 +1,14 @@
-import { ChangeEvent } from 'react';
+import { ChangeEvent, Dispatch, SetStateAction } from 'react';
 
-function EVSlider(props: any) {
+type PokemonSlotProps = {
+  setEV: Dispatch<SetStateAction<number>>;
+  evName: string;
+  evStatType: number;
+};
+
+function EVSlider(props: PokemonSlotProps) {
   function changeEV(event: ChangeEvent<HTMLInputElement>) {
-    props.setEV(event.target.value);
+    props.setEV(+event.target.value);
   }
 
   return (
