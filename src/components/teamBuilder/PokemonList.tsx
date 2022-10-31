@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { ChangeEvent, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { getAllPokemon } from '../../API/pokemon';
 import { useAppSelector } from '../../hooks';
@@ -12,13 +12,12 @@ function PokemonList(props: any) {
   const [pokemonID, setPokemonID] = useState('');
   const dispatch = useDispatch();
   const pokedexEntry = useAppSelector((state) => state.pokedex.pokemonList);
-  //const team = useSelector((state: any) => state.teamBuilder.team);
 
   useEffect(() => {
     getAllPokemon().then((allPokemon) => dispatch(setPokemonList(allPokemon)));
   }, []);
 
-  function handleChange(event: any) {
+  function handleChange(event: ChangeEvent<HTMLInputElement>) {
     setPokemonID(event.target.value);
   }
 

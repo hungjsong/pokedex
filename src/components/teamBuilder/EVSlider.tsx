@@ -1,6 +1,7 @@
+import { ChangeEvent } from 'react';
+
 function EVSlider(props: any) {
-  function changeEV(event: any) {
-    console.log(event.target.id + ' ' + event.target.value);
+  function changeEV(event: ChangeEvent<HTMLInputElement>) {
     props.setEV(event.target.value);
   }
 
