@@ -62,30 +62,26 @@ function PokemonList(props: PokemonListProps) {
   }
 
   return (
-    <>
-      <div>
-        <h3>Slot {props.slotNumber + 1}</h3>
-        <input
-          type="search"
-          autoComplete="off"
-          placeholder="Search Pokémon"
-          value={pokemonID}
-          onFocus={() => {
-            setDisplayList(true);
-          }}
-          onBlur={() => {
-            setDisplayList(false);
-          }}
-          onChange={handleChange}
-          onKeyUp={(event) => {
-            setPokemonID(
-              (event.target as HTMLInputElement).value.toLowerCase()
-            );
-          }}
-        />
-        {displayList && displayListOfPokemon(props.slotNumber)}
-      </div>
-    </>
+    <div>
+      <h3>Slot {props.slotNumber + 1}</h3>
+      <input
+        type="search"
+        autoComplete="off"
+        placeholder="Search Pokémon"
+        value={pokemonID}
+        onFocus={() => {
+          setDisplayList(true);
+        }}
+        onBlur={() => {
+          setDisplayList(false);
+        }}
+        onChange={handleChange}
+        onKeyUp={(event) => {
+          setPokemonID((event.target as HTMLInputElement).value.toLowerCase());
+        }}
+      />
+      {displayList && displayListOfPokemon(props.slotNumber)}
+    </div>
   );
 }
 
