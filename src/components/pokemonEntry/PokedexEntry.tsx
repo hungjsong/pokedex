@@ -1,6 +1,6 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, FormEvent } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { setPokemonEntry, setSpeciesDetails } from '../../redux/pokedexSlice';
 import { getPokedexEntry, getSpeciesDetails } from '../../API/pokemon';
@@ -10,15 +10,16 @@ import {
   getPokemonTypes,
 } from '../../utilityFunctions';
 import Loader from '../common/Loader';
+import { useAppSelector } from '../../hooks';
 
 function PokedexEntry() {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const [pokemonID, setPokemonID] = useState(1);
   const [errorMessage, setErrorMessage] = useState('');
-  const pokedexEntry = useSelector((state: any) => state.pokedex.pokemonEntry);
-  const speciesDetails = useSelector(
-    (state: any) => state.pokedex.speciesDetails
+  const pokedexEntry = useAppSelector((state) => state.pokedex.pokemonEntry);
+  const speciesDetails = useAppSelector(
+    (state) => state.pokedex.speciesDetails
   );
 
   useEffect(() => {
@@ -36,9 +37,9 @@ function PokedexEntry() {
     });
   }, [pokemonID]);
 
-  const handleSubmit = (event: any) => {
+  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    let pokemonID = event.target.pokemonID.value;
+    let pokemonID = event.currentTarget.pokemonID.value;
     if (typeof pokemonID === 'string') {
       pokemonID = pokemonID.toLowerCase();
     }

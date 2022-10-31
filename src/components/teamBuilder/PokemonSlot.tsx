@@ -16,14 +16,12 @@ function PokemonSlot(props: PokemonSlotProps) {
   const [pokemonNatures, setPokemonNatures] = useState<PokemonNature[]>([]);
   const [inputNature, setInputNature] = useState('');
   const [displayList, setDisplayList] = useState(false);
-  const [remainingEVs, setRemainingEVs] = useState(510);
   const [hpEV, setHPEV] = useState(0);
   const [atkEV, setAtkEV] = useState(0);
   const [defEV, setDefEV] = useState(0);
   const [spAtkEV, setSpAtkEV] = useState(0);
   const [spDefEV, setSpDefEV] = useState(0);
   const [spdEV, setSpdEV] = useState(0);
-  //const team = useSelector((state: any) => state.teamBuilder.team);
 
   useEffect(() => {
     getPokemonNatures().then((response) => {
@@ -83,53 +81,17 @@ function PokemonSlot(props: PokemonSlotProps) {
       />
       {displayList && displayListOfNatures(props.slotNumber)}
       <h4>HP</h4>
-      <EVSlider
-        evStatType={hpEV}
-        setEV={setHPEV}
-        evName={'hp'}
-        remainingEVs={remainingEVs}
-        setRemainingEVs={setRemainingEVs}
-      />
+      <EVSlider evStatType={hpEV} setEV={setHPEV} evName={'hp'} />
       <h4>Attack</h4>
-      <EVSlider
-        evStatType={atkEV}
-        setEV={setAtkEV}
-        evName={'atk'}
-        remainingEVs={remainingEVs}
-        setRemainingEVs={setRemainingEVs}
-      />
+      <EVSlider evStatType={atkEV} setEV={setAtkEV} evName={'atk'} />
       <h4>Defence</h4>
-      <EVSlider
-        evStatType={defEV}
-        setEV={setDefEV}
-        evName={'def'}
-        remainingEVs={remainingEVs}
-        setRemainingEVs={setRemainingEVs}
-      />
+      <EVSlider evStatType={defEV} setEV={setDefEV} evName={'def'} />
       <h4>Special Attack</h4>
-      <EVSlider
-        evStatType={spAtkEV}
-        setEV={setSpAtkEV}
-        evName={'spAtk'}
-        remainingEVs={remainingEVs}
-        setRemainingEVs={setRemainingEVs}
-      />
+      <EVSlider evStatType={spAtkEV} setEV={setSpAtkEV} evName={'spAtk'} />
       <h4>Special Defence</h4>
-      <EVSlider
-        evStatType={spDefEV}
-        setEV={setSpDefEV}
-        evName={'spDef'}
-        remainingEVs={remainingEVs}
-        setRemainingEVs={setRemainingEVs}
-      />
+      <EVSlider evStatType={spDefEV} setEV={setSpDefEV} evName={'spDef'} />
       <h4>Speed</h4>
-      <EVSlider
-        evStatType={spdEV}
-        setEV={setSpdEV}
-        evName={'spd'}
-        remainingEVs={remainingEVs}
-        setRemainingEVs={setRemainingEVs}
-      />
+      <EVSlider evStatType={spdEV} setEV={setSpdEV} evName={'spd'} />
     </>
   );
 }
