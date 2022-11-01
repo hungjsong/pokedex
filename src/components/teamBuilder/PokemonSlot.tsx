@@ -60,6 +60,25 @@ function PokemonSlot(props: PokemonSlotProps) {
     );
   }
 
+  function displayEVSliders() {
+    return (
+      <>
+        <h4>HP</h4>
+        <EVSlider evStatType={hpEV} setEV={setHPEV} evName={'hp'} />
+        <h4>Attack</h4>
+        <EVSlider evStatType={atkEV} setEV={setAtkEV} evName={'atk'} />
+        <h4>Defence</h4>
+        <EVSlider evStatType={defEV} setEV={setDefEV} evName={'def'} />
+        <h4>Special Attack</h4>
+        <EVSlider evStatType={spAtkEV} setEV={setSpAtkEV} evName={'spAtk'} />
+        <h4>Special Defence</h4>
+        <EVSlider evStatType={spDefEV} setEV={setSpDefEV} evName={'spDef'} />
+        <h4>Speed</h4>
+        <EVSlider evStatType={spdEV} setEV={setSpdEV} evName={'spd'} />
+      </>
+    );
+  }
+
   return (
     <>
       <PokemonList slotNumber={props.slotNumber} />
@@ -80,18 +99,7 @@ function PokemonSlot(props: PokemonSlotProps) {
         }}
       />
       {displayList && displayListOfNatures(props.slotNumber)}
-      <h4>HP</h4>
-      <EVSlider evStatType={hpEV} setEV={setHPEV} evName={'hp'} />
-      <h4>Attack</h4>
-      <EVSlider evStatType={atkEV} setEV={setAtkEV} evName={'atk'} />
-      <h4>Defence</h4>
-      <EVSlider evStatType={defEV} setEV={setDefEV} evName={'def'} />
-      <h4>Special Attack</h4>
-      <EVSlider evStatType={spAtkEV} setEV={setSpAtkEV} evName={'spAtk'} />
-      <h4>Special Defence</h4>
-      <EVSlider evStatType={spDefEV} setEV={setSpDefEV} evName={'spDef'} />
-      <h4>Speed</h4>
-      <EVSlider evStatType={spdEV} setEV={setSpdEV} evName={'spd'} />
+      {displayEVSliders()}
     </>
   );
 }
