@@ -1,11 +1,11 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { GetAllPokemonResults } from '../API/pokemon';
+import { GetAllPokemonResponse } from '../API/pokemon';
 import { PokemonEntry, SpeciesDetails } from '../types/pokemonTypes';
 
 interface PokedexState {
   pokemonEntry: PokemonEntry | null;
   speciesDetails: SpeciesDetails | null;
-  pokemonList: GetAllPokemonResults | null;
+  pokemonList: GetAllPokemonResponse | null;
 }
 
 const initialState: PokedexState = {
