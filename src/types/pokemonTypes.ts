@@ -24,14 +24,14 @@ export type PokemonEntry = {
 
 export type Move = {
   name: string;
-  type: PokemonType;
+  type: string;
   category: string;
   accuracy: number;
   powerPoint: number;
-  power: number;
+  power: number | null;
   additional_effect: {
-    description: string;
-    chance: number;
+    description: string | null;
+    chance: number | null;
   };
 };
 
