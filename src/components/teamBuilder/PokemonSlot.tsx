@@ -6,6 +6,7 @@ import EVSlider from './EVSlider';
 import { getPokemonNatures } from '../../API/pokemon';
 import { PokemonNature } from '../../types/pokemonTypes';
 import { setNature } from '../../redux/teamBuilderSlice';
+import PokemonMove from './PokemonMove';
 
 type PokemonSlotProps = {
   slotNumber: number;
@@ -100,6 +101,7 @@ function PokemonSlot(props: PokemonSlotProps) {
       />
       {displayList && displayListOfNatures(props.slotNumber)}
       {displayEVSliders()}
+      <PokemonMove />
     </>
   );
 }
