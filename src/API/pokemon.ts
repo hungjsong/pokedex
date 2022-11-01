@@ -1,5 +1,6 @@
 import pokemonNatures from './mockData/pokemonNatures.json';
-import { PokemonNature } from '../types/pokemonTypes';
+import pokemonMoves from './mockData/pokemonMoves.json';
+import { Move, PokemonNature } from '../types/pokemonTypes';
 
 //API documentation can be found here: https://pokeapi.co/docs/v2
 export const getPokedexEntry = (pokemon: string | number) => {
@@ -41,10 +42,22 @@ type GetPokemonNaturesResponse = {
   payload: PokemonNature[];
 };
 
+type GetPokemonMovesResponse = {
+  payload: Move[];
+};
+
 export const getPokemonNatures = () => {
   return new Promise<GetPokemonNaturesResponse>((resolve) => {
     setTimeout(() => {
       resolve(pokemonNatures);
+    }, MOCK_API_DELAY);
+  });
+};
+
+export const getPokemonMoves = () => {
+  return new Promise<GetPokemonMovesResponse>((resolve) => {
+    setTimeout(() => {
+      resolve(pokemonMoves);
     }, MOCK_API_DELAY);
   });
 };
