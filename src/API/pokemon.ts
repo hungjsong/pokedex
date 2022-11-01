@@ -19,15 +19,14 @@ export const getSpeciesDetails = (pokemonID: string | number) => {
     });
 };
 
-//TODO: Please rename this.
-export type GetAllPokemonResults = [
+export type GetAllPokemonResponse = [
   {
     name: string;
     url: string;
   }
 ];
 
-export const getAllPokemon = (): Promise<GetAllPokemonResults> => {
+export const getAllPokemon = (): Promise<GetAllPokemonResponse> => {
   return fetch('https://pokeapi.co/api/v2/pokemon?limit=100000&offset=0')
     .then((response) => response.json())
     .then((allpokemon) => allpokemon.results)
