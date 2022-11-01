@@ -38,7 +38,9 @@ function PokemonSlot(props: PokemonSlotProps) {
     return (
       <ul>
         {pokemonNatures
-          .filter((nature) => nature.name.includes(inputNature))
+          .filter((nature) =>
+            nature.name.toLowerCase().includes(inputNature.toLowerCase())
+          )
           .map((nature) => (
             <>
               <li
@@ -53,7 +55,22 @@ function PokemonSlot(props: PokemonSlotProps) {
                   setInputNature(nature.name);
                 }}
               >
-                {capitalize(nature.name)}
+                {capitalize(nature.name) + ' ('}
+                {nature.increased_stat !== null ? (
+                  <span style={{ color: 'green' }}>
+                    {'↑' + nature.increased_stat}
+                  </span>
+                ) : (
+                  ''
+                )}
+                {nature.decreased_stat !== null ? (
+                  <span style={{ color: 'red' }}>
+                    {' ↓' + nature.decreased_stat}
+                  </span>
+                ) : (
+                  'No Effect'
+                )}
+                {')'}
               </li>
             </>
           ))}
