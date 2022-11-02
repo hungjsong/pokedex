@@ -1,16 +1,21 @@
-import { ChangeEvent, useEffect, useState } from 'react';
+import {
+  ChangeEvent,
+  Dispatch,
+  SetStateAction,
+  useEffect,
+  useState,
+} from 'react';
 import { getPokemonMoves } from '../../API/pokemon';
 import { Move } from '../../types/pokemonTypes';
 
-// type PokemonSlotProps = {
-//   setMove: Dispatch<SetStateAction<number>>;
-//   pokemonID: string | number;
-//   teamSlotNumber: number;
-// };
+type PokemonSlotProps = {
+  moveSlotNumber: number;
+  selectedMoves: string[];
+  setSelectedMoves: Dispatch<SetStateAction<string[]>>;
+};
 
-function PokemonMove() {
+function PokemonMove(props: PokemonSlotProps) {
   const [move, setMove] = useState('');
-
   const [displayList, setDisplayList] = useState(false);
   const [pokemonMoves, setPokemonMoves] = useState<Move[]>([]);
 
@@ -22,6 +27,11 @@ function PokemonMove() {
 
   function handleChange(event: ChangeEvent<HTMLInputElement>) {
     setMove(event.target.value);
+    if (event.target.value === '') {
+      const updatedSelectedMoves = props.selectedMoves;
+      updatedSelectedMoves[props.moveSlotNumber] = '';
+      props.setSelectedMoves(updatedSelectedMoves);
+    }
   }
 
   function displayListOfMoves() {
@@ -31,11 +41,17 @@ function PokemonMove() {
           .filter((pokemonMove) =>
             pokemonMove.name.toLowerCase().includes(move.toLowerCase())
           )
+          .filter(
+            (pokemonMove) => !props.selectedMoves.includes(pokemonMove.name)
+          )
           .map((pokemonMove) => (
             <li
               key={pokemonMove.name}
               onMouseDown={() => {
+                const updatedSelectedMoves = props.selectedMoves;
+                updatedSelectedMoves[props.moveSlotNumber] = pokemonMove.name;
                 setMove(pokemonMove.name);
+                props.setSelectedMoves(updatedSelectedMoves);
               }}
             >
               <img
@@ -61,7 +77,7 @@ function PokemonMove() {
 
   return (
     <>
-      <h3>Move 1</h3>
+      <h3>Move {props.moveSlotNumber + 1}</h3>
       <input
         type="search"
         autoComplete="off"
