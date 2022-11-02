@@ -23,6 +23,7 @@ function PokemonSlot(props: PokemonSlotProps) {
   const [spAtkEV, setSpAtkEV] = useState(0);
   const [spDefEV, setSpDefEV] = useState(0);
   const [spdEV, setSpdEV] = useState(0);
+  const [selectedMoves, setSelectedMoves] = useState(['', '', '', '']);
 
   useEffect(() => {
     getPokemonNatures().then((response) => {
@@ -97,6 +98,33 @@ function PokemonSlot(props: PokemonSlotProps) {
     );
   }
 
+  function displayMoves() {
+    return (
+      <>
+        <PokemonMove
+          moveSlotNumber={0}
+          selectedMoves={selectedMoves}
+          setSelectedMoves={setSelectedMoves}
+        />
+        <PokemonMove
+          moveSlotNumber={1}
+          selectedMoves={selectedMoves}
+          setSelectedMoves={setSelectedMoves}
+        />
+        <PokemonMove
+          moveSlotNumber={2}
+          selectedMoves={selectedMoves}
+          setSelectedMoves={setSelectedMoves}
+        />
+        <PokemonMove
+          moveSlotNumber={3}
+          selectedMoves={selectedMoves}
+          setSelectedMoves={setSelectedMoves}
+        />
+      </>
+    );
+  }
+
   return (
     <>
       <PokemonList slotNumber={props.slotNumber} />
@@ -118,7 +146,7 @@ function PokemonSlot(props: PokemonSlotProps) {
       />
       {displayList && displayListOfNatures(props.slotNumber)}
       {displayEVSliders()}
-      <PokemonMove />
+      {displayMoves()}
     </>
   );
 }
