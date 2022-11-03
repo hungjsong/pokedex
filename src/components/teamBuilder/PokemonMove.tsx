@@ -10,14 +10,64 @@ import { Move } from '../../types/pokemonTypes';
 
 type PokemonSlotProps = {
   moveSlotNumber: number;
-  selectedMoves: string[];
-  setSelectedMoves: Dispatch<SetStateAction<string[]>>;
+  selectedMoves: Move[];
+  setSelectedMoves: Dispatch<SetStateAction<Move[]>>;
+  teamSlotNumber: number;
 };
 
 function PokemonMove(props: PokemonSlotProps) {
   const [move, setMove] = useState('');
   const [displayList, setDisplayList] = useState(false);
-  const [pokemonMoves, setPokemonMoves] = useState<Move[]>([]);
+  const [pokemonMoves, setPokemonMoves] = useState<Move[]>([
+    {
+      name: '',
+      type: 'Normal',
+      category: 'Physical',
+      accuracy: 0,
+      powerPoint: 0,
+      power: 0,
+      additional_effect: {
+        description: null,
+        chance: null,
+      },
+    },
+    {
+      name: '',
+      type: 'Normal',
+      category: 'Physical',
+      accuracy: 0,
+      powerPoint: 0,
+      power: 0,
+      additional_effect: {
+        description: null,
+        chance: null,
+      },
+    },
+    {
+      name: '',
+      type: 'Normal',
+      category: 'Physical',
+      accuracy: 0,
+      powerPoint: 0,
+      power: 0,
+      additional_effect: {
+        description: null,
+        chance: null,
+      },
+    },
+    {
+      name: '',
+      type: 'Normal',
+      category: 'Physical',
+      accuracy: 0,
+      powerPoint: 0,
+      power: 0,
+      additional_effect: {
+        description: null,
+        chance: null,
+      },
+    },
+  ]);
 
   useEffect(() => {
     getPokemonMoves().then((response) => {
@@ -29,7 +79,18 @@ function PokemonMove(props: PokemonSlotProps) {
     setMove(event.target.value);
     if (event.target.value === '') {
       const updatedSelectedMoves = props.selectedMoves;
-      updatedSelectedMoves[props.moveSlotNumber] = '';
+      updatedSelectedMoves[props.moveSlotNumber] = {
+        name: '',
+        type: 'Normal',
+        category: 'Physical',
+        accuracy: 0,
+        powerPoint: 0,
+        power: 0,
+        additional_effect: {
+          description: null,
+          chance: null,
+        },
+      };
       props.setSelectedMoves(updatedSelectedMoves);
     }
   }
@@ -42,14 +103,22 @@ function PokemonMove(props: PokemonSlotProps) {
             pokemonMove.name.toLowerCase().includes(move.toLowerCase())
           )
           .filter(
-            (pokemonMove) => !props.selectedMoves.includes(pokemonMove.name)
+            (pokemonMove) =>
+              !props.selectedMoves
+                .filter(
+                  (selectedMove) => selectedMove.name === pokemonMove.name
+                )
+                .includes(pokemonMove)
           )
           .map((pokemonMove) => (
             <li
               key={pokemonMove.name}
               onMouseDown={() => {
                 const updatedSelectedMoves = props.selectedMoves;
-                updatedSelectedMoves[props.moveSlotNumber] = pokemonMove.name;
+                updatedSelectedMoves[props.moveSlotNumber] =
+                  pokemonMoves.filter((move) =>
+                    move.name.includes(pokemonMove.name)
+                  )[0];
                 setMove(pokemonMove.name);
                 props.setSelectedMoves(updatedSelectedMoves);
               }}
