@@ -8,6 +8,7 @@ import { Move, PokemonNature } from '../../types/pokemonTypes';
 import { setNature } from '../../redux/teamBuilderSlice';
 import PokemonMove from './PokemonMove';
 import { useAppSelector } from '../../hooks';
+import Loader from '../common/Loader';
 
 type PokemonSlotProps = {
   slotNumber: number;
@@ -24,8 +25,9 @@ function PokemonSlot(props: PokemonSlotProps) {
   const [spAtkEV, setSpAtkEV] = useState(0);
   const [spDefEV, setSpDefEV] = useState(0);
   const [spdEV, setSpdEV] = useState(0);
-  const [selectedMoves, setSelectedMoves] = useState<Move[]>([]);
+  //const [selectedMoves, setSelectedMoves] = useState<Move[]>([]);
   const team = useAppSelector((state) => state.teamBuilder.team);
+  const selectedMoves = team[props.slotNumber].moves;
 
   useEffect(() => {
     getPokemonNatures().then((response) => {
@@ -103,30 +105,30 @@ function PokemonSlot(props: PokemonSlotProps) {
   }
 
   function displayMoves() {
+    if (selectedMoves === undefined) {
+      return <Loader />;
+    }
+
     return (
       <>
         <PokemonMove
           moveSlotNumber={0}
           selectedMoves={selectedMoves}
-          setSelectedMoves={setSelectedMoves}
           teamSlotNumber={props.slotNumber}
         />
         <PokemonMove
           moveSlotNumber={1}
           selectedMoves={selectedMoves}
-          setSelectedMoves={setSelectedMoves}
           teamSlotNumber={props.slotNumber}
         />
         <PokemonMove
           moveSlotNumber={2}
           selectedMoves={selectedMoves}
-          setSelectedMoves={setSelectedMoves}
           teamSlotNumber={props.slotNumber}
         />
         <PokemonMove
           moveSlotNumber={3}
           selectedMoves={selectedMoves}
-          setSelectedMoves={setSelectedMoves}
           teamSlotNumber={props.slotNumber}
         />
       </>

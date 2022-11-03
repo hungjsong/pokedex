@@ -7,13 +7,12 @@ import {
 } from 'react';
 import { useDispatch } from 'react-redux';
 import { getPokemonMoves } from '../../API/pokemon';
-import { setMoves } from '../../redux/teamBuilderSlice';
+import { setReduxMove, setMoves } from '../../redux/teamBuilderSlice';
 import { Move } from '../../types/pokemonTypes';
 
 type PokemonSlotProps = {
   moveSlotNumber: number;
   selectedMoves: Move[];
-  setSelectedMoves: Dispatch<SetStateAction<Move[]>>;
   teamSlotNumber: number;
 };
 
@@ -94,7 +93,7 @@ function PokemonMove(props: PokemonSlotProps) {
           chance: null,
         },
       };
-      props.setSelectedMoves(updatedSelectedMoves);
+      //props.setSelectedMoves(updatedSelectedMoves);
     }
   }
 
@@ -117,17 +116,19 @@ function PokemonMove(props: PokemonSlotProps) {
             <li
               key={pokemonMove.name}
               onMouseDown={() => {
-                const updatedSelectedMoves = props.selectedMoves;
-                updatedSelectedMoves[props.moveSlotNumber] =
-                  pokemonMoves.filter((move) =>
-                    move.name.includes(pokemonMove.name)
-                  )[0];
+                console.log(
+                  'HEREEHREHRHEHREHEHRE',
+                  Object.isExtensible(props.selectedMoves)
+                );
                 setMove(pokemonMove.name);
-                props.setSelectedMoves(updatedSelectedMoves);
+                //props.setSelectedMoves(updatedSelectedMoves);
                 dispatch(
-                  setMoves({
-                    selectedMoves: updatedSelectedMoves,
+                  setReduxMove({
+                    selectedMove: pokemonMoves.filter((move) =>
+                      move.name.includes(pokemonMove.name)
+                    )[0],
                     teamSlotNumber: props.teamSlotNumber,
+                    moveSlotNumber: props.moveSlotNumber,
                   })
                 );
               }}

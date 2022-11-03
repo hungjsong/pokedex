@@ -1,5 +1,5 @@
-import { createSlice } from '@reduxjs/toolkit';
-import { Pokemon } from '../types/pokemonTypes';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { Move, Pokemon } from '../types/pokemonTypes';
 
 interface TeamBuilderState {
   team: Pokemon[];
@@ -185,9 +185,23 @@ export const teamBuilderSlice = createSlice({
     setPokemon: (state, action) => {
       state.team[action.payload.slotNumber].name = action.payload.name;
     },
+    setReduxMove: (
+      state,
+      action: PayloadAction<{
+        teamSlotNumber: number;
+        moveSlotNumber: number;
+        selectedMove: Move;
+      }>
+    ) => {
+      //console.log(action.payload.selectedMoves);
+      //console.log('HELLO', state.team);
+
+      const { teamSlotNumber, moveSlotNumber, selectedMove } = action.payload;
+      state.team[teamSlotNumber].moves![moveSlotNumber] = selectedMove;
+    },
     setMoves: (state, action) => {
-      console.log(action.payload.selectedMoves);
-      console.log('HELLO', state.team);
+      //console.log(action.payload.selectedMoves);
+      //console.log('HELLO', state.team);
       state.team[action.payload.teamSlotNumber].moves =
         action.payload.selectedMoves;
     },
@@ -197,5 +211,6 @@ export const teamBuilderSlice = createSlice({
   },
 });
 
-export const { setPokemon, setNature, setMoves } = teamBuilderSlice.actions;
+export const { setPokemon, setNature, setReduxMove, setMoves } =
+  teamBuilderSlice.actions;
 export default teamBuilderSlice.reducer;
