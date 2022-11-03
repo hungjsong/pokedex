@@ -7,6 +7,7 @@ import { getPokemonNatures } from '../../API/pokemon';
 import { Move, PokemonNature } from '../../types/pokemonTypes';
 import { setNature } from '../../redux/teamBuilderSlice';
 import PokemonMove from './PokemonMove';
+import { useAppSelector } from '../../hooks';
 
 type PokemonSlotProps = {
   slotNumber: number;
@@ -24,12 +25,15 @@ function PokemonSlot(props: PokemonSlotProps) {
   const [spDefEV, setSpDefEV] = useState(0);
   const [spdEV, setSpdEV] = useState(0);
   const [selectedMoves, setSelectedMoves] = useState<Move[]>([]);
+  const team = useAppSelector((state) => state.teamBuilder.team);
 
   useEffect(() => {
     getPokemonNatures().then((response) => {
       setPokemonNatures(response.payload);
     });
-  }, []);
+
+    console.log(team);
+  }, [team]);
 
   function handleChange(event: ChangeEvent<HTMLInputElement>) {
     setInputNature(event.target.value);

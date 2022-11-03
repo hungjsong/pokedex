@@ -5,7 +5,9 @@ import {
   useEffect,
   useState,
 } from 'react';
+import { useDispatch } from 'react-redux';
 import { getPokemonMoves } from '../../API/pokemon';
+import { setMoves } from '../../redux/teamBuilderSlice';
 import { Move } from '../../types/pokemonTypes';
 
 type PokemonSlotProps = {
@@ -68,6 +70,7 @@ function PokemonMove(props: PokemonSlotProps) {
       },
     },
   ]);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     getPokemonMoves().then((response) => {
@@ -121,6 +124,12 @@ function PokemonMove(props: PokemonSlotProps) {
                   )[0];
                 setMove(pokemonMove.name);
                 props.setSelectedMoves(updatedSelectedMoves);
+                dispatch(
+                  setMoves({
+                    selectedMoves: updatedSelectedMoves,
+                    teamSlotNumber: props.teamSlotNumber,
+                  })
+                );
               }}
             >
               <img
