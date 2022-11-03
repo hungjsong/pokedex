@@ -4,7 +4,7 @@ import PokemonList from './PokemonList';
 import { capitalize } from '../../utilityFunctions';
 import EVSlider from './EVSlider';
 import { getPokemonNatures } from '../../API/pokemon';
-import { PokemonNature } from '../../types/pokemonTypes';
+import { Move, PokemonNature } from '../../types/pokemonTypes';
 import { setNature } from '../../redux/teamBuilderSlice';
 import PokemonMove from './PokemonMove';
 
@@ -23,7 +23,7 @@ function PokemonSlot(props: PokemonSlotProps) {
   const [spAtkEV, setSpAtkEV] = useState(0);
   const [spDefEV, setSpDefEV] = useState(0);
   const [spdEV, setSpdEV] = useState(0);
-  const [selectedMoves, setSelectedMoves] = useState(['', '', '', '']);
+  const [selectedMoves, setSelectedMoves] = useState<Move[]>([]);
 
   useEffect(() => {
     getPokemonNatures().then((response) => {
@@ -105,21 +105,25 @@ function PokemonSlot(props: PokemonSlotProps) {
           moveSlotNumber={0}
           selectedMoves={selectedMoves}
           setSelectedMoves={setSelectedMoves}
+          teamSlotNumber={props.slotNumber}
         />
         <PokemonMove
           moveSlotNumber={1}
           selectedMoves={selectedMoves}
           setSelectedMoves={setSelectedMoves}
+          teamSlotNumber={props.slotNumber}
         />
         <PokemonMove
           moveSlotNumber={2}
           selectedMoves={selectedMoves}
           setSelectedMoves={setSelectedMoves}
+          teamSlotNumber={props.slotNumber}
         />
         <PokemonMove
           moveSlotNumber={3}
           selectedMoves={selectedMoves}
           setSelectedMoves={setSelectedMoves}
+          teamSlotNumber={props.slotNumber}
         />
       </>
     );
