@@ -41,7 +41,7 @@ function PokemonList(props: PokemonListProps) {
                 dispatch(
                   setPokemon({
                     name: element.name,
-                    slotNumber: slotNumber,
+                    teamSlotNumber: slotNumber,
                   })
                 );
                 setPokemonID(element.name);

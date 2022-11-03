@@ -53,7 +53,7 @@ function PokemonSlot(props: PokemonSlotProps) {
                   dispatch(
                     setNature({
                       nature: nature.name,
-                      slotNumber: slotNumber,
+                      teamSlotNumber: slotNumber,
                     })
                   );
                   setInputNature(nature.name);
@@ -147,9 +147,6 @@ function PokemonSlot(props: PokemonSlotProps) {
           setDisplayList(false);
         }}
         onChange={handleChange}
-        onKeyUp={(event) => {
-          setNature((event.target as HTMLInputElement).value.toLowerCase());
-        }}
       />
       {displayList && displayListOfNatures(props.slotNumber)}
       {displayEVSliders()}
