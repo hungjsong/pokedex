@@ -1,73 +1,21 @@
-import {
-  ChangeEvent,
-  Dispatch,
-  SetStateAction,
-  useEffect,
-  useState,
-} from 'react';
+import { ChangeEvent, useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { getPokemonMoves } from '../../API/pokemon';
+import { setMove } from '../../redux/teamBuilderSlice';
 import { Move } from '../../types/pokemonTypes';
+import Loader from '../common/Loader';
 
 type PokemonSlotProps = {
   moveSlotNumber: number;
   selectedMoves: Move[];
-  setSelectedMoves: Dispatch<SetStateAction<Move[]>>;
   teamSlotNumber: number;
 };
 
 function PokemonMove(props: PokemonSlotProps) {
-  const [move, setMove] = useState('');
+  const [searchTerm, setSearchTerm] = useState('');
   const [displayList, setDisplayList] = useState(false);
-  const [pokemonMoves, setPokemonMoves] = useState<Move[]>([
-    {
-      name: '',
-      type: 'Normal',
-      category: 'Physical',
-      accuracy: 0,
-      powerPoint: 0,
-      power: 0,
-      additional_effect: {
-        description: null,
-        chance: null,
-      },
-    },
-    {
-      name: '',
-      type: 'Normal',
-      category: 'Physical',
-      accuracy: 0,
-      powerPoint: 0,
-      power: 0,
-      additional_effect: {
-        description: null,
-        chance: null,
-      },
-    },
-    {
-      name: '',
-      type: 'Normal',
-      category: 'Physical',
-      accuracy: 0,
-      powerPoint: 0,
-      power: 0,
-      additional_effect: {
-        description: null,
-        chance: null,
-      },
-    },
-    {
-      name: '',
-      type: 'Normal',
-      category: 'Physical',
-      accuracy: 0,
-      powerPoint: 0,
-      power: 0,
-      additional_effect: {
-        description: null,
-        chance: null,
-      },
-    },
-  ]);
+  const [pokemonMoves, setPokemonMoves] = useState<Move[]>([]);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     getPokemonMoves().then((response) => {
@@ -76,31 +24,39 @@ function PokemonMove(props: PokemonSlotProps) {
   }, []);
 
   function handleChange(event: ChangeEvent<HTMLInputElement>) {
-    setMove(event.target.value);
+    setSearchTerm(event.target.value);
     if (event.target.value === '') {
-      const updatedSelectedMoves = props.selectedMoves;
-      updatedSelectedMoves[props.moveSlotNumber] = {
-        name: '',
-        type: 'Normal',
-        category: 'Physical',
-        accuracy: 0,
-        powerPoint: 0,
-        power: 0,
-        additional_effect: {
-          description: null,
-          chance: null,
-        },
-      };
-      props.setSelectedMoves(updatedSelectedMoves);
+      dispatch(
+        setMove({
+          selectedMove: {
+            name: '',
+            type: 'Normal',
+            category: 'Physical',
+            accuracy: 0,
+            powerPoint: 0,
+            power: 0,
+            additional_effect: {
+              description: null,
+              chance: null,
+            },
+          },
+          teamSlotNumber: props.teamSlotNumber,
+          moveSlotNumber: props.moveSlotNumber,
+        })
+      );
     }
   }
 
   function displayListOfMoves() {
+    if (pokemonMoves.length === 0) {
+      return <Loader />;
+    }
+
     return (
       <ul>
         {pokemonMoves
           .filter((pokemonMove) =>
-            pokemonMove.name.toLowerCase().includes(move.toLowerCase())
+            pokemonMove.name.toLowerCase().includes(searchTerm.toLowerCase())
           )
           .filter(
             (pokemonMove) =>
@@ -114,13 +70,16 @@ function PokemonMove(props: PokemonSlotProps) {
             <li
               key={pokemonMove.name}
               onMouseDown={() => {
-                const updatedSelectedMoves = props.selectedMoves;
-                updatedSelectedMoves[props.moveSlotNumber] =
-                  pokemonMoves.filter((move) =>
-                    move.name.includes(pokemonMove.name)
-                  )[0];
-                setMove(pokemonMove.name);
-                props.setSelectedMoves(updatedSelectedMoves);
+                setSearchTerm(pokemonMove.name);
+                dispatch(
+                  setMove({
+                    selectedMove: pokemonMoves.filter((move) =>
+                      move.name.includes(pokemonMove.name)
+                    )[0],
+                    teamSlotNumber: props.teamSlotNumber,
+                    moveSlotNumber: props.moveSlotNumber,
+                  })
+                );
               }}
             >
               <img
@@ -150,7 +109,7 @@ function PokemonMove(props: PokemonSlotProps) {
       <input
         type="search"
         autoComplete="off"
-        value={move}
+        value={searchTerm}
         onFocus={() => {
           setDisplayList(true);
         }}
@@ -159,7 +118,7 @@ function PokemonMove(props: PokemonSlotProps) {
         }}
         onChange={handleChange}
         onKeyUp={(event) => {
-          setMove((event.target as HTMLInputElement).value.toLowerCase());
+          setSearchTerm((event.target as HTMLInputElement).value.toLowerCase());
         }}
       />
       {displayList && displayListOfMoves()}
