@@ -5,7 +5,7 @@ import { capitalize } from '../../utilityFunctions';
 import EVSlider from './EVSlider';
 import { getPokemonNatures } from '../../API/pokemon';
 import { PokemonNature } from '../../types/pokemonTypes';
-import { setNature } from '../../redux/teamBuilderSlice';
+import { setNature, setShiny } from '../../redux/teamBuilderSlice';
 import PokemonMove from './PokemonMove';
 import { useAppSelector } from '../../hooks';
 import Loader from '../common/Loader';
@@ -27,6 +27,7 @@ function PokemonSlot(props: PokemonSlotProps) {
   const [spdEV, setSpdEV] = useState(0);
   const team = useAppSelector((state) => state.teamBuilder.team);
   const selectedMoves = team[props.slotNumber].moves;
+  const isShiny = team[props.slotNumber].shiny;
 
   useEffect(() => {
     getPokemonNatures().then((response) => {
@@ -35,7 +36,16 @@ function PokemonSlot(props: PokemonSlotProps) {
   }, []);
 
   function handleChange(event: ChangeEvent<HTMLInputElement>) {
-    setInputNature(event.target.value);
+    if (event.target.type === 'checkbox') {
+      dispatch(
+        setShiny({
+          isShiny: event.target.checked,
+          teamSlotNumber: props.slotNumber,
+        })
+      );
+    } else {
+      setInputNature(event.target.value);
+    }
   }
 
   function displayListOfNatures(slotNumber: number) {
@@ -135,6 +145,15 @@ function PokemonSlot(props: PokemonSlotProps) {
   return (
     <>
       <PokemonList slotNumber={props.slotNumber} />
+      <label>
+        Shiny:
+        <input
+          name="isShiny"
+          type="checkbox"
+          checked={isShiny}
+          onChange={handleChange}
+        />
+      </label>
       <input
         type="search"
         autoComplete="off"

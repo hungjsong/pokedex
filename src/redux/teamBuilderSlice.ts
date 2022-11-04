@@ -213,8 +213,19 @@ export const teamBuilderSlice = createSlice({
       const { nature, teamSlotNumber } = action.payload;
       state.team[teamSlotNumber].nature = nature;
     },
+    setShiny: (
+      state,
+      action: PayloadAction<{
+        isShiny: boolean;
+        teamSlotNumber: number;
+      }>
+    ) => {
+      const { isShiny, teamSlotNumber } = action.payload;
+      state.team[teamSlotNumber].shiny = isShiny;
+    },
   },
 });
 
-export const { setPokemon, setNature, setMove } = teamBuilderSlice.actions;
+export const { setPokemon, setNature, setMove, setShiny } =
+  teamBuilderSlice.actions;
 export default teamBuilderSlice.reducer;
