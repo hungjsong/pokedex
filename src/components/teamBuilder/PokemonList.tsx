@@ -25,6 +25,21 @@ function PokemonList(props: PokemonListProps) {
     setPokemonID(event.target.value);
   }
 
+  //Temp solution to retrieving pokemonID
+  function getPokemonID(url: string) {
+    const regex = '0123456789';
+    function checkIfNumber(character: string) {
+      return regex.includes(character) ? true : false;
+    }
+
+    return [...url.split('')]
+      .reduce(
+        (x, character) => (checkIfNumber(character) ? x + character : x),
+        ''
+      )
+      .slice(1);
+  }
+
   function displayListOfPokemon(slotNumber: number) {
     if (pokedexEntry === null) {
       return <Loader />;
@@ -34,27 +49,29 @@ function PokemonList(props: PokemonListProps) {
       <ul>
         {pokedexEntry
           .filter((pokemon) => pokemon.name.includes(pokemonID))
-          .map((element, index: number) => (
+          .map((pokemon) => (
             <li
-              key={element.name}
+              key={pokemon.name}
               onMouseDown={() => {
+                getPokemonID(pokemon.url);
                 dispatch(
                   setPokemon({
-                    name: element.name,
+                    name: pokemon.name,
+                    pokemonID: parseInt(getPokemonID(pokemon.url)),
                     teamSlotNumber: slotNumber,
                   })
                 );
-                setPokemonID(element.name);
+                setPokemonID(pokemon.name);
               }}
             >
               <img
                 src={
                   'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-viii/icons/' +
-                  (index + 1) +
+                  getPokemonID(pokemon.url) +
                   '.png'
                 }
               ></img>
-              {capitalize(element.name)}
+              {capitalize(pokemon.name)}
             </li>
           ))}
       </ul>
