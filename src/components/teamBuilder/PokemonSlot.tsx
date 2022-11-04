@@ -5,7 +5,12 @@ import { capitalize } from '../../utilityFunctions';
 import EVSlider from './EVSlider';
 import { getPokemonNatures, getSpeciesDetails } from '../../API/pokemon';
 import { PokemonNature } from '../../types/pokemonTypes';
-import { setGender, setNature, setShiny } from '../../redux/teamBuilderSlice';
+import {
+  setGender,
+  setLevel,
+  setNature,
+  setShiny,
+} from '../../redux/teamBuilderSlice';
 import PokemonMove from './PokemonMove';
 import { useAppSelector } from '../../hooks';
 import Loader from '../common/Loader';
@@ -29,6 +34,7 @@ function PokemonSlot(props: PokemonSlotProps) {
   const selectedMoves = team[props.slotNumber].moves;
   const isShiny = team[props.slotNumber].shiny;
   const gender = team[props.slotNumber].gender;
+  const level = team[props.slotNumber].level;
   const [genderRate, setGenderRate] = useState(1);
 
   useEffect(() => {
@@ -41,7 +47,8 @@ function PokemonSlot(props: PokemonSlotProps) {
         setGenderRate(response.gender_rate);
       });
     }
-  }, []);
+    console.log(team);
+  }, [team]);
 
   function handleChange(event: ChangeEvent<HTMLInputElement>) {
     if (event.target.type === 'checkbox') {
@@ -53,6 +60,20 @@ function PokemonSlot(props: PokemonSlotProps) {
       );
     } else {
       setInputNature(event.target.value);
+    }
+  }
+
+  function handleLevelChange(event: ChangeEvent<HTMLInputElement>) {
+    const inputLevel = +event.target.value;
+    const validLevel =
+      inputLevel <= +event.target.max && inputLevel >= +event.target.min;
+    if (validLevel) {
+      dispatch(
+        setLevel({
+          level: inputLevel,
+          teamSlotNumber: props.slotNumber,
+        })
+      );
     }
   }
 
@@ -208,6 +229,13 @@ function PokemonSlot(props: PokemonSlotProps) {
           onChange={handleChange}
         />
       </label>
+      <input
+        type="number"
+        min="1"
+        max="100"
+        value={level}
+        onChange={handleLevelChange}
+      />
       <input
         type="search"
         autoComplete="off"
