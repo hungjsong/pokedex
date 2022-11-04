@@ -223,9 +223,13 @@ export const teamBuilderSlice = createSlice({
       const { isShiny, teamSlotNumber } = action.payload;
       state.team[teamSlotNumber].shiny = isShiny;
     },
+    setGender: (state, action) => {
+      const { gender, teamSlotNumber } = action.payload;
+      state.team[teamSlotNumber].gender = gender;
+    },
   },
 });
 
-export const { setPokemon, setNature, setMove, setShiny } =
+export const { setPokemon, setNature, setMove, setShiny, setGender } =
   teamBuilderSlice.actions;
 export default teamBuilderSlice.reducer;
