@@ -186,11 +186,13 @@ export const teamBuilderSlice = createSlice({
       state,
       action: PayloadAction<{
         teamSlotNumber: number;
+        pokemonID: number;
         name: string;
       }>
     ) => {
-      const { teamSlotNumber, name } = action.payload;
+      const { teamSlotNumber, name, pokemonID } = action.payload;
       state.team[teamSlotNumber].name = name;
+      state.team[teamSlotNumber].id = pokemonID;
     },
     setMove: (
       state,
