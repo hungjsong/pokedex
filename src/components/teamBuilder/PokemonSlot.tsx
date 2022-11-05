@@ -7,6 +7,7 @@ import { getPokemonNatures, getSpeciesDetails } from '../../API/pokemon';
 import { PokemonNature } from '../../types/pokemonTypes';
 import {
   setGender,
+  setHapppiness,
   setIV,
   setLevel,
   setNature,
@@ -41,6 +42,7 @@ function PokemonSlot(props: PokemonSlotProps) {
   const selectedMoves = team[props.slotNumber].moves;
   const isShiny = team[props.slotNumber].shiny;
   const gender = team[props.slotNumber].gender;
+  const happiness = team[props.slotNumber].happiness;
   const level = team[props.slotNumber].level;
   const [genderRate, setGenderRate] = useState(1);
   const remainingEVs = 510 - (hpEV + atkEV + defEV + spAtkEV + spDefEV + spdEV);
@@ -104,6 +106,20 @@ function PokemonSlot(props: PokemonSlotProps) {
           ivInputValue: +event.target.value,
           teamSlotNumber: props.slotNumber,
           ivName: event.target.id,
+        })
+      );
+    }
+  }
+
+  function handleHappinessChange(event: ChangeEvent<HTMLInputElement>) {
+    const happiness = +event.target.value;
+    const validHappinessEntered =
+      happiness <= +event.target.max && happiness >= +event.target.min;
+    if (validHappinessEntered) {
+      dispatch(
+        setHapppiness({
+          happiness: happiness,
+          teamSlotNumber: props.slotNumber,
         })
       );
     }
@@ -345,6 +361,16 @@ function PokemonSlot(props: PokemonSlotProps) {
         value={level}
         onChange={handleLevelChange}
       />
+      <label>
+        Happiness:
+        <input
+          type="number"
+          min="1"
+          max="255"
+          value={happiness}
+          onChange={handleHappinessChange}
+        />
+      </label>
       <input
         type="search"
         autoComplete="off"
