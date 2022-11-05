@@ -52,7 +52,7 @@ export type Pokemon = {
     def: number;
     spAtk: number;
     spDef: number;
-    speed: number;
+    spd: number;
   };
   ev?: {
     hp: number;
@@ -60,7 +60,7 @@ export type Pokemon = {
     def: number;
     spAtk: number;
     spDef: number;
-    speed: number;
+    spd: number;
   };
 };
 
