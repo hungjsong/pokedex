@@ -36,6 +36,7 @@ function PokemonSlot(props: PokemonSlotProps) {
   const gender = team[props.slotNumber].gender;
   const level = team[props.slotNumber].level;
   const [genderRate, setGenderRate] = useState(1);
+  const remainingEVs = 510 - (hpEV + atkEV + defEV + spAtkEV + spDefEV + spdEV);
 
   useEffect(() => {
     getPokemonNatures().then((response) => {
@@ -170,41 +171,48 @@ function PokemonSlot(props: PokemonSlotProps) {
   function displayEVSliders() {
     return (
       <>
+        <h4>Remaining EVs {remainingEVs}</h4>
         <h4>HP</h4>
         <EVSlider
           evStatValue={hpEV}
           evName={'hp'}
           teamSlotNumber={props.slotNumber}
+          remainingEVs={remainingEVs}
         />
         <h4>Attack</h4>
         <EVSlider
           evStatValue={atkEV}
           evName={'atk'}
           teamSlotNumber={props.slotNumber}
+          remainingEVs={remainingEVs}
         />
         <h4>Defence</h4>
         <EVSlider
           evStatValue={defEV}
           evName={'def'}
           teamSlotNumber={props.slotNumber}
+          remainingEVs={remainingEVs}
         />
         <h4>Special Attack</h4>
         <EVSlider
           evStatValue={spAtkEV}
           evName={'spAtk'}
           teamSlotNumber={props.slotNumber}
+          remainingEVs={remainingEVs}
         />
         <h4>Special Defence</h4>
         <EVSlider
           evStatValue={spDefEV}
           evName={'spDef'}
           teamSlotNumber={props.slotNumber}
+          remainingEVs={remainingEVs}
         />
         <h4>Speed</h4>
         <EVSlider
           evStatValue={spdEV}
           evName={'spd'}
           teamSlotNumber={props.slotNumber}
+          remainingEVs={remainingEVs}
         />
       </>
     );

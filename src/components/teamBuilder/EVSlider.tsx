@@ -6,6 +6,7 @@ type PokemonSlotProps = {
   evName: string;
   evStatValue: number;
   teamSlotNumber: number;
+  remainingEVs: number;
 };
 
 function EVSlider(props: PokemonSlotProps) {
@@ -14,7 +15,9 @@ function EVSlider(props: PokemonSlotProps) {
   function changeEV(event: ChangeEvent<HTMLInputElement>) {
     const inputEV = +event.target.value;
     const validEV =
-      inputEV <= +event.target.max && inputEV >= +event.target.min;
+      inputEV <= +event.target.max &&
+      inputEV >= +event.target.min &&
+      inputEV - props.evStatValue <= props.remainingEVs;
     if (validEV) {
       dispatch(
         setEV({
