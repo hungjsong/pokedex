@@ -271,6 +271,38 @@ export const teamBuilderSlice = createSlice({
           break;
       }
     },
+    setIV: (
+      state,
+      action: PayloadAction<{
+        ivInputValue: number;
+        teamSlotNumber: number;
+        ivName: string;
+      }>
+    ) => {
+      const { ivInputValue, ivName, teamSlotNumber } = action.payload;
+      switch (ivName) {
+        case 'hp':
+          state.team[teamSlotNumber].iv!.hp = ivInputValue;
+          break;
+        case 'atk':
+          state.team[teamSlotNumber].iv!.atk = ivInputValue;
+          break;
+        case 'def':
+          state.team[teamSlotNumber].iv!.def = ivInputValue;
+          break;
+        case 'spAtk':
+          state.team[teamSlotNumber].iv!.spAtk = ivInputValue;
+          break;
+        case 'spDef':
+          state.team[teamSlotNumber].iv!.spDef = ivInputValue;
+          break;
+        case 'spd':
+          state.team[teamSlotNumber].iv!.spd = ivInputValue;
+          break;
+        default:
+          break;
+      }
+    },
   },
 });
 
@@ -282,5 +314,6 @@ export const {
   setGender,
   setLevel,
   setEV,
+  setIV,
 } = teamBuilderSlice.actions;
 export default teamBuilderSlice.reducer;

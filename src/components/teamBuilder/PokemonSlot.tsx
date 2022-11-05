@@ -7,6 +7,7 @@ import { getPokemonNatures, getSpeciesDetails } from '../../API/pokemon';
 import { PokemonNature } from '../../types/pokemonTypes';
 import {
   setGender,
+  setIV,
   setLevel,
   setNature,
   setShiny,
@@ -31,6 +32,12 @@ function PokemonSlot(props: PokemonSlotProps) {
   const spAtkEV = team[props.slotNumber].ev!.spAtk;
   const spDefEV = team[props.slotNumber].ev!.spDef;
   const spdEV = team[props.slotNumber].ev!.spd;
+  const hpIV = team[props.slotNumber].iv!.hp;
+  const atkIV = team[props.slotNumber].iv!.atk;
+  const defIV = team[props.slotNumber].iv!.def;
+  const spAtkIV = team[props.slotNumber].iv!.spAtk;
+  const spDefIV = team[props.slotNumber].iv!.spDef;
+  const spdIV = team[props.slotNumber].iv!.spd;
   const selectedMoves = team[props.slotNumber].moves;
   const isShiny = team[props.slotNumber].shiny;
   const gender = team[props.slotNumber].gender;
@@ -78,13 +85,28 @@ function PokemonSlot(props: PokemonSlotProps) {
     }
   }
 
-  function handleGenderChange(event: any) {
+  function handleGenderChange(event: ChangeEvent<HTMLInputElement>) {
     dispatch(
       setGender({
         gender: event.target.value,
         teamSlotNumber: props.slotNumber,
       })
     );
+  }
+
+  function handleIVChange(event: ChangeEvent<HTMLInputElement>) {
+    const inputIV = +event.target.value;
+    const validIV =
+      inputIV <= +event.target.max && inputIV >= +event.target.min;
+    if (validIV) {
+      dispatch(
+        setIV({
+          ivInputValue: +event.target.value,
+          teamSlotNumber: props.slotNumber,
+          ivName: event.target.id,
+        })
+      );
+    }
   }
 
   function displayGenderOptions(genderRate: number) {
@@ -249,6 +271,61 @@ function PokemonSlot(props: PokemonSlotProps) {
     );
   }
 
+  function displayIVs() {
+    return (
+      <>
+        <input
+          id="hp"
+          type="number"
+          min="0"
+          max="31"
+          value={hpIV}
+          onChange={handleIVChange}
+        />
+        <input
+          id="atk"
+          type="number"
+          min="0"
+          max="31"
+          value={atkIV}
+          onChange={handleIVChange}
+        />
+        <input
+          id="def"
+          type="number"
+          min="0"
+          max="31"
+          value={defIV}
+          onChange={handleIVChange}
+        />
+        <input
+          id="spAtk"
+          type="number"
+          min="0"
+          max="31"
+          value={spAtkIV}
+          onChange={handleIVChange}
+        />
+        <input
+          id="spDef"
+          type="number"
+          min="0"
+          max="31"
+          value={spDefIV}
+          onChange={handleIVChange}
+        />
+        <input
+          id="spd"
+          type="number"
+          min="0"
+          max="31"
+          value={spdIV}
+          onChange={handleIVChange}
+        />
+      </>
+    );
+  }
+
   return (
     <>
       <PokemonList slotNumber={props.slotNumber} />
@@ -285,6 +362,7 @@ function PokemonSlot(props: PokemonSlotProps) {
       {displayEVSliders()}
       {displayMoves()}
       {displayGenderOptions(genderRate)}
+      {displayIVs()}
     </>
   );
 }
