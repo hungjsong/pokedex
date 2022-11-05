@@ -8,7 +8,12 @@ type PokemonSlotProps = {
 
 function EVSlider(props: PokemonSlotProps) {
   function changeEV(event: ChangeEvent<HTMLInputElement>) {
-    props.setEV(+event.target.value);
+    const inputEV = +event.target.value;
+    const validEV =
+      inputEV <= +event.target.max && inputEV >= +event.target.min;
+    if (validEV) {
+      props.setEV(+event.target.value);
+    }
   }
 
   return (
