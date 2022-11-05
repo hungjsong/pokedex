@@ -24,7 +24,7 @@ const initialState: TeamBuilderState = {
         def: 0,
         spAtk: 0,
         spDef: 0,
-        speed: 0,
+        spd: 0,
       },
       ev: {
         hp: 0,
@@ -32,7 +32,7 @@ const initialState: TeamBuilderState = {
         def: 0,
         spAtk: 0,
         spDef: 0,
-        speed: 0,
+        spd: 0,
       },
     },
     {
@@ -52,7 +52,7 @@ const initialState: TeamBuilderState = {
         def: 0,
         spAtk: 0,
         spDef: 0,
-        speed: 0,
+        spd: 0,
       },
       ev: {
         hp: 0,
@@ -60,7 +60,7 @@ const initialState: TeamBuilderState = {
         def: 0,
         spAtk: 0,
         spDef: 0,
-        speed: 0,
+        spd: 0,
       },
     },
     {
@@ -80,7 +80,7 @@ const initialState: TeamBuilderState = {
         def: 0,
         spAtk: 0,
         spDef: 0,
-        speed: 0,
+        spd: 0,
       },
       ev: {
         hp: 0,
@@ -88,7 +88,7 @@ const initialState: TeamBuilderState = {
         def: 0,
         spAtk: 0,
         spDef: 0,
-        speed: 0,
+        spd: 0,
       },
     },
     {
@@ -108,7 +108,7 @@ const initialState: TeamBuilderState = {
         def: 0,
         spAtk: 0,
         spDef: 0,
-        speed: 0,
+        spd: 0,
       },
       ev: {
         hp: 0,
@@ -116,7 +116,7 @@ const initialState: TeamBuilderState = {
         def: 0,
         spAtk: 0,
         spDef: 0,
-        speed: 0,
+        spd: 0,
       },
     },
     {
@@ -136,7 +136,7 @@ const initialState: TeamBuilderState = {
         def: 0,
         spAtk: 0,
         spDef: 0,
-        speed: 0,
+        spd: 0,
       },
       ev: {
         hp: 0,
@@ -144,7 +144,7 @@ const initialState: TeamBuilderState = {
         def: 0,
         spAtk: 0,
         spDef: 0,
-        speed: 0,
+        spd: 0,
       },
     },
     {
@@ -164,7 +164,7 @@ const initialState: TeamBuilderState = {
         def: 0,
         spAtk: 0,
         spDef: 0,
-        speed: 0,
+        spd: 0,
       },
       ev: {
         hp: 0,
@@ -172,7 +172,7 @@ const initialState: TeamBuilderState = {
         def: 0,
         spAtk: 0,
         spDef: 0,
-        speed: 0,
+        spd: 0,
       },
     },
   ],
@@ -239,9 +239,48 @@ export const teamBuilderSlice = createSlice({
       const { level, teamSlotNumber } = action.payload;
       state.team[teamSlotNumber].level = level;
     },
+    setEV: (
+      state,
+      action: PayloadAction<{
+        evInputValue: number;
+        teamSlotNumber: number;
+        evName: string;
+      }>
+    ) => {
+      const { evInputValue, evName, teamSlotNumber } = action.payload;
+      switch (evName) {
+        case 'hp':
+          state.team[teamSlotNumber].ev!.hp = evInputValue;
+          break;
+        case 'atk':
+          state.team[teamSlotNumber].ev!.atk = evInputValue;
+          break;
+        case 'def':
+          state.team[teamSlotNumber].ev!.def = evInputValue;
+          break;
+        case 'spAtk':
+          state.team[teamSlotNumber].ev!.spAtk = evInputValue;
+          break;
+        case 'spDef':
+          state.team[teamSlotNumber].ev!.spDef = evInputValue;
+          break;
+        case 'spd':
+          state.team[teamSlotNumber].ev!.spd = evInputValue;
+          break;
+        default:
+          break;
+      }
+    },
   },
 });
 
-export const { setPokemon, setNature, setMove, setShiny, setGender, setLevel } =
-  teamBuilderSlice.actions;
+export const {
+  setPokemon,
+  setNature,
+  setMove,
+  setShiny,
+  setGender,
+  setLevel,
+  setEV,
+} = teamBuilderSlice.actions;
 export default teamBuilderSlice.reducer;

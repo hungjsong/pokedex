@@ -1,18 +1,28 @@
-import { ChangeEvent, Dispatch, SetStateAction } from 'react';
+import { ChangeEvent } from 'react';
+import { useDispatch } from 'react-redux';
+import { setEV } from '../../redux/teamBuilderSlice';
 
 type PokemonSlotProps = {
-  setEV: Dispatch<SetStateAction<number>>;
   evName: string;
-  evStatType: number;
+  evStatValue: number;
+  teamSlotNumber: number;
 };
 
 function EVSlider(props: PokemonSlotProps) {
+  const dispatch = useDispatch();
+
   function changeEV(event: ChangeEvent<HTMLInputElement>) {
     const inputEV = +event.target.value;
     const validEV =
       inputEV <= +event.target.max && inputEV >= +event.target.min;
     if (validEV) {
-      props.setEV(+event.target.value);
+      dispatch(
+        setEV({
+          evInputValue: +event.target.value,
+          teamSlotNumber: props.teamSlotNumber,
+          evName: props.evName,
+        })
+      );
     }
   }
 
@@ -23,7 +33,7 @@ function EVSlider(props: PokemonSlotProps) {
         type="number"
         min="0"
         max="252"
-        value={props.evStatType}
+        value={props.evStatValue}
         onChange={changeEV}
       />
       <input
@@ -31,7 +41,7 @@ function EVSlider(props: PokemonSlotProps) {
         type="range"
         min="0"
         max="252"
-        value={props.evStatType}
+        value={props.evStatValue}
         step="1"
         onInput={changeEV}
       />

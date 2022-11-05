@@ -24,13 +24,13 @@ function PokemonSlot(props: PokemonSlotProps) {
   const [pokemonNatures, setPokemonNatures] = useState<PokemonNature[]>([]);
   const [inputNature, setInputNature] = useState('');
   const [displayList, setDisplayList] = useState(false);
-  const [hpEV, setHPEV] = useState(0);
-  const [atkEV, setAtkEV] = useState(0);
-  const [defEV, setDefEV] = useState(0);
-  const [spAtkEV, setSpAtkEV] = useState(0);
-  const [spDefEV, setSpDefEV] = useState(0);
-  const [spdEV, setSpdEV] = useState(0);
   const team = useAppSelector((state) => state.teamBuilder.team);
+  const hpEV = team[props.slotNumber].ev!.hp;
+  const atkEV = team[props.slotNumber].ev!.atk;
+  const defEV = team[props.slotNumber].ev!.def;
+  const spAtkEV = team[props.slotNumber].ev!.spAtk;
+  const spDefEV = team[props.slotNumber].ev!.spDef;
+  const spdEV = team[props.slotNumber].ev!.spd;
   const selectedMoves = team[props.slotNumber].moves;
   const isShiny = team[props.slotNumber].shiny;
   const gender = team[props.slotNumber].gender;
@@ -171,17 +171,41 @@ function PokemonSlot(props: PokemonSlotProps) {
     return (
       <>
         <h4>HP</h4>
-        <EVSlider evStatType={hpEV} setEV={setHPEV} evName={'hp'} />
+        <EVSlider
+          evStatValue={hpEV}
+          evName={'hp'}
+          teamSlotNumber={props.slotNumber}
+        />
         <h4>Attack</h4>
-        <EVSlider evStatType={atkEV} setEV={setAtkEV} evName={'atk'} />
+        <EVSlider
+          evStatValue={atkEV}
+          evName={'atk'}
+          teamSlotNumber={props.slotNumber}
+        />
         <h4>Defence</h4>
-        <EVSlider evStatType={defEV} setEV={setDefEV} evName={'def'} />
+        <EVSlider
+          evStatValue={defEV}
+          evName={'def'}
+          teamSlotNumber={props.slotNumber}
+        />
         <h4>Special Attack</h4>
-        <EVSlider evStatType={spAtkEV} setEV={setSpAtkEV} evName={'spAtk'} />
+        <EVSlider
+          evStatValue={spAtkEV}
+          evName={'spAtk'}
+          teamSlotNumber={props.slotNumber}
+        />
         <h4>Special Defence</h4>
-        <EVSlider evStatType={spDefEV} setEV={setSpDefEV} evName={'spDef'} />
+        <EVSlider
+          evStatValue={spDefEV}
+          evName={'spDef'}
+          teamSlotNumber={props.slotNumber}
+        />
         <h4>Speed</h4>
-        <EVSlider evStatType={spdEV} setEV={setSpdEV} evName={'spd'} />
+        <EVSlider
+          evStatValue={spdEV}
+          evName={'spd'}
+          teamSlotNumber={props.slotNumber}
+        />
       </>
     );
   }
