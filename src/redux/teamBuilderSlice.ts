@@ -310,6 +310,13 @@ export const teamBuilderSlice = createSlice({
       const { happiness, teamSlotNumber } = action.payload;
       state.team[teamSlotNumber].happiness = happiness;
     },
+    setItem: (
+      state,
+      action: PayloadAction<{ item: string; teamSlotNumber: number }>
+    ) => {
+      const { item, teamSlotNumber } = action.payload;
+      state.team[teamSlotNumber].item = item;
+    },
   },
 });
 
@@ -323,5 +330,6 @@ export const {
   setEV,
   setIV,
   setHapppiness,
+  setItem,
 } = teamBuilderSlice.actions;
 export default teamBuilderSlice.reducer;

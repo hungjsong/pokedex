@@ -81,3 +81,8 @@ export type PokemonNature = {
   increased_stat: string | null;
   decreased_stat: string | null;
 };
+
+export type Item = {
+  name: string;
+  description: string;
+};

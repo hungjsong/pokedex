@@ -16,6 +16,7 @@ import {
 import PokemonMove from './PokemonMove';
 import { useAppSelector } from '../../hooks';
 import Loader from '../common/Loader';
+import ItemList from './ItemList';
 
 type PokemonSlotProps = {
   slotNumber: number;
@@ -345,6 +346,7 @@ function PokemonSlot(props: PokemonSlotProps) {
   return (
     <>
       <PokemonList slotNumber={props.slotNumber} />
+      <ItemList slotNumber={props.slotNumber} />
       <label>
         Shiny:
         <input
