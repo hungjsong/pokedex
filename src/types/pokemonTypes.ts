@@ -35,6 +35,10 @@ export type Move = {
   };
 };
 
+//TODO: Rename this, I think?
+export type EVType = 'hp' | 'atk' | 'def' | 'spAtk' | 'spDef' | 'spd';
+//export type EVTypeDynamic = keyof NonNullable<Pokemon['ev']>;
+
 export type Pokemon = {
   name?: string;
   id?: number;

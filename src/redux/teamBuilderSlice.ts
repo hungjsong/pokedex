@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { Move, Pokemon } from '../types/pokemonTypes';
+import { EVType, Move, Pokemon } from '../types/pokemonTypes';
 
 interface TeamBuilderState {
   team: Pokemon[];
@@ -244,32 +244,12 @@ export const teamBuilderSlice = createSlice({
       action: PayloadAction<{
         evInputValue: number;
         teamSlotNumber: number;
-        evName: string;
+        //evName: string; //e.g. 'hp' | 'hpp' | 'hppp'
+        evName: EVType; //Imagine there is more...
       }>
     ) => {
       const { evInputValue, evName, teamSlotNumber } = action.payload;
-      switch (evName) {
-        case 'hp':
-          state.team[teamSlotNumber].ev!.hp = evInputValue;
-          break;
-        case 'atk':
-          state.team[teamSlotNumber].ev!.atk = evInputValue;
-          break;
-        case 'def':
-          state.team[teamSlotNumber].ev!.def = evInputValue;
-          break;
-        case 'spAtk':
-          state.team[teamSlotNumber].ev!.spAtk = evInputValue;
-          break;
-        case 'spDef':
-          state.team[teamSlotNumber].ev!.spDef = evInputValue;
-          break;
-        case 'spd':
-          state.team[teamSlotNumber].ev!.spd = evInputValue;
-          break;
-        default:
-          break;
-      }
+      state.team[teamSlotNumber].ev![evName] = evInputValue;
     },
   },
 });

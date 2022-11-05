@@ -1,9 +1,10 @@
 import { ChangeEvent } from 'react';
 import { useDispatch } from 'react-redux';
 import { setEV } from '../../redux/teamBuilderSlice';
+import { EVType } from '../../types/pokemonTypes';
 
 type PokemonSlotProps = {
-  evName: string;
+  evName: EVType;
   evStatValue: number;
   teamSlotNumber: number;
   remainingEVs: number;
@@ -23,7 +24,7 @@ function EVSlider(props: PokemonSlotProps) {
         setEV({
           evInputValue: +event.target.value,
           teamSlotNumber: props.teamSlotNumber,
-          evName: props.evName,
+          evName: props.evName, //'hpp'
         })
       );
     }
