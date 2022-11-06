@@ -1,52 +1,64 @@
 {
   "payload": [
     { "name": "hardy", "increased_stat": null, "decreased_stat": null },
-    { "name": "lonely", "increased_stat": "Attack", "decreased_stat": null },
-    { "name": "brave", "increased_stat": "Attack", "decreased_stat": null },
-    { "name": "adamant", "increased_stat": "Attack", "decreased_stat": null },
-    { "name": "naughty", "increased_stat": "Attack", "decreased_stat": null },
-    { "name": "bold", "increased_stat": "Defense", "decreased_stat": null },
+    { "name": "lonely", "increased_stat": "Atk.", "decreased_stat": "Def." },
+    { "name": "brave", "increased_stat": "Atk.", "decreased_stat": "Spd." },
+    {
+      "name": "adamant",
+      "increased_stat": "Atk.",
+      "decreased_stat": "Sp.Atk."
+    },
+    {
+      "name": "naughty",
+      "increased_stat": "Atk.",
+      "decreased_stat": "Sp.Def."
+    },
+    { "name": "bold", "increased_stat": "Def.", "decreased_stat": "Atk." },
     { "name": "docile", "increased_stat": null, "decreased_stat": null },
-    { "name": "relaxed", "increased_stat": "Defense", "decreased_stat": null },
-    { "name": "impish", "increased_stat": "Defense", "decreased_stat": null },
-    { "name": "lax", "increased_stat": "Defense", "decreased_stat": null },
-    { "name": "timid", "increased_stat": "Speed", "decreased_stat": null },
-    { "name": "hasty", "increased_stat": "Speed", "decreased_stat": null },
+    { "name": "relaxed", "increased_stat": "Def.", "decreased_stat": "Spd." },
+    { "name": "impish", "increased_stat": "Def.", "decreased_stat": "Sp.Atk." },
+    { "name": "lax", "increased_stat": "Def.", "decreased_stat": "Sp.Def." },
+    { "name": "timid", "increased_stat": "Spd.", "decreased_stat": "Atk." },
+    { "name": "hasty", "increased_stat": "Spd.", "decreased_stat": "Def." },
     { "name": "serious", "increased_stat": null, "decreased_stat": null },
-    { "name": "jolly", "increased_stat": "Speed", "decreased_stat": null },
-    { "name": "naive", "increased_stat": "Speed", "decreased_stat": null },
+    { "name": "jolly", "increased_stat": "Spd.", "decreased_stat": "Sp.Atk." },
+    { "name": "naive", "increased_stat": "Spd.", "decreased_stat": "Sp.Def." },
     {
       "name": "modest",
-      "increased_stat": "Sp. Attack",
-      "decreased_stat": null
+      "increased_stat": "Sp.Atk.",
+      "decreased_stat": "Atk."
     },
-    { "name": "mild", "increased_stat": "Sp. Attack", "decreased_stat": null },
+    { "name": "mild", "increased_stat": "Sp.Atk.", "decreased_stat": "Def." },
     {
       "name": "quiet",
-      "increased_stat": "Sp. Attack",
-      "decreased_stat": null
+      "increased_stat": "Sp.Atk.",
+      "decreased_stat": "Spd."
     },
     { "name": "bashful", "increased_stat": null, "decreased_stat": null },
-    { "name": "rash", "increased_stat": "Sp. Attack", "decreased_stat": null },
+    {
+      "name": "rash",
+      "increased_stat": "Sp.Atk.",
+      "decreased_stat": "Sp.Def."
+    },
     {
       "name": "calm",
-      "increased_stat": "Sp. Defense",
-      "decreased_stat": null
+      "increased_stat": "Sp.Def",
+      "decreased_stat": "Atk."
     },
     {
       "name": "gentle",
-      "increased_stat": "Sp. Defense",
-      "decreased_stat": null
+      "increased_stat": "Sp.Def",
+      "decreased_stat": "Def."
     },
     {
       "name": "sassy",
-      "increased_stat": "Sp. Defense",
-      "decreased_stat": null
+      "increased_stat": "Sp.Def",
+      "decreased_stat": "Spd."
     },
     {
       "name": "careful",
-      "increased_stat": "Sp. Defense",
-      "decreased_stat": null
+      "increased_stat": "Sp.Def",
+      "decreased_stat": "Sp.Atk."
     },
     { "name": "quirky", "increased_stat": null, "decreased_stat": null }
   ]

@@ -24,14 +24,14 @@ export type PokemonEntry = {
 
 export type Move = {
   name: string;
-  type: PokemonType;
+  type: string;
   category: string;
   accuracy: number;
   powerPoint: number;
-  power: number;
+  power: number | null;
   additional_effect: {
-    description: string;
-    chance: number;
+    description: string | null;
+    chance: number | null;
   };
 };
 
@@ -52,7 +52,7 @@ export type Pokemon = {
     def: number;
     spAtk: number;
     spDef: number;
-    speed: number;
+    spd: number;
   };
   ev?: {
     hp: number;
@@ -60,7 +60,7 @@ export type Pokemon = {
     def: number;
     spAtk: number;
     spDef: number;
-    speed: number;
+    spd: number;
   };
 };
 
@@ -80,4 +80,9 @@ export type PokemonNature = {
   name: string;
   increased_stat: string | null;
   decreased_stat: string | null;
+};
+
+export type Item = {
+  name: string;
+  description: string;
 };

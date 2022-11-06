@@ -1,5 +1,7 @@
 import pokemonNatures from './mockData/pokemonNatures.json';
-import { PokemonNature } from '../types/pokemonTypes';
+import pokemonMoves from './mockData/pokemonMoves.json';
+import pokemonItems from './mockData/pokemonItems.json';
+import { Item, Move, PokemonNature } from '../types/pokemonTypes';
 
 //API documentation can be found here: https://pokeapi.co/docs/v2
 export const getPokedexEntry = (pokemon: string | number) => {
@@ -18,15 +20,14 @@ export const getSpeciesDetails = (pokemonID: string | number) => {
     });
 };
 
-//TODO: Please rename this.
-export type GetAllPokemonResults = [
+export type GetAllPokemonResponse = [
   {
     name: string;
     url: string;
   }
 ];
 
-export const getAllPokemon = (): Promise<GetAllPokemonResults> => {
+export const getAllPokemon = (): Promise<GetAllPokemonResponse> => {
   return fetch('https://pokeapi.co/api/v2/pokemon?limit=100000&offset=0')
     .then((response) => response.json())
     .then((allpokemon) => allpokemon.results)
@@ -41,10 +42,34 @@ type GetPokemonNaturesResponse = {
   payload: PokemonNature[];
 };
 
+type GetPokemonMovesResponse = {
+  payload: Move[];
+};
+
+type GetItemsResponse = {
+  payload: Item[];
+};
+
 export const getPokemonNatures = () => {
   return new Promise<GetPokemonNaturesResponse>((resolve) => {
     setTimeout(() => {
       resolve(pokemonNatures);
+    }, MOCK_API_DELAY);
+  });
+};
+
+export const getPokemonMoves = () => {
+  return new Promise<GetPokemonMovesResponse>((resolve) => {
+    setTimeout(() => {
+      resolve(pokemonMoves);
+    }, MOCK_API_DELAY);
+  });
+};
+
+export const getPokemonItems = () => {
+  return new Promise<GetItemsResponse>((resolve) => {
+    setTimeout(() => {
+      resolve(pokemonItems);
     }, MOCK_API_DELAY);
   });
 };

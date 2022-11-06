@@ -1,5 +1,5 @@
-import { createSlice } from '@reduxjs/toolkit';
-import { Pokemon } from '../types/pokemonTypes';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { Move, Pokemon } from '../types/pokemonTypes';
 
 interface TeamBuilderState {
   team: Pokemon[];
@@ -24,7 +24,7 @@ const initialState: TeamBuilderState = {
         def: 0,
         spAtk: 0,
         spDef: 0,
-        speed: 0,
+        spd: 0,
       },
       ev: {
         hp: 0,
@@ -32,7 +32,7 @@ const initialState: TeamBuilderState = {
         def: 0,
         spAtk: 0,
         spDef: 0,
-        speed: 0,
+        spd: 0,
       },
     },
     {
@@ -52,7 +52,7 @@ const initialState: TeamBuilderState = {
         def: 0,
         spAtk: 0,
         spDef: 0,
-        speed: 0,
+        spd: 0,
       },
       ev: {
         hp: 0,
@@ -60,7 +60,7 @@ const initialState: TeamBuilderState = {
         def: 0,
         spAtk: 0,
         spDef: 0,
-        speed: 0,
+        spd: 0,
       },
     },
     {
@@ -80,7 +80,7 @@ const initialState: TeamBuilderState = {
         def: 0,
         spAtk: 0,
         spDef: 0,
-        speed: 0,
+        spd: 0,
       },
       ev: {
         hp: 0,
@@ -88,7 +88,7 @@ const initialState: TeamBuilderState = {
         def: 0,
         spAtk: 0,
         spDef: 0,
-        speed: 0,
+        spd: 0,
       },
     },
     {
@@ -108,7 +108,7 @@ const initialState: TeamBuilderState = {
         def: 0,
         spAtk: 0,
         spDef: 0,
-        speed: 0,
+        spd: 0,
       },
       ev: {
         hp: 0,
@@ -116,7 +116,7 @@ const initialState: TeamBuilderState = {
         def: 0,
         spAtk: 0,
         spDef: 0,
-        speed: 0,
+        spd: 0,
       },
     },
     {
@@ -136,7 +136,7 @@ const initialState: TeamBuilderState = {
         def: 0,
         spAtk: 0,
         spDef: 0,
-        speed: 0,
+        spd: 0,
       },
       ev: {
         hp: 0,
@@ -144,7 +144,7 @@ const initialState: TeamBuilderState = {
         def: 0,
         spAtk: 0,
         spDef: 0,
-        speed: 0,
+        spd: 0,
       },
     },
     {
@@ -164,7 +164,7 @@ const initialState: TeamBuilderState = {
         def: 0,
         spAtk: 0,
         spDef: 0,
-        speed: 0,
+        spd: 0,
       },
       ev: {
         hp: 0,
@@ -172,35 +172,7 @@ const initialState: TeamBuilderState = {
         def: 0,
         spAtk: 0,
         spDef: 0,
-        speed: 0,
-      },
-    },
-    {
-      name: undefined,
-      id: undefined,
-      moves: [],
-      item: undefined,
-      level: 1,
-      gender: undefined,
-      happiness: 0,
-      shiny: false,
-      types: [],
-      nature: undefined,
-      iv: {
-        hp: 0,
-        atk: 0,
-        def: 0,
-        spAtk: 0,
-        spDef: 0,
-        speed: 0,
-      },
-      ev: {
-        hp: 0,
-        atk: 0,
-        def: 0,
-        spAtk: 0,
-        spDef: 0,
-        speed: 0,
+        spd: 0,
       },
     },
   ],
@@ -210,17 +182,154 @@ export const teamBuilderSlice = createSlice({
   name: 'teamBuilder',
   initialState,
   reducers: {
-    setPokemon: (state, action) => {
-      state.team[action.payload.slotNumber].name = action.payload.name;
+    setPokemon: (
+      state,
+      action: PayloadAction<{
+        teamSlotNumber: number;
+        pokemonID: number;
+        name: string;
+      }>
+    ) => {
+      const { teamSlotNumber, name, pokemonID } = action.payload;
+      state.team[teamSlotNumber].name = name;
+      state.team[teamSlotNumber].id = pokemonID;
     },
-    setMove: () => {
-      console.log('hi'); //Added console log for now to prevent empty reducer error
+    setMove: (
+      state,
+      action: PayloadAction<{
+        teamSlotNumber: number;
+        moveSlotNumber: number;
+        selectedMove: Move;
+      }>
+    ) => {
+      const { teamSlotNumber, moveSlotNumber, selectedMove } = action.payload;
+      state.team[teamSlotNumber].moves![moveSlotNumber] = selectedMove;
     },
-    setNature: (state, action) => {
-      state.team[action.payload.slotNumber].nature = action.payload.nature;
+    setNature: (
+      state,
+      action: PayloadAction<{
+        nature: string;
+        teamSlotNumber: number;
+      }>
+    ) => {
+      const { nature, teamSlotNumber } = action.payload;
+      state.team[teamSlotNumber].nature = nature;
+    },
+    setShiny: (
+      state,
+      action: PayloadAction<{
+        isShiny: boolean;
+        teamSlotNumber: number;
+      }>
+    ) => {
+      const { isShiny, teamSlotNumber } = action.payload;
+      state.team[teamSlotNumber].shiny = isShiny;
+    },
+    setGender: (state, action) => {
+      const { gender, teamSlotNumber } = action.payload;
+      state.team[teamSlotNumber].gender = gender;
+    },
+    setLevel: (
+      state,
+      action: PayloadAction<{
+        level: number;
+        teamSlotNumber: number;
+      }>
+    ) => {
+      const { level, teamSlotNumber } = action.payload;
+      state.team[teamSlotNumber].level = level;
+    },
+    setEV: (
+      state,
+      action: PayloadAction<{
+        evInputValue: number;
+        teamSlotNumber: number;
+        evName: string;
+      }>
+    ) => {
+      const { evInputValue, evName, teamSlotNumber } = action.payload;
+      switch (evName) {
+        case 'hp':
+          state.team[teamSlotNumber].ev!.hp = evInputValue;
+          break;
+        case 'atk':
+          state.team[teamSlotNumber].ev!.atk = evInputValue;
+          break;
+        case 'def':
+          state.team[teamSlotNumber].ev!.def = evInputValue;
+          break;
+        case 'spAtk':
+          state.team[teamSlotNumber].ev!.spAtk = evInputValue;
+          break;
+        case 'spDef':
+          state.team[teamSlotNumber].ev!.spDef = evInputValue;
+          break;
+        case 'spd':
+          state.team[teamSlotNumber].ev!.spd = evInputValue;
+          break;
+        default:
+          break;
+      }
+    },
+    setIV: (
+      state,
+      action: PayloadAction<{
+        ivInputValue: number;
+        teamSlotNumber: number;
+        ivName: string;
+      }>
+    ) => {
+      const { ivInputValue, ivName, teamSlotNumber } = action.payload;
+      switch (ivName) {
+        case 'hp':
+          state.team[teamSlotNumber].iv!.hp = ivInputValue;
+          break;
+        case 'atk':
+          state.team[teamSlotNumber].iv!.atk = ivInputValue;
+          break;
+        case 'def':
+          state.team[teamSlotNumber].iv!.def = ivInputValue;
+          break;
+        case 'spAtk':
+          state.team[teamSlotNumber].iv!.spAtk = ivInputValue;
+          break;
+        case 'spDef':
+          state.team[teamSlotNumber].iv!.spDef = ivInputValue;
+          break;
+        case 'spd':
+          state.team[teamSlotNumber].iv!.spd = ivInputValue;
+          break;
+        default:
+          break;
+      }
+    },
+    setHapppiness: (
+      state,
+      action: PayloadAction<{ happiness: number; teamSlotNumber: number }>
+    ) => {
+      const { happiness, teamSlotNumber } = action.payload;
+      state.team[teamSlotNumber].happiness = happiness;
+    },
+    setItem: (
+      state,
+      action: PayloadAction<{ item: string; teamSlotNumber: number }>
+    ) => {
+      const { item, teamSlotNumber } = action.payload;
+      state.team[teamSlotNumber].item = item;
     },
   },
 });
 
-export const { setPokemon, setNature } = teamBuilderSlice.actions;
+export const {
+  setPokemon,
+  setNature,
+  setMove,
+  setShiny,
+  setGender,
+  setLevel,
+  setEV,
+  setIV,
+  setHapppiness,
+  setItem,
+} = teamBuilderSlice.actions;
 export default teamBuilderSlice.reducer;
