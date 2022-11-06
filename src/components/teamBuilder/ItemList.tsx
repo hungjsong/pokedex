@@ -31,7 +31,9 @@ function ItemList(props: ItemListProps) {
     return (
       <ul>
         {pokemonItems
-          .filter((item) => item.name.includes(itemID))
+          .filter((item) =>
+            item.name.toLowerCase().includes(itemID.toLowerCase())
+          )
           .map((item) => (
             <li
               key={item.name}
