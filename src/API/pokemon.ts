@@ -35,6 +35,30 @@ export const getAllPokemon = (): Promise<GetAllPokemonResults> => {
     });
 };
 
+type SpecificPokemon = { name: string };
+
+export const getSpecificPokemon = (
+  pokemonId: number
+): Promise<SpecificPokemon> => {
+  return new Promise<SpecificPokemon>((resolve) => {
+    setTimeout(() => {
+      let data: SpecificPokemon;
+      switch (pokemonId) {
+        case 1:
+          data = { name: 'Bulbasaur' };
+          break;
+        case 24:
+          data = { name: 'Pikachu' };
+          break;
+        default:
+          data = { name: 'Charizard' };
+          break;
+      }
+      resolve(data);
+    }, MOCK_API_DELAY);
+  });
+};
+
 const MOCK_API_DELAY = 1000;
 
 type GetPokemonNaturesResponse = {
