@@ -2,6 +2,7 @@ import { useState, useEffect, FormEvent } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
+import styled from 'styled-components';
 import { setPokemonEntry, setSpeciesDetails } from '../../redux/pokedexSlice';
 import { getPokedexEntry, getSpeciesDetails } from '../../API/pokemon';
 import {
@@ -11,6 +12,10 @@ import {
 } from '../../utilityFunctions';
 import Loader from '../common/Loader';
 import { useAppSelector } from '../../hooks';
+
+const ErrorP = styled.p`
+  color: red;
+`;
 
 function PokedexEntry() {
   const { t } = useTranslation();
@@ -83,7 +88,7 @@ function PokedexEntry() {
         {(pokedexEntry.height * 0.1).toFixed(1) + 'm'}{' '}
         {(pokedexEntry.weight * 0.1).toFixed(1) + 'kg'}
       </>
-      {errorMessage !== '' && <p style={{ color: 'red' }}>{errorMessage}</p>}
+      {errorMessage !== '' && <ErrorP>{errorMessage}</ErrorP>}
       <form onSubmit={handleSubmit}>
         <label>
           {t('inputPrompt')}
