@@ -11,12 +11,11 @@ import {
   setNature,
   setShiny,
 } from '../../redux/teamBuilderSlice';
-import PokemonMove from './PokemonMove';
 import { useAppSelector } from '../../hooks';
-import Loader from '../common/Loader';
 import ItemList from './ItemList';
 import EVSliders from './EVSliders';
 import PokemonIVs from './PokemonIVs';
+import PokemonMoves from './PokemonMoves';
 
 type PokemonSlotProps = {
   slotNumber: number;
@@ -28,7 +27,6 @@ function PokemonSlot(props: PokemonSlotProps) {
   const [inputNature, setInputNature] = useState('');
   const [displayList, setDisplayList] = useState(false);
   const team = useAppSelector((state) => state.teamBuilder.team);
-  const selectedMoves = team[props.slotNumber].moves;
   const isShiny = team[props.slotNumber].shiny;
   const gender = team[props.slotNumber].gender;
   const happiness = team[props.slotNumber].happiness;
@@ -179,37 +177,6 @@ function PokemonSlot(props: PokemonSlotProps) {
     );
   }
 
-  function displayMoves() {
-    if (selectedMoves === undefined) {
-      return <Loader />;
-    }
-
-    return (
-      <>
-        <PokemonMove
-          moveSlotNumber={0}
-          selectedMoves={selectedMoves}
-          teamSlotNumber={props.slotNumber}
-        />
-        <PokemonMove
-          moveSlotNumber={1}
-          selectedMoves={selectedMoves}
-          teamSlotNumber={props.slotNumber}
-        />
-        <PokemonMove
-          moveSlotNumber={2}
-          selectedMoves={selectedMoves}
-          teamSlotNumber={props.slotNumber}
-        />
-        <PokemonMove
-          moveSlotNumber={3}
-          selectedMoves={selectedMoves}
-          teamSlotNumber={props.slotNumber}
-        />
-      </>
-    );
-  }
-
   return (
     <>
       <PokemonList slotNumber={props.slotNumber} />
@@ -255,7 +222,7 @@ function PokemonSlot(props: PokemonSlotProps) {
       />
       {displayList && displayListOfNatures(props.slotNumber)}
       <EVSliders teamSlotNumber={props.slotNumber} />
-      {displayMoves()}
+      <PokemonMoves teamSlotNumber={props.slotNumber} />
       {displayGenderOptions(genderRate)}
       <PokemonIVs teamSlotNumber={props.slotNumber} />
     </>
