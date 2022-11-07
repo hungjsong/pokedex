@@ -10,22 +10,22 @@ import PokemonHappiness from './PokemonHappiness';
 import PokemonShiny from './PokemonShiny';
 
 type PokemonSlotProps = {
-  slotNumber: number;
+  teamSlotNumber: number;
 };
 
 function PokemonSlot(props: PokemonSlotProps) {
   return (
     <>
-      <PokemonList slotNumber={props.slotNumber} />
-      <ItemList slotNumber={props.slotNumber} />
-      <PokemonShiny teamSlotNumber={props.slotNumber} />
-      <PokemonLevel teamSlotNumber={props.slotNumber} />
-      <PokemonHappiness teamSlotNumber={props.slotNumber} />
-      <NatureList teamSlotNumber={props.slotNumber} />
-      <EVSliders teamSlotNumber={props.slotNumber} />
-      <PokemonMoves teamSlotNumber={props.slotNumber} />
-      <PokemonGender teamSlotNumber={props.slotNumber} />
-      <PokemonIVs teamSlotNumber={props.slotNumber} />
+      <PokemonList slotNumber={props.teamSlotNumber} />
+      <ItemList slotNumber={props.teamSlotNumber} />
+      <PokemonShiny teamSlotNumber={props.teamSlotNumber} />
+      <PokemonLevel teamSlotNumber={props.teamSlotNumber} />
+      <PokemonHappiness teamSlotNumber={props.teamSlotNumber} />
+      <NatureList teamSlotNumber={props.teamSlotNumber} />
+      <EVSliders teamSlotNumber={props.teamSlotNumber} />
+      <PokemonMoves teamSlotNumber={props.teamSlotNumber} />
+      <PokemonGender teamSlotNumber={props.teamSlotNumber} />
+      <PokemonIVs teamSlotNumber={props.teamSlotNumber} />
     </>
   );
 }
