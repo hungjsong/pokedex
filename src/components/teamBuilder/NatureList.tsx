@@ -1,10 +1,10 @@
 import { ChangeEvent, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { getPokemonNatures } from '../../API/pokemon';
-import { setNature } from '../../redux/teamBuilderSlice';
-import { PokemonNature } from '../../types/pokemonTypes';
-import { capitalize } from '../../utilityFunctions';
 import styled from 'styled-components';
+import { capitalize } from '../../utilityFunctions';
+import { getPokemonNatures } from '../../API/pokemon';
+import { PokemonNature } from '../../types/pokemonTypes';
+import { setNature } from '../../redux/teamBuilderSlice';
 
 type NatureListProps = {
   teamSlotNumber: number;

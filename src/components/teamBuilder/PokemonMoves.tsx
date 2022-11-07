@@ -1,6 +1,6 @@
-import { useAppSelector } from '../../hooks';
 import Loader from '../common/Loader';
 import PokemonMove from './PokemonMove';
+import { useAppSelector } from '../../hooks';
 
 type PokemonMovesProps = {
   teamSlotNumber: number;

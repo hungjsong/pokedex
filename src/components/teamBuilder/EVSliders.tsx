@@ -1,5 +1,5 @@
-import { useAppSelector } from '../../hooks';
 import EVSlider from './EVSlider';
+import { useAppSelector } from '../../hooks';
 
 type EVSlidersProps = {
   teamSlotNumber: number;

@@ -1,9 +1,9 @@
 import { ChangeEvent, useEffect, useState } from 'react';
+import styled from 'styled-components';
 import { useDispatch } from 'react-redux';
 import { getSpeciesDetails } from '../../API/pokemon';
-import { useAppSelector } from '../../hooks';
 import { setGender } from '../../redux/teamBuilderSlice';
-import styled from 'styled-components';
+import { useAppSelector } from '../../hooks';
 
 type PokemonGenderProps = {
   teamSlotNumber: number;

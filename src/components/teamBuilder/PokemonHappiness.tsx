@@ -1,7 +1,7 @@
 import { ChangeEvent } from 'react';
 import { useDispatch } from 'react-redux';
-import { useAppSelector } from '../../hooks';
 import { setHapppiness } from '../../redux/teamBuilderSlice';
+import { useAppSelector } from '../../hooks';
 
 type PokemonHappinessProps = {
   teamSlotNumber: number;

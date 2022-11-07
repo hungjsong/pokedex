@@ -1,8 +1,8 @@
+import { Link } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 import { useState, useEffect, FormEvent } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useDispatch } from 'react-redux';
-import { Link } from 'react-router-dom';
-import { setPokemonEntry, setSpeciesDetails } from '../../redux/pokedexSlice';
+import styled from 'styled-components';
 import { getPokedexEntry, getSpeciesDetails } from '../../API/pokemon';
 import {
   capitalize,
@@ -10,8 +10,8 @@ import {
   getPokemonTypes,
 } from '../../utilityFunctions';
 import Loader from '../common/Loader';
+import { setPokemonEntry, setSpeciesDetails } from '../../redux/pokedexSlice';
 import { useAppSelector } from '../../hooks';
-import styled from 'styled-components';
 
 const ErrorMessage = styled.p`
   color: red;

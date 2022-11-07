@@ -1,9 +1,9 @@
 import { ChangeEvent, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { getPokemonMoves } from '../../API/pokemon';
-import { setMove } from '../../redux/teamBuilderSlice';
-import { Move } from '../../types/pokemonTypes';
 import Loader from '../common/Loader';
+import { Move } from '../../types/pokemonTypes';
+import { setMove } from '../../redux/teamBuilderSlice';
 
 type PokemonMoveProps = {
   moveSlotNumber: number;

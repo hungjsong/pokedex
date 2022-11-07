@@ -1,7 +1,7 @@
 import { ChangeEvent } from 'react';
 import { useDispatch } from 'react-redux';
-import { useAppSelector } from '../../hooks';
 import { setShiny } from '../../redux/teamBuilderSlice';
+import { useAppSelector } from '../../hooks';
 
 type PokemonShinyProps = {
   teamSlotNumber: number;
