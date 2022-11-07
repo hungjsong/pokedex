@@ -2,7 +2,6 @@ import { ChangeEvent, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import PokemonList from './PokemonList';
 import { capitalize } from '../../utilityFunctions';
-import EVSlider from './EVSlider';
 import { getPokemonNatures, getSpeciesDetails } from '../../API/pokemon';
 import { PokemonNature } from '../../types/pokemonTypes';
 import {
@@ -17,6 +16,7 @@ import PokemonMove from './PokemonMove';
 import { useAppSelector } from '../../hooks';
 import Loader from '../common/Loader';
 import ItemList from './ItemList';
+import EVSliders from './EVSliders';
 
 type PokemonSlotProps = {
   slotNumber: number;
@@ -28,12 +28,6 @@ function PokemonSlot(props: PokemonSlotProps) {
   const [inputNature, setInputNature] = useState('');
   const [displayList, setDisplayList] = useState(false);
   const team = useAppSelector((state) => state.teamBuilder.team);
-  const hpEV = team[props.slotNumber].ev!.hp;
-  const atkEV = team[props.slotNumber].ev!.atk;
-  const defEV = team[props.slotNumber].ev!.def;
-  const spAtkEV = team[props.slotNumber].ev!.spAtk;
-  const spDefEV = team[props.slotNumber].ev!.spDef;
-  const spdEV = team[props.slotNumber].ev!.spd;
   const hpIV = team[props.slotNumber].iv!.hp;
   const atkIV = team[props.slotNumber].iv!.atk;
   const defIV = team[props.slotNumber].iv!.def;
@@ -46,7 +40,6 @@ function PokemonSlot(props: PokemonSlotProps) {
   const happiness = team[props.slotNumber].happiness;
   const level = team[props.slotNumber].level;
   const [genderRate, setGenderRate] = useState(1);
-  const remainingEVs = 510 - (hpEV + atkEV + defEV + spAtkEV + spDefEV + spdEV);
 
   useEffect(() => {
     getPokemonNatures().then((response) => {
@@ -207,56 +200,6 @@ function PokemonSlot(props: PokemonSlotProps) {
     );
   }
 
-  function displayEVSliders() {
-    return (
-      <>
-        <h4>Remaining EVs {remainingEVs}</h4>
-        <h4>HP</h4>
-        <EVSlider
-          evStatValue={hpEV}
-          evName={'hp'}
-          teamSlotNumber={props.slotNumber}
-          remainingEVs={remainingEVs}
-        />
-        <h4>Attack</h4>
-        <EVSlider
-          evStatValue={atkEV}
-          evName={'atk'}
-          teamSlotNumber={props.slotNumber}
-          remainingEVs={remainingEVs}
-        />
-        <h4>Defence</h4>
-        <EVSlider
-          evStatValue={defEV}
-          evName={'def'}
-          teamSlotNumber={props.slotNumber}
-          remainingEVs={remainingEVs}
-        />
-        <h4>Special Attack</h4>
-        <EVSlider
-          evStatValue={spAtkEV}
-          evName={'spAtk'}
-          teamSlotNumber={props.slotNumber}
-          remainingEVs={remainingEVs}
-        />
-        <h4>Special Defence</h4>
-        <EVSlider
-          evStatValue={spDefEV}
-          evName={'spDef'}
-          teamSlotNumber={props.slotNumber}
-          remainingEVs={remainingEVs}
-        />
-        <h4>Speed</h4>
-        <EVSlider
-          evStatValue={spdEV}
-          evName={'spd'}
-          teamSlotNumber={props.slotNumber}
-          remainingEVs={remainingEVs}
-        />
-      </>
-    );
-  }
-
   function displayMoves() {
     if (selectedMoves === undefined) {
       return <Loader />;
@@ -387,7 +330,7 @@ function PokemonSlot(props: PokemonSlotProps) {
         onChange={handleChange}
       />
       {displayList && displayListOfNatures(props.slotNumber)}
-      {displayEVSliders()}
+      <EVSliders teamSlotNumber={props.slotNumber} />
       {displayMoves()}
       {displayGenderOptions(genderRate)}
       {displayIVs()}
