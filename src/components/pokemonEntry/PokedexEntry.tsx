@@ -11,6 +11,11 @@ import {
 } from '../../utilityFunctions';
 import Loader from '../common/Loader';
 import { useAppSelector } from '../../hooks';
+import styled from 'styled-components';
+
+const ErrorMessage = styled.p`
+  color: red;
+`;
 
 function PokedexEntry() {
   const { t } = useTranslation();
@@ -83,7 +88,7 @@ function PokedexEntry() {
         {(pokedexEntry.height * 0.1).toFixed(1) + 'm'}{' '}
         {(pokedexEntry.weight * 0.1).toFixed(1) + 'kg'}
       </>
-      {errorMessage !== '' && <p style={{ color: 'red' }}>{errorMessage}</p>}
+      {errorMessage !== '' && <ErrorMessage>{errorMessage}</ErrorMessage>}
       <form onSubmit={handleSubmit}>
         <label>
           {t('inputPrompt')}

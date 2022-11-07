@@ -3,10 +3,19 @@ import { useDispatch } from 'react-redux';
 import { getSpeciesDetails } from '../../API/pokemon';
 import { useAppSelector } from '../../hooks';
 import { setGender } from '../../redux/teamBuilderSlice';
+import styled from 'styled-components';
 
 type PokemonGenderProps = {
   teamSlotNumber: number;
 };
+
+const MalePokemon = styled.span`
+  color: blue;
+`;
+
+const FemalePokemon = styled.span`
+  color: pink;
+`;
 
 function PokemonGender(props: PokemonGenderProps) {
   const team = useAppSelector((state) => state.teamBuilder.team);
@@ -37,13 +46,13 @@ function PokemonGender(props: PokemonGenderProps) {
     } else if (genderRate === 0) {
       return (
         <>
-          <span style={{ color: 'blue' }}>♂</span> Male
+          <MalePokemon>♂</MalePokemon> Male
         </>
       );
     } else if (genderRate === 8) {
       return (
         <>
-          <span style={{ color: 'pink' }}>♀</span> Female
+          <FemalePokemon>♀</FemalePokemon> Female
         </>
       );
     }
@@ -56,14 +65,14 @@ function PokemonGender(props: PokemonGenderProps) {
           name="gender"
           checked={gender === 'Male' ? true : false}
         />
-        <span style={{ color: 'blue' }}>♂</span> Male
+        <MalePokemon>♂</MalePokemon> Male
         <input
           type="radio"
           value="Female"
           name="gender"
           checked={gender === 'Female' ? true : false}
         />
-        <span style={{ color: 'pink' }}>♀</span> Female
+        <FemalePokemon>♀</FemalePokemon> Female
       </div>
     );
   }

@@ -4,10 +4,19 @@ import { getPokemonNatures } from '../../API/pokemon';
 import { setNature } from '../../redux/teamBuilderSlice';
 import { PokemonNature } from '../../types/pokemonTypes';
 import { capitalize } from '../../utilityFunctions';
+import styled from 'styled-components';
 
 type NatureListProps = {
   teamSlotNumber: number;
 };
+
+const IncreasedStat = styled.span`
+  color: green;
+`;
+
+const DecreasedStat = styled.span`
+  color: red;
+`;
 
 function NatureList(props: NatureListProps) {
   const [pokemonNatures, setPokemonNatures] = useState<PokemonNature[]>([]);
@@ -48,16 +57,12 @@ function NatureList(props: NatureListProps) {
               >
                 {capitalize(nature.name) + ' ('}
                 {nature.increased_stat !== null ? (
-                  <span style={{ color: 'green' }}>
-                    {'↑' + nature.increased_stat}
-                  </span>
+                  <IncreasedStat>{'↑' + nature.increased_stat}</IncreasedStat>
                 ) : (
                   ''
                 )}
                 {nature.decreased_stat !== null ? (
-                  <span style={{ color: 'red' }}>
-                    {' ↓' + nature.decreased_stat}
-                  </span>
+                  <DecreasedStat>{' ↓' + nature.decreased_stat}</DecreasedStat>
                 ) : (
                   'No Effect'
                 )}
