@@ -7,7 +7,6 @@ import { PokemonNature } from '../../types/pokemonTypes';
 import {
   setGender,
   setHapppiness,
-  setLevel,
   setNature,
   setShiny,
 } from '../../redux/teamBuilderSlice';
@@ -16,6 +15,7 @@ import ItemList from './ItemList';
 import EVSliders from './EVSliders';
 import PokemonIVs from './PokemonIVs';
 import PokemonMoves from './PokemonMoves';
+import PokemonLevel from './PokemonLevel';
 
 type PokemonSlotProps = {
   slotNumber: number;
@@ -30,7 +30,7 @@ function PokemonSlot(props: PokemonSlotProps) {
   const isShiny = team[props.slotNumber].shiny;
   const gender = team[props.slotNumber].gender;
   const happiness = team[props.slotNumber].happiness;
-  const level = team[props.slotNumber].level;
+
   const [genderRate, setGenderRate] = useState(1);
 
   useEffect(() => {
@@ -56,20 +56,6 @@ function PokemonSlot(props: PokemonSlotProps) {
       );
     } else {
       setInputNature(event.target.value);
-    }
-  }
-
-  function handleLevelChange(event: ChangeEvent<HTMLInputElement>) {
-    const inputLevel = +event.target.value;
-    const validLevel =
-      inputLevel <= +event.target.max && inputLevel >= +event.target.min;
-    if (validLevel) {
-      dispatch(
-        setLevel({
-          level: inputLevel,
-          teamSlotNumber: props.slotNumber,
-        })
-      );
     }
   }
 
@@ -190,13 +176,7 @@ function PokemonSlot(props: PokemonSlotProps) {
           onChange={handleChange}
         />
       </label>
-      <input
-        type="number"
-        min="1"
-        max="100"
-        value={level}
-        onChange={handleLevelChange}
-      />
+      <PokemonLevel teamSlotNumber={props.slotNumber} />
       <label>
         Happiness:
         <input
