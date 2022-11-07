@@ -3,11 +3,11 @@ import { useDispatch } from 'react-redux';
 import { useAppSelector } from '../../hooks';
 import { setHapppiness } from '../../redux/teamBuilderSlice';
 
-type PokemonHappinessType = {
+type PokemonHappinessProps = {
   teamSlotNumber: number;
 };
 
-function PokemonHappiness(props: PokemonHappinessType) {
+function PokemonHappiness(props: PokemonHappinessProps) {
   const team = useAppSelector((state) => state.teamBuilder.team);
   const happiness = team[props.teamSlotNumber].happiness;
   const dispatch = useDispatch();

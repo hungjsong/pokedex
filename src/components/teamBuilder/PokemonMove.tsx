@@ -5,13 +5,13 @@ import { setMove } from '../../redux/teamBuilderSlice';
 import { Move } from '../../types/pokemonTypes';
 import Loader from '../common/Loader';
 
-type PokemonSlotProps = {
+type PokemonMoveProps = {
   moveSlotNumber: number;
   selectedMoves: Move[];
   teamSlotNumber: number;
 };
 
-function PokemonMove(props: PokemonSlotProps) {
+function PokemonMove(props: PokemonMoveProps) {
   const [searchTerm, setSearchTerm] = useState('');
   const [displayList, setDisplayList] = useState(false);
   const [pokemonMoves, setPokemonMoves] = useState<Move[]>([]);

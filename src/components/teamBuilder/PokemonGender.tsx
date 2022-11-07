@@ -4,11 +4,11 @@ import { getSpeciesDetails } from '../../API/pokemon';
 import { useAppSelector } from '../../hooks';
 import { setGender } from '../../redux/teamBuilderSlice';
 
-type PokemonGenderType = {
+type PokemonGenderProps = {
   teamSlotNumber: number;
 };
 
-function PokemonGender(props: PokemonGenderType) {
+function PokemonGender(props: PokemonGenderProps) {
   const team = useAppSelector((state) => state.teamBuilder.team);
   const gender = team[props.teamSlotNumber].gender;
   const [genderRate, setGenderRate] = useState(1);

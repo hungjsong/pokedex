@@ -3,11 +3,11 @@ import { useDispatch } from 'react-redux';
 import { useAppSelector } from '../../hooks';
 import { setShiny } from '../../redux/teamBuilderSlice';
 
-type PokemonShinyType = {
+type PokemonShinyProps = {
   teamSlotNumber: number;
 };
 
-function PokemonShiny(props: PokemonShinyType) {
+function PokemonShiny(props: PokemonShinyProps) {
   const team = useAppSelector((state) => state.teamBuilder.team);
   const isShiny = team[props.teamSlotNumber].shiny;
   const dispatch = useDispatch();

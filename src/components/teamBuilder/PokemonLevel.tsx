@@ -3,11 +3,11 @@ import { useDispatch } from 'react-redux';
 import { useAppSelector } from '../../hooks';
 import { setLevel } from '../../redux/teamBuilderSlice';
 
-type PokemonLevelType = {
+type PokemonLevelProps = {
   teamSlotNumber: number;
 };
 
-function PokemonLevel(props: PokemonLevelType) {
+function PokemonLevel(props: PokemonLevelProps) {
   const team = useAppSelector((state) => state.teamBuilder.team);
   const level = team[props.teamSlotNumber].level;
   const dispatch = useDispatch();

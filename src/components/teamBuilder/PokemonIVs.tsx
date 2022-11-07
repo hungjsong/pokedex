@@ -3,11 +3,11 @@ import { useDispatch } from 'react-redux';
 import { useAppSelector } from '../../hooks';
 import { setIV } from '../../redux/teamBuilderSlice';
 
-type PokemonIVsType = {
+type PokemonIVsProps = {
   teamSlotNumber: number;
 };
 
-function PokemonIVs(props: PokemonIVsType) {
+function PokemonIVs(props: PokemonIVsProps) {
   const team = useAppSelector((state) => state.teamBuilder.team);
   const hpIV = team[props.teamSlotNumber].iv!.hp;
   const atkIV = team[props.teamSlotNumber].iv!.atk;

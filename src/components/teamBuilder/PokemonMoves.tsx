@@ -2,11 +2,11 @@ import { useAppSelector } from '../../hooks';
 import Loader from '../common/Loader';
 import PokemonMove from './PokemonMove';
 
-type PokemonMovesType = {
+type PokemonMovesProps = {
   teamSlotNumber: number;
 };
 
-function PokemonMoves(props: PokemonMovesType) {
+function PokemonMoves(props: PokemonMovesProps) {
   const team = useAppSelector((state) => state.teamBuilder.team);
   const selectedMoves = team[props.teamSlotNumber].moves;
 

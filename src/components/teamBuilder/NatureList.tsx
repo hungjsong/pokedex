@@ -5,11 +5,11 @@ import { setNature } from '../../redux/teamBuilderSlice';
 import { PokemonNature } from '../../types/pokemonTypes';
 import { capitalize } from '../../utilityFunctions';
 
-type NatureListType = {
+type NatureListProps = {
   teamSlotNumber: number;
 };
 
-function NatureList(props: NatureListType) {
+function NatureList(props: NatureListProps) {
   const [pokemonNatures, setPokemonNatures] = useState<PokemonNature[]>([]);
   const [displayList, setDisplayList] = useState(false);
   const [inputNature, setInputNature] = useState('');
