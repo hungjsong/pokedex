@@ -1,14 +1,7 @@
-import { ChangeEvent, useEffect, useState } from 'react';
+import { ChangeEvent, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import PokemonList from './PokemonList';
-import { capitalize } from '../../utilityFunctions';
-import { getPokemonNatures } from '../../API/pokemon';
-import { PokemonNature } from '../../types/pokemonTypes';
-import {
-  setHapppiness,
-  setNature,
-  setShiny,
-} from '../../redux/teamBuilderSlice';
+import { setHapppiness, setShiny } from '../../redux/teamBuilderSlice';
 import { useAppSelector } from '../../hooks';
 import ItemList from './ItemList';
 import EVSliders from './EVSliders';
@@ -16,6 +9,7 @@ import PokemonIVs from './PokemonIVs';
 import PokemonMoves from './PokemonMoves';
 import PokemonLevel from './PokemonLevel';
 import PokemonGender from './PokemonGender';
+import NatureList from './NatureList';
 
 type PokemonSlotProps = {
   slotNumber: number;
@@ -23,18 +17,11 @@ type PokemonSlotProps = {
 
 function PokemonSlot(props: PokemonSlotProps) {
   const dispatch = useDispatch();
-  const [pokemonNatures, setPokemonNatures] = useState<PokemonNature[]>([]);
-  const [inputNature, setInputNature] = useState('');
-  const [displayList, setDisplayList] = useState(false);
   const team = useAppSelector((state) => state.teamBuilder.team);
   const isShiny = team[props.slotNumber].shiny;
   const happiness = team[props.slotNumber].happiness;
 
   useEffect(() => {
-    getPokemonNatures().then((response) => {
-      setPokemonNatures(response.payload);
-    });
-
     console.log(team);
   }, [team]);
 
@@ -46,8 +33,6 @@ function PokemonSlot(props: PokemonSlotProps) {
           teamSlotNumber: props.slotNumber,
         })
       );
-    } else {
-      setInputNature(event.target.value);
     }
   }
 
@@ -63,50 +48,6 @@ function PokemonSlot(props: PokemonSlotProps) {
         })
       );
     }
-  }
-
-  function displayListOfNatures(slotNumber: number) {
-    return (
-      <ul>
-        {pokemonNatures
-          .filter((nature) =>
-            nature.name.toLowerCase().includes(inputNature.toLowerCase())
-          )
-          .map((nature) => (
-            <>
-              <li
-                key={nature.name}
-                onMouseDown={() => {
-                  dispatch(
-                    setNature({
-                      nature: nature.name,
-                      teamSlotNumber: slotNumber,
-                    })
-                  );
-                  setInputNature(nature.name);
-                }}
-              >
-                {capitalize(nature.name) + ' ('}
-                {nature.increased_stat !== null ? (
-                  <span style={{ color: 'green' }}>
-                    {'↑' + nature.increased_stat}
-                  </span>
-                ) : (
-                  ''
-                )}
-                {nature.decreased_stat !== null ? (
-                  <span style={{ color: 'red' }}>
-                    {' ↓' + nature.decreased_stat}
-                  </span>
-                ) : (
-                  'No Effect'
-                )}
-                {')'}
-              </li>
-            </>
-          ))}
-      </ul>
-    );
   }
 
   return (
@@ -133,20 +74,7 @@ function PokemonSlot(props: PokemonSlotProps) {
           onChange={handleHappinessChange}
         />
       </label>
-      <input
-        type="search"
-        autoComplete="off"
-        placeholder="Nature"
-        value={inputNature}
-        onFocus={() => {
-          setDisplayList(true);
-        }}
-        onBlur={() => {
-          setDisplayList(false);
-        }}
-        onChange={handleChange}
-      />
-      {displayList && displayListOfNatures(props.slotNumber)}
+      <NatureList teamSlotNumber={props.slotNumber} />
       <EVSliders teamSlotNumber={props.slotNumber} />
       <PokemonMoves teamSlotNumber={props.slotNumber} />
       <PokemonGender teamSlotNumber={props.slotNumber} />
