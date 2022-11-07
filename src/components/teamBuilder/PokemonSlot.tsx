@@ -2,10 +2,9 @@ import { ChangeEvent, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import PokemonList from './PokemonList';
 import { capitalize } from '../../utilityFunctions';
-import { getPokemonNatures, getSpeciesDetails } from '../../API/pokemon';
+import { getPokemonNatures } from '../../API/pokemon';
 import { PokemonNature } from '../../types/pokemonTypes';
 import {
-  setGender,
   setHapppiness,
   setNature,
   setShiny,
@@ -16,6 +15,7 @@ import EVSliders from './EVSliders';
 import PokemonIVs from './PokemonIVs';
 import PokemonMoves from './PokemonMoves';
 import PokemonLevel from './PokemonLevel';
+import PokemonGender from './PokemonGender';
 
 type PokemonSlotProps = {
   slotNumber: number;
@@ -28,21 +28,13 @@ function PokemonSlot(props: PokemonSlotProps) {
   const [displayList, setDisplayList] = useState(false);
   const team = useAppSelector((state) => state.teamBuilder.team);
   const isShiny = team[props.slotNumber].shiny;
-  const gender = team[props.slotNumber].gender;
   const happiness = team[props.slotNumber].happiness;
-
-  const [genderRate, setGenderRate] = useState(1);
 
   useEffect(() => {
     getPokemonNatures().then((response) => {
       setPokemonNatures(response.payload);
     });
 
-    if (team[props.slotNumber].id !== undefined) {
-      getSpeciesDetails(team[props.slotNumber].id!).then((response) => {
-        setGenderRate(response.gender_rate);
-      });
-    }
     console.log(team);
   }, [team]);
 
@@ -59,15 +51,6 @@ function PokemonSlot(props: PokemonSlotProps) {
     }
   }
 
-  function handleGenderChange(event: ChangeEvent<HTMLInputElement>) {
-    dispatch(
-      setGender({
-        gender: event.target.value,
-        teamSlotNumber: props.slotNumber,
-      })
-    );
-  }
-
   function handleHappinessChange(event: ChangeEvent<HTMLInputElement>) {
     const happiness = +event.target.value;
     const validHappinessEntered =
@@ -80,43 +63,6 @@ function PokemonSlot(props: PokemonSlotProps) {
         })
       );
     }
-  }
-
-  function displayGenderOptions(genderRate: number) {
-    if (genderRate === -1) {
-      return <>Genderless</>;
-    } else if (genderRate === 0) {
-      return (
-        <>
-          <span style={{ color: 'blue' }}>♂</span> Male
-        </>
-      );
-    } else if (genderRate === 8) {
-      return (
-        <>
-          <span style={{ color: 'pink' }}>♀</span> Female
-        </>
-      );
-    }
-
-    return (
-      <div onChange={handleGenderChange}>
-        <input
-          type="radio"
-          value="Male"
-          name="gender"
-          checked={gender === 'Male' ? true : false}
-        />
-        <span style={{ color: 'blue' }}>♂</span> Male
-        <input
-          type="radio"
-          value="Female"
-          name="gender"
-          checked={gender === 'Female' ? true : false}
-        />
-        <span style={{ color: 'pink' }}>♀</span> Female
-      </div>
-    );
   }
 
   function displayListOfNatures(slotNumber: number) {
@@ -203,7 +149,7 @@ function PokemonSlot(props: PokemonSlotProps) {
       {displayList && displayListOfNatures(props.slotNumber)}
       <EVSliders teamSlotNumber={props.slotNumber} />
       <PokemonMoves teamSlotNumber={props.slotNumber} />
-      {displayGenderOptions(genderRate)}
+      <PokemonGender teamSlotNumber={props.slotNumber} />
       <PokemonIVs teamSlotNumber={props.slotNumber} />
     </>
   );
