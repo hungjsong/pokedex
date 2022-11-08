@@ -1,11 +1,11 @@
 import { ChangeEvent, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { getAllPokemon } from '../../API/pokemon';
-import { useAppSelector } from '../../hooks';
-import { setPokemonList } from '../../redux/pokedexSlice';
-import { setPokemon } from '../../redux/teamBuilderSlice';
 import { capitalize } from '../../utilityFunctions';
+import { getAllPokemon } from '../../API/pokemon';
 import Loader from '../common/Loader';
+import { setPokemon } from '../../redux/teamBuilderSlice';
+import { setPokemonList } from '../../redux/pokedexSlice';
+import { useAppSelector } from '../../hooks';
 
 type PokemonListProps = {
   slotNumber: number;

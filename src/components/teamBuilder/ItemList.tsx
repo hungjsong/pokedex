@@ -1,9 +1,9 @@
 import { ChangeEvent, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { getPokemonItems } from '../../API/pokemon';
-import { setItem } from '../../redux/teamBuilderSlice';
 import { Item } from '../../types/pokemonTypes';
 import Loader from '../common/Loader';
+import { setItem } from '../../redux/teamBuilderSlice';
 
 type ItemListProps = {
   slotNumber: number;

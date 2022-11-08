@@ -2,14 +2,14 @@ import { ChangeEvent } from 'react';
 import { useDispatch } from 'react-redux';
 import { setEV } from '../../redux/teamBuilderSlice';
 
-type PokemonSlotProps = {
+type EVSliderProps = {
   evName: string;
   evStatValue: number;
   teamSlotNumber: number;
   remainingEVs: number;
 };
 
-function EVSlider(props: PokemonSlotProps) {
+function EVSlider(props: EVSliderProps) {
   const dispatch = useDispatch();
 
   function changeEV(event: ChangeEvent<HTMLInputElement>) {
