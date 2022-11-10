@@ -1,16 +1,19 @@
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
+import Loader from '../common/Loader';
 
 function CatchingSimulator() {
   const { t } = useTranslation();
+  const [selectedPokemon, setSelectedPokemon] = useState('Bulbasaur');
   const [maximumHP, setMaximumHP] = useState(12);
   const [currentHP, setCurrentHP] = useState(12);
   const [catchRate, setCatchRate] = useState(45);
   const [currentLevel, setCurrentLevel] = useState(1);
   const [statusCondition, setStatusCondition] = useState('');
-  const [numOfPokemonCaught, setNumOfPokemonCaught] = useState(0);
-  const [finalCaptureRate, setFinalCaptureRate] = useState(0);
+  const [captureChances, setCaptureChances] = useState<
+    { quote: string; chance: number }[]
+  >([]);
   const [ballUsed, setBallUsed] = useState(0);
   const [storyCompleted, setStoryCompleted] = useState(true);
 
@@ -59,20 +62,72 @@ function CatchingSimulator() {
       statusConditionModifier *
       difficultyModifier;
 
-    const capturePercentage = +(
-      Math.pow(finalCaptureRate / 255, 0.75) * 100
-    ).toPrecision(4);
-
-    setFinalCaptureRate(capturePercentage);
+    setCaptureChances(calculateShakeChancePercentages(finalCaptureRate));
   }
 
-  return (
-    <nav>
-      <h1>Catching Simulator</h1>
-      <p>{finalCaptureRate}%</p>
-      <Link to="/">{t('home')}</Link>
-    </nav>
-  );
+  function calculateShakeChancePercentages(finalCaptureRate: number) {
+    const shakeProbability =
+      65536 / Math.pow(255 / finalCaptureRate, 3 / 16) / 65536;
+
+    return [
+      {
+        quote: 'Oh no! The Pokémon broke free!',
+        chance: +((1 - shakeProbability) * 100).toPrecision(4),
+      },
+      {
+        quote: 'Aww! It appeared to be caught!',
+        chance: +(
+          (shakeProbability - Math.pow(shakeProbability, 2)) *
+          100
+        ).toPrecision(4),
+      },
+      {
+        quote: 'Aargh! Almost had it!',
+        chance: +(
+          (Math.pow(shakeProbability, 2) - Math.pow(shakeProbability, 3)) *
+          100
+        ).toPrecision(4),
+      },
+      {
+        quote: 'Gah! It was so close, too!',
+        chance: +(
+          (Math.pow(shakeProbability, 3) - Math.pow(shakeProbability, 4)) *
+          100
+        ).toPrecision(4),
+      },
+      {
+        quote: 'Gotcha! ' + selectedPokemon + ' was caught!',
+        chance: +(Math.pow(shakeProbability, 4) * 100).toPrecision(4),
+      },
+    ];
+  }
+
+  if (captureChances.length === 0) {
+    return <Loader />;
+  } else {
+    return (
+      <nav>
+        <h1>Catching Simulator</h1>
+        <p>
+          0 Shakes: {captureChances[0].chance}% {captureChances[0].quote}
+        </p>
+        <p>
+          1 Shakes: {captureChances[1].chance}% {captureChances[1].quote}
+        </p>
+        <p>
+          2 Shakes: {captureChances[2].chance}% {captureChances[2].quote}
+        </p>
+        <p>
+          3 Shakes: {captureChances[3].chance}% {captureChances[3].quote}
+        </p>
+        <p>
+          Successful Capture: {captureChances[4].chance}%{' '}
+          {captureChances[4].quote}
+        </p>
+        <Link to="/">{t('home')}</Link>
+      </nav>
+    );
+  }
 }
 
 export default CatchingSimulator;
