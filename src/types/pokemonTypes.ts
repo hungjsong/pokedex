@@ -46,6 +46,14 @@ export type Pokemon = {
   shiny?: boolean;
   types?: PokemonType[];
   nature?: string;
+  baseStats?: {
+    hp: number;
+    atk: number;
+    def: number;
+    spAtk: number;
+    spDef: number;
+    spd: number;
+  };
   iv?: {
     hp: number;
     atk: number;
@@ -86,3 +94,5 @@ export type Item = {
   name: string;
   description: string;
 };
+
+export type statType = 'hp' | 'atk' | 'def' | 'spAtk' | 'spDef' | 'spd';
