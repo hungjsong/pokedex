@@ -5,17 +5,66 @@ import Loader from '../common/Loader';
 
 function CatchingSimulator() {
   const { t } = useTranslation();
-  const [selectedPokemon, setSelectedPokemon] = useState('Bulbasaur');
-  const [maximumHP, setMaximumHP] = useState(12);
-  const [currentHP, setCurrentHP] = useState(12);
-  const [catchRate, setCatchRate] = useState(45);
-  const [currentLevel, setCurrentLevel] = useState(1);
+  const [selectedPokemon, setSelectedPokemon] = useState({
+    name: 'Bulbasaur',
+    id: 1,
+    level: 1,
+    gender: 'Male',
+    shiny: false,
+    types: [
+      {
+        slot: 0,
+        type: {
+          name: 'grass',
+          url: '',
+        },
+      },
+      {
+        slot: 1,
+        type: {
+          name: 'poison',
+          url: '',
+        },
+      },
+    ],
+    nature: 'docile',
+    baseStats: {
+      hp: 45,
+      atk: 49,
+      def: 49,
+      spAtk: 65,
+      spDef: 65,
+      spd: 45,
+    },
+    iv: {
+      hp: 31,
+      atk: 31,
+      def: 31,
+      spAtk: 31,
+      spDef: 31,
+      spd: 31,
+    },
+    ev: {
+      hp: 0,
+      atk: 0,
+      def: 0,
+      spAtk: 0,
+      spDef: 0,
+      spd: 0,
+    },
+    catchRate: 45,
+  });
+
+  const maximumHP = selectedPokemon.baseStats.hp;
+  const catchRate = selectedPokemon.catchRate;
+  const [storyCompleted, setStoryCompleted] = useState(true);
   const [statusCondition, setStatusCondition] = useState('');
+  const [ballUsed, setBallUsed] = useState('Poké Ball');
+  const [currentLevel, setCurrentLevel] = useState(1);
+  const [currentHP, setCurrentHP] = useState(12);
   const [captureChances, setCaptureChances] = useState<
     { quote: string; chance: number }[]
   >([]);
-  const [ballUsed, setBallUsed] = useState(0);
-  const [storyCompleted, setStoryCompleted] = useState(true);
 
   useEffect(() => {
     calculateCaptureRateGen8();
