@@ -1,6 +1,6 @@
 {
   "payload": [
-    { "name": "Poké Ball", "catchRateModifier": 1 },
+    { "name": "Poke Ball", "catchRateModifier": 1 },
     { "name": "Great Ball", "catchRateModifier": 1.5 },
     { "name": "Ultra Ball", "catchRateModifier": 2 },
     { "name": "Master Ball", "catchRateModifier": 255 },
