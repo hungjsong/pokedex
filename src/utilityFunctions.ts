@@ -30,16 +30,19 @@ export const getEnglishGenera = (speciesDetails: SpeciesDetails): Genus => {
   )[0];
 };
 
-export const calculateStatValues = (
-  pokemon: Pokemon,
-  nature: PokemonNature,
-  level: number
-) => {
+export const calculateStatValues = (pokemon: Pokemon, level: number) => {
   const ivValues = pokemon.iv;
   const evValues = pokemon.ev;
   const baseStats = pokemon.baseStats;
-  const increasedStatType = nature.increased_stat!.replace('.', '');
-  const decreasedStatType = nature.decreased_stat!.replace('.', '');
+  const nature = pokemon.nature;
+  const increasedStatType =
+    nature!.increased_stat === null
+      ? ''
+      : nature!.increased_stat!.replace('.', '');
+  const decreasedStatType =
+    nature!.decreased_stat === null
+      ? ''
+      : nature!.decreased_stat!.replace('.', '');
   const statTypes: statType[] = ['hp', 'atk', 'def', 'spAtk', 'spDef', 'spd'];
   const pokemonStats = { hp: 0, atk: 0, def: 0, spAtk: 0, spDef: 0, spd: 0 };
 
