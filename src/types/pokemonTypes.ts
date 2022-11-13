@@ -45,7 +45,7 @@ export type Pokemon = {
   happiness?: number;
   shiny?: boolean;
   types?: PokemonType[];
-  nature?: string;
+  nature?: PokemonNature;
   baseStats?: {
     hp: number;
     atk: number;
@@ -70,6 +70,8 @@ export type Pokemon = {
     spDef: number;
     spd: number;
   };
+  catchRate?: number;
+  weight?: number;
 };
 
 export type Genus = {
@@ -96,3 +98,8 @@ export type Item = {
 };
 
 export type statType = 'hp' | 'atk' | 'def' | 'spAtk' | 'spDef' | 'spd';
+
+export type PokeBall = {
+  name: string;
+  catchRateModifier: number;
+};
