@@ -4,18 +4,20 @@ import { Link } from 'react-router-dom';
 import { useAppSelector } from '../../hooks';
 import { calculateStatValues } from '../../utilityFunctions';
 import Loader from '../common/Loader';
+import PokeBallsList from './PokeBallsList';
 import StatusesList from './StatusesList';
 
 function CatchingSimulator() {
   const { t } = useTranslation();
+  const ballUsed = useAppSelector((state) => state.catchingSimulator.pokeball);
   const pokemon = useAppSelector((state) => state.catchingSimulator.pokemon);
   const statusCondition = useAppSelector((state) =>
     state.catchingSimulator.status?.toLowerCase()
   );
-  const catchRate = pokemon.catchRate;
+
   const [storyCompleted, setStoryCompleted] = useState(true);
-  const [ballUsed, setBallUsed] = useState('Poké Ball');
   const [currentLevel, setCurrentLevel] = useState(1);
+  const catchRate = pokemon.catchRate;
   const maximumHP = calculateStatValues(pokemon, currentLevel).hp;
   const [currentHP, setCurrentHP] = useState(maximumHP);
   const [captureChances, setCaptureChances] = useState<
@@ -143,6 +145,7 @@ function CatchingSimulator() {
           />
         </label>
         <StatusesList />
+        <PokeBallsList />
         <Link to="/">{t('home')}</Link>
       </nav>
     );

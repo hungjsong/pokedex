@@ -1,11 +1,14 @@
 import { ChangeEvent, useEffect, useState } from 'react';
 import { getPokeBalls } from '../../API/pokemon';
+import { useAppDispatch } from '../../hooks';
+import { setPokeBall } from '../../redux/catchingSimulatorSlice';
 import { PokeBall } from '../../types/pokemonTypes';
 import Loader from '../common/Loader';
 
 type PokeBallsListProps = {};
 
 function PokeBallsList(props: PokeBallsListProps) {
+  const dispatch = useAppDispatch();
   const [pokeBalls, setPokeBalls] = useState<PokeBall[]>([]);
   const [displayList, setDisplayList] = useState(false);
   const [selectedPokeBall, setSelectedPokeBall] = useState('');
@@ -37,6 +40,7 @@ function PokeBallsList(props: PokeBallsListProps) {
                 key={pokeBall.name}
                 onMouseDown={() => {
                   setSelectedPokeBall(pokeBall.name);
+                  dispatch(setPokeBall({ pokeBall: pokeBall.name }));
                 }}
               >
                 <img
@@ -54,14 +58,12 @@ function PokeBallsList(props: PokeBallsListProps) {
     );
   }
 
-  function calculateCatchRateModifier() {}
-
   return (
     <>
       <input
         type="search"
         autoComplete="off"
-        placeholder="Pokeball"
+        placeholder="Poké Ball"
         value={selectedPokeBall}
         onFocus={() => {
           setDisplayList(true);

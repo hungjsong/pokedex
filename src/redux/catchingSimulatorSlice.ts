@@ -4,6 +4,7 @@ import { Pokemon } from '../types/pokemonTypes';
 interface CatchingSimulatorState {
   pokemon: Pokemon;
   status?: string;
+  pokeball: string;
 }
 
 const initialState: CatchingSimulatorState = {
@@ -58,6 +59,7 @@ const initialState: CatchingSimulatorState = {
     weight: 6.9,
   },
   status: undefined,
+  pokeball: 'Poke Ball',
 };
 
 export const catchingSimulatorSlice = createSlice({
@@ -76,8 +78,12 @@ export const catchingSimulatorSlice = createSlice({
       const { status } = action.payload;
       state.status = status;
     },
+    setPokeBall: (state, action: PayloadAction<{ pokeBall: string }>) => {
+      const { pokeBall } = action.payload;
+      state.status = pokeBall;
+    },
   },
 });
 
-export const { setStatus } = catchingSimulatorSlice.actions;
+export const { setStatus, setPokeBall } = catchingSimulatorSlice.actions;
 export default catchingSimulatorSlice.reducer;
