@@ -1,8 +1,9 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { Pokemon } from '../types/pokemonTypes';
 
 interface CatchingSimulatorState {
   pokemon: Pokemon;
+  status?: string;
 }
 
 const initialState: CatchingSimulatorState = {
@@ -56,6 +57,7 @@ const initialState: CatchingSimulatorState = {
     catchRate: 45,
     weight: 6.9,
   },
+  status: undefined,
 };
 
 export const catchingSimulatorSlice = createSlice({
@@ -65,8 +67,17 @@ export const catchingSimulatorSlice = createSlice({
     setPokemon: (state, action) => {
       state.pokemon = action.payload;
     },
+    setStatus: (
+      state,
+      action: PayloadAction<{
+        status: string;
+      }>
+    ) => {
+      const { status } = action.payload;
+      state.status = status;
+    },
   },
 });
 
-export const {} = catchingSimulatorSlice.actions;
+export const { setStatus } = catchingSimulatorSlice.actions;
 export default catchingSimulatorSlice.reducer;
