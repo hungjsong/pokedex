@@ -80,7 +80,7 @@ export const catchingSimulatorSlice = createSlice({
     },
     setPokeBall: (state, action: PayloadAction<{ pokeBall: string }>) => {
       const { pokeBall } = action.payload;
-      state.status = pokeBall;
+      state.pokeball = pokeBall;
     },
   },
 });
