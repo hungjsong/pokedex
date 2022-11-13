@@ -1,68 +1,22 @@
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
+import { useAppSelector } from '../../hooks';
 import { calculateStatValues } from '../../utilityFunctions';
 import Loader from '../common/Loader';
+import StatusesList from './StatusesList';
 
 function CatchingSimulator() {
   const { t } = useTranslation();
-  const [selectedPokemon, setSelectedPokemon] = useState({
-    name: 'Bulbasaur',
-    id: 1,
-    level: 1,
-    gender: 'Male',
-    shiny: false,
-    types: [
-      {
-        slot: 0,
-        type: {
-          name: 'grass',
-          url: '',
-        },
-      },
-      {
-        slot: 1,
-        type: {
-          name: 'poison',
-          url: '',
-        },
-      },
-    ],
-    nature: { name: 'docile', increased_stat: null, decreased_stat: null },
-    baseStats: {
-      hp: 45,
-      atk: 49,
-      def: 49,
-      spAtk: 65,
-      spDef: 65,
-      spd: 45,
-    },
-    iv: {
-      hp: 31,
-      atk: 31,
-      def: 31,
-      spAtk: 31,
-      spDef: 31,
-      spd: 31,
-    },
-    ev: {
-      hp: 0,
-      atk: 0,
-      def: 0,
-      spAtk: 0,
-      spDef: 0,
-      spd: 0,
-    },
-    catchRate: 45,
-    weight: 6.9,
-  });
-
-  const catchRate = selectedPokemon.catchRate;
+  const pokemon = useAppSelector((state) => state.catchingSimulator.pokemon);
+  const statusCondition = useAppSelector((state) =>
+    state.catchingSimulator.status?.toLowerCase()
+  );
+  const catchRate = pokemon.catchRate;
   const [storyCompleted, setStoryCompleted] = useState(true);
-  const [statusCondition, setStatusCondition] = useState('');
   const [ballUsed, setBallUsed] = useState('Poké Ball');
   const [currentLevel, setCurrentLevel] = useState(1);
-  const maximumHP = calculateStatValues(selectedPokemon, currentLevel).hp;
+  const maximumHP = calculateStatValues(pokemon, currentLevel).hp;
   const [currentHP, setCurrentHP] = useState(maximumHP);
   const [captureChances, setCaptureChances] = useState<
     { quote: string; chance: number }[]
@@ -71,7 +25,7 @@ function CatchingSimulator() {
   useEffect(() => {
     setCurrentHP(maximumHP);
     calculateCaptureRateGen8();
-  }, [currentLevel]);
+  }, [currentLevel, statusCondition]);
 
   function calculateBallBonus() {
     return 1; //WIP
@@ -107,7 +61,7 @@ function CatchingSimulator() {
     const finalCaptureRate =
       (((3 * maximumHP - 2 * currentHP) *
         grassModifier *
-        catchRate *
+        catchRate! *
         ballBonus) /
         (3 * maximumHP)) *
       lowLevelModifier *
@@ -148,7 +102,7 @@ function CatchingSimulator() {
         ).toPrecision(4),
       },
       {
-        quote: 'Gotcha! ' + selectedPokemon.name + ' was caught!',
+        quote: 'Gotcha! ' + pokemon.name + ' was caught!',
         chance: +(Math.pow(shakeProbability, 4) * 100).toPrecision(4),
       },
     ];
@@ -188,6 +142,7 @@ function CatchingSimulator() {
             }}
           />
         </label>
+        <StatusesList />
         <Link to="/">{t('home')}</Link>
       </nav>
     );
