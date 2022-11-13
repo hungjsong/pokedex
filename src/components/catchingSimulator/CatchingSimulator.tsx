@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
+import { calculateStatValues } from '../../utilityFunctions';
 import Loader from '../common/Loader';
 
 function CatchingSimulator() {
@@ -27,7 +28,7 @@ function CatchingSimulator() {
         },
       },
     ],
-    nature: 'docile',
+    nature: { name: 'docile', increased_stat: null, decreased_stat: null },
     baseStats: {
       hp: 45,
       atk: 49,
@@ -53,22 +54,24 @@ function CatchingSimulator() {
       spd: 0,
     },
     catchRate: 45,
+    weight: 6.9,
   });
 
-  const maximumHP = selectedPokemon.baseStats.hp;
   const catchRate = selectedPokemon.catchRate;
   const [storyCompleted, setStoryCompleted] = useState(true);
   const [statusCondition, setStatusCondition] = useState('');
   const [ballUsed, setBallUsed] = useState('Poké Ball');
   const [currentLevel, setCurrentLevel] = useState(1);
-  const [currentHP, setCurrentHP] = useState(12);
+  const maximumHP = calculateStatValues(selectedPokemon, currentLevel).hp;
+  const [currentHP, setCurrentHP] = useState(maximumHP);
   const [captureChances, setCaptureChances] = useState<
     { quote: string; chance: number }[]
   >([]);
 
   useEffect(() => {
+    setCurrentHP(maximumHP);
     calculateCaptureRateGen8();
-  }, []);
+  }, [currentLevel]);
 
   function calculateBallBonus() {
     return 1; //WIP
@@ -145,7 +148,7 @@ function CatchingSimulator() {
         ).toPrecision(4),
       },
       {
-        quote: 'Gotcha! ' + selectedPokemon + ' was caught!',
+        quote: 'Gotcha! ' + selectedPokemon.name + ' was caught!',
         chance: +(Math.pow(shakeProbability, 4) * 100).toPrecision(4),
       },
     ];
@@ -173,6 +176,18 @@ function CatchingSimulator() {
           Successful Capture: {captureChances[4].chance}%{' '}
           {captureChances[4].quote}
         </p>
+        <label>
+          Level:
+          <input
+            type="number"
+            min="1"
+            max="100"
+            value={currentLevel}
+            onChange={(event) => {
+              setCurrentLevel(+(event.target as HTMLInputElement).value);
+            }}
+          />
+        </label>
         <Link to="/">{t('home')}</Link>
       </nav>
     );
