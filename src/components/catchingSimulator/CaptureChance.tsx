@@ -22,10 +22,113 @@ function CaptureChance() {
   useEffect(() => {
     setCurrentHP(maximumHP);
     calculateCaptureRateGen8();
-  }, [currentLevel, statusCondition]);
+  }, [currentLevel, statusCondition, ballUsed]);
 
   function calculateBallBonus() {
-    return 1; //WIP
+    switch (ballUsed) {
+      case 'Heavy Ball':
+        if (pokemon.weight! >= 300) {
+          return 30;
+        } else if (pokemon.weight! >= 200 && pokemon.weight! < 300) {
+          return 20;
+        }
+        return 1;
+
+      case 'Great Ball':
+        return 1.5;
+
+      case 'Ultra Ball':
+        return 2;
+
+      case 'Master Ball':
+        return 255;
+
+      case 'Net Ball':
+        const pokemonIsBugOrWaterType =
+          pokemon.types!.filter(
+            (type) => type.type.name === 'water' || type.type.name === 'bug'
+          ).length !== 0;
+
+        if (pokemonIsBugOrWaterType) {
+          return 3.5;
+        }
+        return 1;
+
+      case 'Dive Ball':
+        //To implement later. If currently on or in water, return 3.5
+        return 1;
+
+      case 'Repeat Ball':
+        //To implement later. If Pokemon is registered as caught in Pokedex, return 3.5
+        return 1;
+
+      case 'Timer Ball':
+        //To implement later. Requires turns variable.
+        return (1 + (1 * 1229) / 4096).toPrecision(2);
+
+      case 'Quick Ball':
+        //To Implement later. If first turn, return 5.
+        return 5;
+
+      case 'Level Ball':
+        //To implement later. Requires calculating the difference between the levels of the wild pokemon and trainer's pokemon
+        return 1;
+
+      case 'Love Ball':
+        //To implement later. Requires checking the genders of both the wild pokemon and trainer's pokemon
+        return 1;
+
+      case 'Lure Ball':
+        //To implment later. Requires trainer to be fishing. Return 4 if fishing.
+        return 1;
+
+      case 'Moon Ball':
+        const moonStonePokemon = [
+          'Nidorina',
+          'Nidorino',
+          'Clefairy',
+          'Jigglypuff',
+          'Skitty',
+          'Munna',
+        ];
+        const isMoonStonepokemon = moonStonePokemon.includes(pokemon.name!);
+
+        if (isMoonStonepokemon) {
+          return 4;
+        }
+        return 1;
+
+      case 'Beast Ball':
+        const ultraBeastPokemon = [
+          'Nihilego',
+          'Buzzwole',
+          'Pheromosa',
+          'Xurkitree',
+          'Celesteela',
+          'Kartana',
+          'Guzzlord',
+          'Poipole',
+          'Naganadel',
+          'Stakataka',
+          'Blacephalon',
+        ];
+        const isUltraBeast = ultraBeastPokemon.includes(pokemon.name!);
+
+        if (isUltraBeast) {
+          return 5;
+        }
+
+        return 410 / 4096;
+
+      case 'Dream Ball':
+        if (statusCondition === 'Asleep') {
+          return 4;
+        }
+        return 1;
+
+      default:
+        return 1;
+    }
   }
 
   function calculateStatusConditionModifier() {
@@ -105,12 +208,13 @@ function CaptureChance() {
     ];
   }
 
-  if (captureChances.length === 0) {
-    return <Loader />;
-  } else {
+  function displayCaptureChances() {
+    if (ballUsed === 'Master Ball') {
+      return <p>Successful Capture: 100% Gotcha! {pokemon.name} was caught!</p>;
+    }
+
     return (
       <>
-        <h1>Catching Simulator</h1>
         <p>
           0 Shakes: {captureChances[0].chance}% {captureChances[0].quote}
         </p>
@@ -127,6 +231,17 @@ function CaptureChance() {
           Successful Capture: {captureChances[4].chance}%{' '}
           {captureChances[4].quote}
         </p>
+      </>
+    );
+  }
+
+  if (captureChances.length === 0) {
+    return <Loader />;
+  } else {
+    return (
+      <>
+        <h1>Catching Simulator</h1>
+        {displayCaptureChances()}
         <label>
           Level:
           <input
