@@ -1,7 +1,37 @@
 import { useEffect, useState } from 'react';
+import styled from 'styled-components';
 import { useAppSelector } from '../../hooks';
 import { calculateStatValues } from '../../utilityFunctions';
 import Loader from '../common/Loader';
+
+const CaptureRateBar = styled.div<{ title: string }>`
+  display: inline-block;
+  position: relative;
+  title: ${(props) => props.title};
+  width: 20em;
+  height: 2em;
+  background: #51ff2e;
+`;
+
+const Wobbles0 = styled.div<{ barWidth: number; title: string }>`
+  float: left;
+  background: #ff6142;
+  height: 100%;
+  width: ${(props) => props.barWidth + '%'};
+  title: ${(props) => props.title};
+`;
+
+const Wobbles1 = styled(Wobbles0)`
+  background: #e88f33;
+`;
+
+const Wobbles2 = styled(Wobbles0)`
+  background: #ffd444;
+`;
+
+const Wobbles3 = styled(Wobbles0)`
+  background: #e9eb44;
+`;
 
 function CaptureChance() {
   const ballUsed = useAppSelector((state) => state.catchingSimulator.pokeball);
@@ -219,7 +249,12 @@ function CaptureChance() {
 
   function displayCaptureChances() {
     if (ballUsed === 'Master Ball') {
-      return <p>Successful Capture: 100% Gotcha! {pokemon.name} was caught!</p>;
+      return (
+        <>
+          <p>Successful Capture: 100% Gotcha! {pokemon.name} was caught!</p>
+          <CaptureRateBar title={captureChances[4].quote} />
+        </>
+      );
     }
 
     return (
@@ -240,6 +275,26 @@ function CaptureChance() {
           Successful Capture: {captureChances[4].chance}%{' '}
           {captureChances[4].quote}
         </p>
+        <CaptureRateBar
+          title={captureChances[4].chance + '% ' + captureChances[4].quote}
+        >
+          <Wobbles0
+            barWidth={captureChances[0].chance}
+            title={captureChances[0].chance + '% ' + captureChances[0].quote}
+          />
+          <Wobbles1
+            barWidth={captureChances[1].chance}
+            title={captureChances[1].chance + '% ' + captureChances[1].quote}
+          />
+          <Wobbles2
+            barWidth={captureChances[2].chance}
+            title={captureChances[2].chance + '% ' + captureChances[2].quote}
+          />
+          <Wobbles3
+            barWidth={captureChances[3].chance}
+            title={captureChances[3].chance + '% ' + captureChances[3].quote}
+          />
+        </CaptureRateBar>
       </>
     );
   }
