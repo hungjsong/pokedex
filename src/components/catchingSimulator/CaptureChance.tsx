@@ -20,7 +20,6 @@ function CaptureChance() {
   >([]);
 
   useEffect(() => {
-    setCurrentHP(maximumHP);
     calculateCaptureRateGen8();
   }, [currentLevel, statusCondition, ballUsed]);
 
@@ -64,7 +63,7 @@ function CaptureChance() {
 
       case 'Timer Ball':
         //To implement later. Requires turns variable.
-        return (1 + (1 * 1229) / 4096).toPrecision(2);
+        return +(1 + (1 * 1229) / 4096).toPrecision(2);
 
       case 'Quick Ball':
         //To Implement later. If first turn, return 5.
@@ -250,7 +249,9 @@ function CaptureChance() {
             max="100"
             value={currentLevel}
             onChange={(event) => {
-              setCurrentLevel(+(event.target as HTMLInputElement).value);
+              const newLevel = +(event.target as HTMLInputElement).value;
+              setCurrentLevel(newLevel);
+              setCurrentHP(calculateStatValues(pokemon, newLevel).hp);
             }}
           />
         </label>
