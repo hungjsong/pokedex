@@ -20,7 +20,7 @@ function CaptureChance() {
   >([]);
 
   useEffect(() => {
-    calculateCaptureRateGen8();
+    setCaptureChances(calculateCaptureChances());
   }, [currentLevel, statusCondition, ballUsed]);
 
   function calculateBallBonus() {
@@ -151,7 +151,7 @@ function CaptureChance() {
     }
   }
 
-  function calculateCaptureRateGen8() {
+  function calculateFinalCaptureRateGen8() {
     const grassModifier = 1;
     const ballBonus = calculateBallBonus();
     const statusConditionModifier = calculateStatusConditionModifier();
@@ -167,42 +167,52 @@ function CaptureChance() {
       statusConditionModifier *
       difficultyModifier;
 
-    setCaptureChances(calculateShakeChancePercentages(finalCaptureRate));
+    return finalCaptureRate;
   }
 
-  function calculateShakeChancePercentages(finalCaptureRate: number) {
-    const shakeProbability =
+  function calculateShakeHoldSuccessRate() {
+    const finalCaptureRate = calculateFinalCaptureRateGen8();
+
+    const shakeHoldSuccessRate =
       65536 / Math.pow(255 / finalCaptureRate, 3 / 16) / 65536;
+
+    return shakeHoldSuccessRate;
+  }
+
+  function calculateCaptureChances() {
+    const shakeHoldSuccessRate = calculateShakeHoldSuccessRate();
 
     return [
       {
         quote: 'Oh no! The Pokémon broke free!',
-        chance: +((1 - shakeProbability) * 100).toPrecision(4),
+        chance: +((1 - shakeHoldSuccessRate) * 100).toPrecision(4),
       },
       {
         quote: 'Aww! It appeared to be caught!',
         chance: +(
-          (shakeProbability - Math.pow(shakeProbability, 2)) *
+          (shakeHoldSuccessRate - Math.pow(shakeHoldSuccessRate, 2)) *
           100
         ).toPrecision(4),
       },
       {
         quote: 'Aargh! Almost had it!',
         chance: +(
-          (Math.pow(shakeProbability, 2) - Math.pow(shakeProbability, 3)) *
+          (Math.pow(shakeHoldSuccessRate, 2) -
+            Math.pow(shakeHoldSuccessRate, 3)) *
           100
         ).toPrecision(4),
       },
       {
         quote: 'Gah! It was so close, too!',
         chance: +(
-          (Math.pow(shakeProbability, 3) - Math.pow(shakeProbability, 4)) *
+          (Math.pow(shakeHoldSuccessRate, 3) -
+            Math.pow(shakeHoldSuccessRate, 4)) *
           100
         ).toPrecision(4),
       },
       {
         quote: 'Gotcha! ' + pokemon.name + ' was caught!',
-        chance: +(Math.pow(shakeProbability, 4) * 100).toPrecision(4),
+        chance: +(Math.pow(shakeHoldSuccessRate, 4) * 100).toPrecision(4),
       },
     ];
   }
