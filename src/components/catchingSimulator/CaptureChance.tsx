@@ -203,14 +203,15 @@ function CaptureChance() {
   function calculateShakeHoldSuccessRate() {
     const finalCaptureRate = calculateFinalCaptureRateGen8();
 
-    const shakeHoldSuccessRate =
-      65536 / Math.pow(255 / finalCaptureRate, 3 / 16) / 65536;
+    const shakeHoldSuccessRate = Math.floor(
+      65536 / Math.pow(255 / finalCaptureRate, 3 / 16)
+    );
 
     return shakeHoldSuccessRate;
   }
 
   function calculateCaptureChances() {
-    const shakeHoldSuccessRate = calculateShakeHoldSuccessRate();
+    const shakeHoldSuccessRate = calculateShakeHoldSuccessRate() / 65536;
 
     return [
       {
@@ -245,6 +246,27 @@ function CaptureChance() {
         chance: +(Math.pow(shakeHoldSuccessRate, 4) * 100).toPrecision(4),
       },
     ];
+  }
+
+  function throwBall() {
+    const shakeHoldSuccessRate = calculateShakeHoldSuccessRate();
+    let numOfShakes = 0;
+    let pokeBallStillHolding = true;
+
+    while (pokeBallStillHolding && numOfShakes <= 3) {
+      const shakeCheck = Math.floor(Math.random() * 65536);
+      console.log(shakeCheck, shakeHoldSuccessRate);
+      if (shakeCheck < shakeHoldSuccessRate) {
+        console.log('BALL HOLDING');
+        numOfShakes++;
+      } else {
+        console.log('POKEMON BROKE FREE');
+        pokeBallStillHolding = false;
+      }
+    }
+    if (numOfShakes === 4 && pokeBallStillHolding === true) {
+      console.log('CAPTURE SUCCESS');
+    }
   }
 
   function displayCaptureChances() {
@@ -320,6 +342,7 @@ function CaptureChance() {
             }}
           />
         </label>
+        <button onClick={throwBall}>Throw</button>
       </>
     );
   }
