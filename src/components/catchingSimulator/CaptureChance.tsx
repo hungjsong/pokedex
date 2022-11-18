@@ -45,9 +45,16 @@ function CaptureChance() {
   const catchRate = pokemon.catchRate;
   const maximumHP = calculateStatValues(pokemon, currentLevel).hp;
   const [currentHP, setCurrentHP] = useState(maximumHP);
-  const [captureChances, setCaptureChances] = useState<
-    { quote: string; chance: number }[]
-  >([]);
+  const [captureChances, setCaptureChances] = useState<{ chance: number }[]>(
+    []
+  );
+  const captureQuotes = [
+    'Oh no! The Pokémon broke free!',
+    'Aww! It appeared to be caught!',
+    'Aargh! Almost had it!',
+    'Gah! It was so close, too!',
+    'Gotcha! ' + pokemon.name + ' was caught!',
+  ];
 
   useEffect(() => {
     setCaptureChances(calculateCaptureChances());
@@ -72,7 +79,7 @@ function CaptureChance() {
       case 'Master Ball':
         return 255;
 
-      case 'Net Ball':
+      case 'Net Ball': {
         const pokemonIsBugOrWaterType =
           pokemon.types!.filter(
             (type) => type.type.name === 'water' || type.type.name === 'bug'
@@ -82,7 +89,7 @@ function CaptureChance() {
           return 3.5;
         }
         return 1;
-
+      }
       case 'Dive Ball':
         //To implement later. If currently on or in water, return 3.5
         return 1;
@@ -111,7 +118,7 @@ function CaptureChance() {
         //To implment later. Requires trainer to be fishing. Return 4 if fishing.
         return 1;
 
-      case 'Moon Ball':
+      case 'Moon Ball': {
         const moonStonePokemon = [
           'Nidorina',
           'Nidorino',
@@ -126,8 +133,8 @@ function CaptureChance() {
           return 4;
         }
         return 1;
-
-      case 'Beast Ball':
+      }
+      case 'Beast Ball': {
         const ultraBeastPokemon = [
           'Nihilego',
           'Buzzwole',
@@ -148,7 +155,7 @@ function CaptureChance() {
         }
 
         return 410 / 4096;
-
+      }
       case 'Dream Ball':
         if (statusCondition === 'Asleep') {
           return 4;
@@ -215,18 +222,15 @@ function CaptureChance() {
 
     return [
       {
-        quote: 'Oh no! The Pokémon broke free!',
         chance: +((1 - shakeHoldSuccessRate) * 100).toPrecision(4),
       },
       {
-        quote: 'Aww! It appeared to be caught!',
         chance: +(
           (shakeHoldSuccessRate - Math.pow(shakeHoldSuccessRate, 2)) *
           100
         ).toPrecision(4),
       },
       {
-        quote: 'Aargh! Almost had it!',
         chance: +(
           (Math.pow(shakeHoldSuccessRate, 2) -
             Math.pow(shakeHoldSuccessRate, 3)) *
@@ -234,7 +238,6 @@ function CaptureChance() {
         ).toPrecision(4),
       },
       {
-        quote: 'Gah! It was so close, too!',
         chance: +(
           (Math.pow(shakeHoldSuccessRate, 3) -
             Math.pow(shakeHoldSuccessRate, 4)) *
@@ -242,7 +245,6 @@ function CaptureChance() {
         ).toPrecision(4),
       },
       {
-        quote: 'Gotcha! ' + pokemon.name + ' was caught!',
         chance: +(Math.pow(shakeHoldSuccessRate, 4) * 100).toPrecision(4),
       },
     ];
@@ -274,7 +276,7 @@ function CaptureChance() {
       return (
         <>
           <p>Successful Capture: 100% Gotcha! {pokemon.name} was caught!</p>
-          <CaptureRateBar title={captureChances[4].quote} />
+          <CaptureRateBar title={captureQuotes[4]} />
         </>
       );
     }
@@ -282,39 +284,48 @@ function CaptureChance() {
     return (
       <>
         <p>
-          0 Shakes: {captureChances[0].chance}% {captureChances[0].quote}
+          0 Shakes: {captureChances[0].chance}% {captureQuotes[0]}
         </p>
         <p>
-          1 Shakes: {captureChances[1].chance}% {captureChances[1].quote}
+          1 Shakes: {captureChances[1].chance}% {captureQuotes[1]}
         </p>
         <p>
-          2 Shakes: {captureChances[2].chance}% {captureChances[2].quote}
+          2 Shakes: {captureChances[2].chance}% {captureQuotes[2]}
         </p>
         <p>
-          3 Shakes: {captureChances[3].chance}% {captureChances[3].quote}
+          3 Shakes: {captureChances[3].chance}% {captureQuotes[3]}
         </p>
         <p>
-          Successful Capture: {captureChances[4].chance}%{' '}
-          {captureChances[4].quote}
+          Successful Capture: {captureChances[4].chance}% {captureQuotes[4]}
         </p>
         <CaptureRateBar
-          title={captureChances[4].chance + '% ' + captureChances[4].quote}
+          title={
+            'Success: ' + captureChances[4].chance + '% ' + captureQuotes[4]
+          }
         >
           <Wobbles0
             barWidth={captureChances[0].chance}
-            title={captureChances[0].chance + '% ' + captureChances[0].quote}
+            title={
+              '0 Shakes: ' + captureChances[0].chance + '% ' + captureQuotes[0]
+            }
           />
           <Wobbles1
             barWidth={captureChances[1].chance}
-            title={captureChances[1].chance + '% ' + captureChances[1].quote}
+            title={
+              '1 Shake: ' + captureChances[1].chance + '% ' + captureQuotes[1]
+            }
           />
           <Wobbles2
             barWidth={captureChances[2].chance}
-            title={captureChances[2].chance + '% ' + captureChances[2].quote}
+            title={
+              '2 Shakes: ' + captureChances[2].chance + '% ' + captureQuotes[2]
+            }
           />
           <Wobbles3
             barWidth={captureChances[3].chance}
-            title={captureChances[3].chance + '% ' + captureChances[3].quote}
+            title={
+              '3 Shakes: ' + captureChances[3].chance + '% ' + captureQuotes[3]
+            }
           />
         </CaptureRateBar>
       </>
