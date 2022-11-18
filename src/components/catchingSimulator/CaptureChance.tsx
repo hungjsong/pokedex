@@ -94,6 +94,13 @@ function CaptureChance() {
         //To implement later. If currently on or in water, return 3.5
         return 1;
 
+      case 'Nest Ball': {
+        if (pokemon.level! < 31) {
+          return (41 - pokemon.level!) / 10;
+        }
+        return 1;
+      }
+
       case 'Repeat Ball':
         //To implement later. If Pokemon is registered as caught in Pokedex, return 3.5
         return 1;
