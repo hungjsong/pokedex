@@ -1,8 +1,7 @@
-import { useEffect, useState } from 'react';
+import Loader from '../common/Loader';
 import styled from 'styled-components';
 import { useAppSelector } from '../../hooks';
-import { calculateStatValues } from '../../utilityFunctions';
-import Loader from '../common/Loader';
+import { useEffect, useState } from 'react';
 
 const CaptureRateBar = styled.div<{ title: string }>`
   display: inline-block;
@@ -41,10 +40,16 @@ function CaptureChance() {
   );
 
   const [storyCompleted, setStoryCompleted] = useState(true);
-  const [currentLevel, setCurrentLevel] = useState(1);
+  const currentLevel = useAppSelector(
+    (state) => state.catchingSimulator.pokemon.level
+  )!;
   const catchRate = pokemon.catchRate;
-  const maximumHP = calculateStatValues(pokemon, currentLevel).hp;
-  const [currentHP, setCurrentHP] = useState(maximumHP);
+  const maximumHP = useAppSelector(
+    (state) => state.catchingSimulator.hp.maximumHP
+  );
+  const currentHP = useAppSelector(
+    (state) => state.catchingSimulator.hp.currentHP
+  );
   const [captureChances, setCaptureChances] = useState<{ chance: number }[]>(
     []
   );
@@ -58,7 +63,7 @@ function CaptureChance() {
 
   useEffect(() => {
     setCaptureChances(calculateCaptureChances());
-  }, [currentLevel, statusCondition, ballUsed]);
+  }, [currentLevel, statusCondition, ballUsed, currentLevel]);
 
   function calculateBallBonus() {
     switch (ballUsed) {
@@ -344,22 +349,7 @@ function CaptureChance() {
   } else {
     return (
       <>
-        <h1>Catching Simulator</h1>
         {displayCaptureChances()}
-        <label>
-          Level:
-          <input
-            type="number"
-            min="1"
-            max="100"
-            value={currentLevel}
-            onChange={(event) => {
-              const newLevel = +(event.target as HTMLInputElement).value;
-              setCurrentLevel(newLevel);
-              setCurrentHP(calculateStatValues(pokemon, newLevel).hp);
-            }}
-          />
-        </label>
         <button onClick={throwBall}>Throw</button>
       </>
     );

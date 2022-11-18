@@ -1,10 +1,12 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { Pokemon } from '../types/pokemonTypes';
+import { calculateStatValues } from '../utilityFunctions';
 
 interface CatchingSimulatorState {
   pokemon: Pokemon;
   status?: string;
   pokeball: string;
+  hp: { currentHP: number; maximumHP: number };
 }
 
 const initialState: CatchingSimulatorState = {
@@ -60,6 +62,7 @@ const initialState: CatchingSimulatorState = {
   },
   status: undefined,
   pokeball: 'Poke Ball',
+  hp: { currentHP: 12, maximumHP: 12 },
 };
 
 export const catchingSimulatorSlice = createSlice({
@@ -82,8 +85,16 @@ export const catchingSimulatorSlice = createSlice({
       const { pokeBall } = action.payload;
       state.pokeball = pokeBall;
     },
+    setLevel: (state, action: PayloadAction<{ level: number }>) => {
+      const { level } = action.payload;
+      const maximumHP = calculateStatValues(state.pokemon, level).hp;
+      state.pokemon.level = level;
+      state.hp.maximumHP = maximumHP;
+      state.hp.currentHP = maximumHP;
+    },
   },
 });
 
-export const { setStatus, setPokeBall } = catchingSimulatorSlice.actions;
+export const { setStatus, setPokeBall, setLevel } =
+  catchingSimulatorSlice.actions;
 export default catchingSimulatorSlice.reducer;
