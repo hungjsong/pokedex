@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import PokeBallsList from './PokeBallsList';
 import StatusesList from './StatusesList';
+import AllBallsCaptureChances from './AllBallsCaptureChances';
 import WildPokemonLevel from './WildPokemonLevel';
 import SelectedBallCaptureChance from './SelectedBallCaptureChance';
 
@@ -16,6 +17,7 @@ function CatchingSimulator() {
       <WildPokemonLevel />
       <br />
       <SelectedBallCaptureChance />
+      <AllBallsCaptureChances />
       <nav>
         <Link to="/">{t('home')}</Link>
       </nav>
