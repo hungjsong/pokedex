@@ -2,12 +2,18 @@ import { setLevel } from '../../redux/catchingSimulatorSlice';
 import { useDispatch } from 'react-redux';
 import { useAppSelector } from '../../hooks';
 
-function WildPokemonLevel() {
+type AdjustSimulatorPokemonLevelProps = {
+  isWild: boolean;
+};
+
+function AdjustSimulatorPokemonLevel(props: AdjustSimulatorPokemonLevelProps) {
   const dispatch = useDispatch();
-  const wildPokemon = useAppSelector(
-    (state) => state.catchingSimulator.wildPokemon
+  const pokemon = useAppSelector((state) =>
+    props.isWild === true
+      ? state.catchingSimulator.wildPokemon
+      : state.catchingSimulator.userPokemon
   );
-  const currentLevel = wildPokemon.level!;
+  const currentLevel = pokemon.level!;
 
   return (
     <label>
@@ -19,11 +25,11 @@ function WildPokemonLevel() {
         value={currentLevel}
         onChange={(event) => {
           const newLevel = +(event.target as HTMLInputElement).value;
-          dispatch(setLevel({ level: newLevel }));
+          dispatch(setLevel({ level: newLevel, isWild: props.isWild }));
         }}
       />
     </label>
   );
 }
 
-export default WildPokemonLevel;
+export default AdjustSimulatorPokemonLevel;

@@ -3,8 +3,9 @@ import { useTranslation } from 'react-i18next';
 import PokeBallsList from './PokeBallsList';
 import StatusesList from './StatusesList';
 import AllBallsCaptureChances from './AllBallsCaptureChances';
-import WildPokemonLevel from './WildPokemonLevel';
 import SelectedBallCaptureChance from './SelectedBallCaptureChance';
+import WildPokemonSettings from './Settings/WildPokemon/WildPokemonSettings';
+import UserPokemonSettings from './Settings/UserPokemon/UserPokemonSettings';
 
 function CatchingSimulator() {
   const { t } = useTranslation();
@@ -12,9 +13,9 @@ function CatchingSimulator() {
   return (
     <>
       <h1>Catching Simulator</h1>
-      <StatusesList />
       <PokeBallsList />
-      <WildPokemonLevel />
+      <WildPokemonSettings />
+      <UserPokemonSettings />
       <br />
       <SelectedBallCaptureChance />
       <AllBallsCaptureChances />

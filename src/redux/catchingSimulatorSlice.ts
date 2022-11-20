@@ -94,12 +94,20 @@ export const catchingSimulatorSlice = createSlice({
       const { pokeBall } = action.payload;
       state.pokeball = pokeBall;
     },
-    setLevel: (state, action: PayloadAction<{ level: number }>) => {
-      const { level } = action.payload;
-      const maximumHP = calculateStatValues(state.wildPokemon, level).hp;
-      state.wildPokemon.level = level;
-      state.hp.maximumHP = maximumHP;
-      state.hp.currentHP = maximumHP;
+    setLevel: (
+      state,
+      action: PayloadAction<{ level: number; isWild: boolean }>
+    ) => {
+      const { level, isWild } = action.payload;
+
+      if (isWild) {
+        const maximumHP = calculateStatValues(state.wildPokemon, level).hp;
+        state.hp.currentHP = maximumHP;
+        state.hp.maximumHP = maximumHP;
+        state.wildPokemon.level = level;
+      } else {
+        state.userPokemon.level = level;
+      }
     },
   },
 });
