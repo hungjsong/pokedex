@@ -36,15 +36,17 @@ const TableHead = styled.thead`
 `;
 
 function AllBallsCaptureChances() {
-  const pokemon = useAppSelector((state) => state.catchingSimulator.pokemon);
+  const wildPokemon = useAppSelector(
+    (state) => state.catchingSimulator.wildPokemon
+  );
   const statusCondition = useAppSelector((state) =>
     state.catchingSimulator.status?.toLowerCase()
   );
   const [storyCompleted, setStoryCompleted] = useState(true);
-  const catchRate = pokemon.catchRate;
+  const catchRate = wildPokemon.catchRate;
   const turn = 1;
   const currentLevel = useAppSelector(
-    (state) => state.catchingSimulator.pokemon.level
+    (state) => state.catchingSimulator.wildPokemon.level
   )!;
   const maximumHP = useAppSelector(
     (state) => state.catchingSimulator.hp.maximumHP
@@ -355,7 +357,7 @@ function AllBallsCaptureChances() {
             description:
               "Wild Pokemon's level is < 31 (more effective against lower levels)",
             captureChances: calculateCaptureChances(
-              pokemon.level! < 31 ? (41 - pokemon.level!) / 10 : 1
+              wildPokemon.level! < 31 ? (41 - wildPokemon.level!) / 10 : 1
             ),
           },
           {

@@ -9,15 +9,17 @@ const PokeBallIcon = styled.img`
 
 function SelectedBallCaptureChance() {
   const ballUsed = useAppSelector((state) => state.catchingSimulator.pokeball);
-  const pokemon = useAppSelector((state) => state.catchingSimulator.pokemon);
+  const wildPokemon = useAppSelector(
+    (state) => state.catchingSimulator.wildPokemon
+  );
   const statusCondition = useAppSelector((state) =>
     state.catchingSimulator.status?.toLowerCase()
   );
   const [storyCompleted, setStoryCompleted] = useState(true);
   const currentLevel = useAppSelector(
-    (state) => state.catchingSimulator.pokemon.level
+    (state) => state.catchingSimulator.wildPokemon.level
   )!;
-  const catchRate = pokemon.catchRate;
+  const catchRate = wildPokemon.catchRate;
   const maximumHP = useAppSelector(
     (state) => state.catchingSimulator.hp.maximumHP
   );
@@ -32,7 +34,7 @@ function SelectedBallCaptureChance() {
     'Aww! It appeared to be caught!',
     'Aargh! Almost had it!',
     'Gah! It was so close, too!',
-    'Gotcha! ' + pokemon.name + ' was caught!',
+    'Gotcha! ' + wildPokemon.name + ' was caught!',
   ];
 
   useEffect(() => {
@@ -42,9 +44,9 @@ function SelectedBallCaptureChance() {
   function calculateBallBonus() {
     switch (ballUsed) {
       case 'Heavy Ball':
-        if (pokemon.weight! >= 300) {
+        if (wildPokemon.weight! >= 300) {
           return 30;
-        } else if (pokemon.weight! >= 200 && pokemon.weight! < 300) {
+        } else if (wildPokemon.weight! >= 200 && wildPokemon.weight! < 300) {
           return 20;
         }
         return 1;
@@ -60,7 +62,7 @@ function SelectedBallCaptureChance() {
 
       case 'Net Ball': {
         const pokemonIsBugOrWaterType =
-          pokemon.types!.filter(
+          wildPokemon.types!.filter(
             (type) => type.type.name === 'water' || type.type.name === 'bug'
           ).length !== 0;
 
@@ -74,8 +76,8 @@ function SelectedBallCaptureChance() {
         return 1;
 
       case 'Nest Ball': {
-        if (pokemon.level! < 31) {
-          return (41 - pokemon.level!) / 10;
+        if (wildPokemon.level! < 31) {
+          return (41 - wildPokemon.level!) / 10;
         }
         return 1;
       }
@@ -113,7 +115,7 @@ function SelectedBallCaptureChance() {
           'Skitty',
           'Munna',
         ];
-        const isMoonStonepokemon = moonStonePokemon.includes(pokemon.name!);
+        const isMoonStonepokemon = moonStonePokemon.includes(wildPokemon.name!);
 
         if (isMoonStonepokemon) {
           return 4;
@@ -134,7 +136,7 @@ function SelectedBallCaptureChance() {
           'Stakataka',
           'Blacephalon',
         ];
-        const isUltraBeast = ultraBeastPokemon.includes(pokemon.name!);
+        const isUltraBeast = ultraBeastPokemon.includes(wildPokemon.name!);
 
         if (isUltraBeast) {
           return 5;

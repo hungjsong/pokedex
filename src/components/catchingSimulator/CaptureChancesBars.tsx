@@ -38,13 +38,15 @@ type CaptureChanceBarsProps = {
 };
 
 function CaptureChancesBars(props: CaptureChanceBarsProps) {
-  const pokemon = useAppSelector((state) => state.catchingSimulator.pokemon);
+  const wildPokemon = useAppSelector(
+    (state) => state.catchingSimulator.wildPokemon
+  );
   const captureQuotes = [
     'Oh no! The Pokémon broke free!',
     'Aww! It appeared to be caught!',
     'Aargh! Almost had it!',
     'Gah! It was so close, too!',
-    'Gotcha! ' + pokemon.name + ' was caught!',
+    'Gotcha! ' + wildPokemon.name + ' was caught!',
   ];
 
   function displayCaptureChances() {

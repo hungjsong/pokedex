@@ -4,8 +4,10 @@ import { useAppSelector } from '../../hooks';
 
 function WildPokemonLevel() {
   const dispatch = useDispatch();
-  const pokemon = useAppSelector((state) => state.catchingSimulator.pokemon);
-  const currentLevel = pokemon.level!;
+  const wildPokemon = useAppSelector(
+    (state) => state.catchingSimulator.wildPokemon
+  );
+  const currentLevel = wildPokemon.level!;
 
   return (
     <label>

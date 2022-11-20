@@ -2,15 +2,18 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { Pokemon } from '../types/pokemonTypes';
 import { calculateStatValues } from '../utilityFunctions';
 
+type UserPokemon = { name: string; id: number; level: number; gender: string };
+
 interface CatchingSimulatorState {
-  pokemon: Pokemon;
+  wildPokemon: Pokemon;
+  userPokemon: UserPokemon;
   status?: string;
   pokeball: string;
   hp: { currentHP: number; maximumHP: number };
 }
 
 const initialState: CatchingSimulatorState = {
-  pokemon: {
+  wildPokemon: {
     name: 'Bulbasaur',
     id: 1,
     level: 1,
@@ -60,6 +63,12 @@ const initialState: CatchingSimulatorState = {
     catchRate: 45,
     weight: 6.9,
   },
+  userPokemon: {
+    name: 'Bulbasaur',
+    id: 1,
+    level: 1,
+    gender: 'Male',
+  },
   status: undefined,
   pokeball: 'Poke Ball',
   hp: { currentHP: 12, maximumHP: 12 },
@@ -70,7 +79,7 @@ export const catchingSimulatorSlice = createSlice({
   initialState,
   reducers: {
     setPokemon: (state, action) => {
-      state.pokemon = action.payload;
+      state.wildPokemon = action.payload;
     },
     setStatus: (
       state,
@@ -87,8 +96,8 @@ export const catchingSimulatorSlice = createSlice({
     },
     setLevel: (state, action: PayloadAction<{ level: number }>) => {
       const { level } = action.payload;
-      const maximumHP = calculateStatValues(state.pokemon, level).hp;
-      state.pokemon.level = level;
+      const maximumHP = calculateStatValues(state.wildPokemon, level).hp;
+      state.wildPokemon.level = level;
       state.hp.maximumHP = maximumHP;
       state.hp.currentHP = maximumHP;
     },
