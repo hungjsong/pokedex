@@ -1,6 +1,11 @@
 import { useEffect, useState } from 'react';
+import styled from 'styled-components';
 import { useAppSelector } from '../../hooks';
 import CaptureChancesBars from './CaptureChancesBars';
+
+const PokeBallIcon = styled.img`
+  vertical-align: middle;
+`;
 
 function SelectedBallCaptureChance() {
   const ballUsed = useAppSelector((state) => state.catchingSimulator.pokeball);
@@ -233,6 +238,13 @@ function SelectedBallCaptureChance() {
 
   return (
     <>
+      <PokeBallIcon
+        src={
+          'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/' +
+          ballUsed.toLowerCase().split(' ').join('-') +
+          '.png'
+        }
+      />
       {ballUsed}'s Capture Chances
       <br />
       <CaptureChancesBars captureChances={calculateCaptureChances()} />
