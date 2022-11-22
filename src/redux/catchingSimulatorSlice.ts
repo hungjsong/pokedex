@@ -11,6 +11,7 @@ interface CatchingSimulatorState {
   pokeball: string;
   hp: { currentHP: number; maximumHP: number };
   encounterMethod: string;
+  timeOfDay: string;
 }
 
 const initialState: CatchingSimulatorState = {
@@ -74,6 +75,7 @@ const initialState: CatchingSimulatorState = {
   pokeball: 'Poke Ball',
   hp: { currentHP: 12, maximumHP: 12 },
   encounterMethod: 'Grass',
+  timeOfDay: 'Day',
 };
 
 export const catchingSimulatorSlice = createSlice({
@@ -131,6 +133,10 @@ export const catchingSimulatorSlice = createSlice({
       const { encounterMethod } = action.payload;
       state.encounterMethod = encounterMethod;
     },
+    setTimeOfDay: (state, action: PayloadAction<{ time: string }>) => {
+      const { time } = action.payload;
+      state.timeOfDay = time;
+    },
   },
 });
 
@@ -141,5 +147,6 @@ export const {
   setGender,
   setCurrentHP,
   setEncounterMethod,
+  setTimeOfDay,
 } = catchingSimulatorSlice.actions;
 export default catchingSimulatorSlice.reducer;
