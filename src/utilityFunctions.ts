@@ -1,7 +1,6 @@
 import {
   Genus,
   Pokemon,
-  PokemonNature,
   PokemonType,
   SpeciesDetails,
   statType,
