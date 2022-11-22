@@ -10,6 +10,7 @@ interface CatchingSimulatorState {
   status?: string;
   pokeball: string;
   hp: { currentHP: number; maximumHP: number };
+  encounterMethod: string;
 }
 
 const initialState: CatchingSimulatorState = {
@@ -72,6 +73,7 @@ const initialState: CatchingSimulatorState = {
   status: undefined,
   pokeball: 'Poke Ball',
   hp: { currentHP: 12, maximumHP: 12 },
+  encounterMethod: 'Grass',
 };
 
 export const catchingSimulatorSlice = createSlice({
@@ -122,9 +124,22 @@ export const catchingSimulatorSlice = createSlice({
       const { currentHP } = action.payload;
       state.hp.currentHP = currentHP;
     },
+    setEncounterMethod: (
+      state,
+      action: PayloadAction<{ encounterMethod: string }>
+    ) => {
+      const { encounterMethod } = action.payload;
+      state.encounterMethod = encounterMethod;
+    },
   },
 });
 
-export const { setStatus, setPokeBall, setLevel, setGender, setCurrentHP } =
-  catchingSimulatorSlice.actions;
+export const {
+  setStatus,
+  setPokeBall,
+  setLevel,
+  setGender,
+  setCurrentHP,
+  setEncounterMethod,
+} = catchingSimulatorSlice.actions;
 export default catchingSimulatorSlice.reducer;
