@@ -118,9 +118,13 @@ export const catchingSimulatorSlice = createSlice({
         ? (state.wildPokemon.gender = gender)
         : (state.userPokemon.gender = gender);
     },
+    setCurrentHP: (state, action: PayloadAction<{ currentHP: number }>) => {
+      const { currentHP } = action.payload;
+      state.hp.currentHP = currentHP;
+    },
   },
 });
 
-export const { setStatus, setPokeBall, setLevel, setGender } =
+export const { setStatus, setPokeBall, setLevel, setGender, setCurrentHP } =
   catchingSimulatorSlice.actions;
 export default catchingSimulatorSlice.reducer;
