@@ -109,9 +109,18 @@ export const catchingSimulatorSlice = createSlice({
         state.userPokemon.level = level;
       }
     },
+    setGender: (
+      state,
+      action: PayloadAction<{ gender: string; isWild: boolean }>
+    ) => {
+      const { gender, isWild } = action.payload;
+      isWild
+        ? (state.wildPokemon.gender = gender)
+        : (state.userPokemon.gender = gender);
+    },
   },
 });
 
-export const { setStatus, setPokeBall, setLevel } =
+export const { setStatus, setPokeBall, setLevel, setGender } =
   catchingSimulatorSlice.actions;
 export default catchingSimulatorSlice.reducer;
