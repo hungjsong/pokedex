@@ -6,20 +6,38 @@ import SelectedBallCaptureChance from './SelectedBallCaptureChance';
 import WildPokemonSettings from './Settings/WildPokemon/WildPokemonSettings';
 import UserPokemonSettings from './Settings/UserPokemon/UserPokemonSettings';
 import BattleSettings from './Settings/Battle/BattleSettings';
+import PokemonEncounter from './PokemonEncounter';
+import { useState } from 'react';
 
 function CatchingSimulator() {
+  const [encounterInProgress, setEncounterInProgress] = useState(false);
   const { t } = useTranslation();
+
+  function startEncounter() {
+    setEncounterInProgress(true);
+  }
 
   return (
     <>
       <h1>Catching Simulator</h1>
-      <PokeBallsList />
-      <BattleSettings />
-      <WildPokemonSettings />
-      <UserPokemonSettings />
-      <br />
-      <SelectedBallCaptureChance />
-      <AllBallsCaptureChances />
+      {!encounterInProgress && (
+        <>
+          <button onClick={startEncounter}>Start Encounter</button>
+          <BattleSettings />
+          <WildPokemonSettings />
+          <UserPokemonSettings />
+        </>
+      )}
+      {encounterInProgress && (
+        <>
+          <PokemonEncounter endEncounter={setEncounterInProgress} />
+          <PokeBallsList />
+          <br />
+          <SelectedBallCaptureChance />
+          <AllBallsCaptureChances />
+        </>
+      )}
+
       <nav>
         <Link to="/">{t('home')}</Link>
       </nav>

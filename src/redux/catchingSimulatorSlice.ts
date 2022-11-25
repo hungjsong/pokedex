@@ -12,6 +12,7 @@ interface CatchingSimulatorState {
   hp: { currentHP: number; maximumHP: number };
   encounterMethod: string;
   timeOfDay: string;
+  dialogBoxMessage: string;
 }
 
 const initialState: CatchingSimulatorState = {
@@ -76,6 +77,7 @@ const initialState: CatchingSimulatorState = {
   hp: { currentHP: 12, maximumHP: 12 },
   encounterMethod: 'Grass',
   timeOfDay: 'Day',
+  dialogBoxMessage: 'What will you do?',
 };
 
 export const catchingSimulatorSlice = createSlice({
@@ -137,6 +139,13 @@ export const catchingSimulatorSlice = createSlice({
       const { time } = action.payload;
       state.timeOfDay = time;
     },
+    setDialogBoxMessage: (
+      state,
+      action: PayloadAction<{ message: string }>
+    ) => {
+      const { message } = action.payload;
+      state.dialogBoxMessage = message;
+    },
   },
 });
 
@@ -148,5 +157,6 @@ export const {
   setCurrentHP,
   setEncounterMethod,
   setTimeOfDay,
+  setDialogBoxMessage,
 } = catchingSimulatorSlice.actions;
 export default catchingSimulatorSlice.reducer;
