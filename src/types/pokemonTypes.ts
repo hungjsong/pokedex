@@ -20,6 +20,16 @@ export type PokemonEntry = {
   types: PokemonType[];
   height: number;
   weight: number;
+  stats: APIStats[];
+};
+
+type APIStats = {
+  base_stat: number;
+  effort: number;
+  stat: {
+    name: string;
+    url: string;
+  };
 };
 
 export type Move = {
