@@ -1,5 +1,5 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { Pokemon } from '../types/pokemonTypes';
+import { createSlice, current, PayloadAction } from '@reduxjs/toolkit';
+import { Pokemon, PokemonEntry } from '../types/pokemonTypes';
 import { calculateStatValues } from '../utilityFunctions';
 
 type UserPokemon = { name: string; id: number; level: number; gender: string };
@@ -146,6 +146,35 @@ export const catchingSimulatorSlice = createSlice({
       const { message } = action.payload;
       state.dialogBoxMessage = message;
     },
+    setCatchingPokemonID: (
+      state,
+      action: PayloadAction<{ pokemon: PokemonEntry; isWild: boolean }>
+    ) => {
+      const { pokemon, isWild } = action.payload;
+      if (isWild) {
+        state.wildPokemon.name = pokemon.name;
+        state.wildPokemon.id = pokemon.id;
+        state.wildPokemon.types = pokemon.types;
+        state.wildPokemon.weight = pokemon.weight;
+        state.wildPokemon.baseStats = {
+          hp: pokemon.stats[0].base_stat,
+          atk: pokemon.stats[1].base_stat,
+          def: pokemon.stats[2].base_stat,
+          spAtk: pokemon.stats[3].base_stat,
+          spDef: pokemon.stats[4].base_stat,
+          spd: pokemon.stats[5].base_stat,
+        };
+        const newMaxHP = calculateStatValues(
+          state.wildPokemon,
+          state.wildPokemon.level!
+        ).hp;
+        state.hp.maximumHP = newMaxHP;
+        state.hp.currentHP = newMaxHP;
+      } else {
+        state.userPokemon.id = pokemon.id;
+        state.userPokemon.name = pokemon.name;
+      }
+    },
   },
 });
 
@@ -158,5 +187,6 @@ export const {
   setEncounterMethod,
   setTimeOfDay,
   setDialogBoxMessage,
+  setCatchingPokemonID,
 } = catchingSimulatorSlice.actions;
 export default catchingSimulatorSlice.reducer;
