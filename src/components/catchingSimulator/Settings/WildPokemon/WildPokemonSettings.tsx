@@ -1,4 +1,5 @@
 import AdjustSimulatorPokemonLevel from '../../AdjustSimulatorPokemonLevel';
+import CatchingPokemonList from '../../CatchingPokemonList';
 import SimulatorPokemonGender from '../../SimulatorPokemonGender';
 import StatusesList from '../../StatusesList';
 import WildPokemonHP from '../../WildPokemonHP';
@@ -7,6 +8,7 @@ function WildPokemonSettings() {
   return (
     <>
       <h3>Wild Pokemon Settings</h3>
+      <CatchingPokemonList isWild={true} />
       <StatusesList />
       <br />
       <WildPokemonHP />
