@@ -29,7 +29,7 @@ export type GetAllPokemonResponse = [
 ];
 
 export const getAllPokemon = (): Promise<GetAllPokemonResponse> => {
-  return fetch('https://pokeapi.co/api/v2/pokemon?limit=100000&offset=0')
+  return fetch('https://pokeapi.co/api/v2/pokemon?limit=898&offset=0')
     .then((response) => response.json())
     .then((allpokemon) => allpokemon.results)
     .catch((error) => {
