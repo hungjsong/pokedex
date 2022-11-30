@@ -1,6 +1,5 @@
 import { calculateShakeHoldSuccessRate } from '../../utilityFunctions';
 import { useAppSelector } from '../../hooks';
-import { useEffect, useState } from 'react';
 import CaptureChancesBars from './CaptureChancesBars';
 import styled from 'styled-components';
 
@@ -10,19 +9,6 @@ const PokeBallIcon = styled.img`
 
 function SelectedBallCaptureChance() {
   const ballUsed = useAppSelector((state) => state.catchingSimulator.pokeball);
-  const statusCondition = useAppSelector((state) =>
-    state.catchingSimulator.status?.toLowerCase()
-  );
-  const currentLevel = useAppSelector(
-    (state) => state.catchingSimulator.wildPokemon.level
-  )!;
-  const [captureChances, setCaptureChances] = useState<{ chance: number }[]>(
-    []
-  );
-
-  useEffect(() => {
-    setCaptureChances(calculateCaptureChances());
-  }, [currentLevel, statusCondition, ballUsed]);
 
   function calculateCaptureChances() {
     const shakeHoldSuccessRate = calculateShakeHoldSuccessRate() / 65536;
@@ -68,7 +54,7 @@ function SelectedBallCaptureChance() {
       />
       {ballUsed}'s Capture Chances
       <br />
-      <CaptureChancesBars captureChances={captureChances} />
+      <CaptureChancesBars captureChances={calculateCaptureChances()} />
     </>
   );
 }

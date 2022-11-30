@@ -37,6 +37,7 @@ type PokemonEncounterProps = {
 
 function PokemonEncounter(props: PokemonEncounterProps) {
   const dispatch = useAppDispatch();
+  const shakeHoldSuccessRate = calculateShakeHoldSuccessRate();
   const [catchSuccessful, setCatchSuccessful] = useState(false);
   const [turn, setTurn] = useState(1);
   const ballUsed = useAppSelector((state) => state.catchingSimulator.pokeball);
@@ -62,7 +63,6 @@ function PokemonEncounter(props: PokemonEncounterProps) {
   }
 
   function throwBall() {
-    const shakeHoldSuccessRate = calculateShakeHoldSuccessRate();
     let numOfShakes = 0;
     let pokeBallStillHolding = true;
     let ballHoldingMessage = '.';
