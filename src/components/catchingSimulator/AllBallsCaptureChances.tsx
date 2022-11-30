@@ -1,7 +1,7 @@
 import CaptureChancesBars from './CaptureChancesBars';
 import styled from 'styled-components';
 import { useAppSelector } from '../../hooks';
-import { useState } from 'react';
+import { calculateFinalCaptureRateGen8 } from '../../utilityFunctions';
 
 const AllBallsCaptureChancesTable = styled.table`
   margin-left: auto;
@@ -36,23 +36,9 @@ const TableHead = styled.thead`
 `;
 
 function AllBallsCaptureChances() {
+  const turn = useAppSelector((state) => state.catchingSimulator.currentTurn);
   const wildPokemon = useAppSelector(
     (state) => state.catchingSimulator.wildPokemon
-  );
-  const statusCondition = useAppSelector((state) =>
-    state.catchingSimulator.status?.toLowerCase()
-  );
-  const [storyCompleted, setStoryCompleted] = useState(true);
-  const catchRate = wildPokemon.catchRate;
-  const turn = 1;
-  const currentLevel = useAppSelector(
-    (state) => state.catchingSimulator.wildPokemon.level
-  )!;
-  const maximumHP = useAppSelector(
-    (state) => state.catchingSimulator.hp.maximumHP
-  );
-  const currentHP = useAppSelector(
-    (state) => state.catchingSimulator.hp.currentHP
   );
   const allBallsCaptureChances = calculateAllBallsSuccessRate();
 
@@ -116,44 +102,8 @@ function AllBallsCaptureChances() {
     );
   }
 
-  function calculateStatusConditionModifier() {
-    if (statusCondition === 'asleep' || statusCondition === 'frozen') {
-      return 2.5;
-    } else if (
-      statusCondition === 'poisoned' ||
-      statusCondition === 'paralyzed' ||
-      statusCondition === 'burned'
-    ) {
-      return 1.5;
-    }
-    return 1;
-  }
-
-  function calculateDifficultyModifier() {
-    if (!storyCompleted) {
-      return 410 / 4096;
-    } else {
-      return 1;
-    }
-  }
-
   function calculateCaptureChances(ballBonus: number) {
-    const grassModifier = 1;
-    const statusConditionModifier = calculateStatusConditionModifier();
-    const lowLevelModifier = currentLevel < 20 ? (30 - currentLevel) / 10 : 1;
-    const difficultyModifier = calculateDifficultyModifier();
-    const isHeavyBall = [-20, 0, 20, 30].includes(ballBonus);
-
-    const finalCaptureRate =
-      (((3 * maximumHP - 2 * currentHP) *
-        grassModifier *
-        (isHeavyBall === true ? ballBonus + catchRate! : catchRate!) *
-        (isHeavyBall === true ? 1 : ballBonus)) /
-        (3 * maximumHP)) *
-      lowLevelModifier *
-      statusConditionModifier *
-      difficultyModifier;
-
+    const finalCaptureRate = calculateFinalCaptureRateGen8(ballBonus);
     const shakeHoldSuccessRate =
       Math.floor(65536 / Math.pow(255 / finalCaptureRate, 3 / 16)) / 65536;
 
