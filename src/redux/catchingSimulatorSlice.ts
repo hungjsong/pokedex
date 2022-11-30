@@ -13,6 +13,7 @@ interface CatchingSimulatorState {
   encounterMethod: string;
   timeOfDay: string;
   dialogBoxMessage: string;
+  currentTurn: number;
 }
 
 const initialState: CatchingSimulatorState = {
@@ -78,6 +79,7 @@ const initialState: CatchingSimulatorState = {
   encounterMethod: 'Grass',
   timeOfDay: 'Day',
   dialogBoxMessage: 'What will you do?',
+  currentTurn: 1,
 };
 
 export const catchingSimulatorSlice = createSlice({
@@ -175,6 +177,10 @@ export const catchingSimulatorSlice = createSlice({
         state.userPokemon.name = pokemon.name;
       }
     },
+    setCurrentTurn: (state, action: PayloadAction<{ turn: number }>) => {
+      const { turn } = action.payload;
+      state.currentTurn = turn;
+    },
   },
 });
 
@@ -188,5 +194,6 @@ export const {
   setTimeOfDay,
   setDialogBoxMessage,
   setCatchingPokemonID,
+  setCurrentTurn,
 } = catchingSimulatorSlice.actions;
 export default catchingSimulatorSlice.reducer;
