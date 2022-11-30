@@ -18,8 +18,8 @@ const GrassTerain = styled.span`
   margin-right: auto;
 `;
 
-const Pokemon = styled.span<{ pokemonID: number }>`
-  float: left;
+const WildPokemon = styled.span<{ pokemonID: number }>`
+  float: right;
   background-image: url(https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${(
     props
   ) => props.pokemonID}.png);
@@ -27,8 +27,22 @@ const Pokemon = styled.span<{ pokemonID: number }>`
   background-repeat: no-repeat;
   width: 100px;
   height: 100px;
-  margin-left: 145px;
   margin-top: 23px;
+  margin-right: 10px;
+`;
+
+const UserPokemon = styled.span<{ pokemonID: number }>`
+  float: left;
+  background-image: url(https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/${(
+    props
+  ) => props.pokemonID}.png);
+  background-size: 100px;
+  background-repeat: no-repeat;
+  width: 100px;
+  height: 100px;
+  margin-top: 70px;
+  margin-left: 15px;
+}
 `;
 
 type PokemonEncounterProps = {
@@ -43,6 +57,9 @@ function PokemonEncounter(props: PokemonEncounterProps) {
   const ballUsed = useAppSelector((state) => state.catchingSimulator.pokeball);
   const wildPokemon = useAppSelector(
     (state) => state.catchingSimulator.wildPokemon
+  );
+  const userPokemon = useAppSelector(
+    (state) => state.catchingSimulator.userPokemon
   );
   const captureQuotes = [
     'Oh no! The Pokémon broke free!',
@@ -95,8 +112,10 @@ function PokemonEncounter(props: PokemonEncounterProps) {
     <>
       Turn {turn}
       <GrassTerain>
-        <Pokemon pokemonID={wildPokemon.id!} />
+        <WildPokemon pokemonID={wildPokemon.id!} />
+        <UserPokemon pokemonID={userPokemon.id} />
       </GrassTerain>
+      <br />
       <DialogBox />
       {!catchSuccessful && <button onClick={throwBall}>Throw</button>}
       <button onClick={runAway}>
