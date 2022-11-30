@@ -14,6 +14,8 @@ interface CatchingSimulatorState {
   timeOfDay: string;
   dialogBoxMessage: string;
   currentTurn: number;
+  storyCompleted: boolean;
+  previouslyCaught: boolean;
 }
 
 const initialState: CatchingSimulatorState = {
@@ -80,6 +82,8 @@ const initialState: CatchingSimulatorState = {
   timeOfDay: 'Day',
   dialogBoxMessage: 'What will you do?',
   currentTurn: 1,
+  storyCompleted: true,
+  previouslyCaught: false,
 };
 
 export const catchingSimulatorSlice = createSlice({
@@ -181,10 +185,25 @@ export const catchingSimulatorSlice = createSlice({
         state.userPokemon.id = pokemon.id;
         state.userPokemon.name = pokemon.name;
       }
+      state.previouslyCaught = false;
     },
     setCurrentTurn: (state, action: PayloadAction<{ turn: number }>) => {
       const { turn } = action.payload;
       state.currentTurn = turn;
+    },
+    setPreviouslyCaught: (
+      state,
+      action: PayloadAction<{ previouslyCaught: boolean }>
+    ) => {
+      const { previouslyCaught } = action.payload;
+      state.previouslyCaught = previouslyCaught;
+    },
+    setStoryCompletion: (
+      state,
+      action: PayloadAction<{ completionStatus: boolean }>
+    ) => {
+      const { completionStatus } = action.payload;
+      state.storyCompleted = completionStatus;
     },
   },
 });
@@ -200,5 +219,7 @@ export const {
   setDialogBoxMessage,
   setCatchingPokemonID,
   setCurrentTurn,
+  setPreviouslyCaught,
+  setStoryCompletion,
 } = catchingSimulatorSlice.actions;
 export default catchingSimulatorSlice.reducer;

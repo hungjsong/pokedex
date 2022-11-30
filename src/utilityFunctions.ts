@@ -230,9 +230,17 @@ export function calculateStatusConditionModifier() {
 }
 
 export function calculateDifficultyModifier() {
-  const storyCompleted = true;
+  const storyCompleted = useAppSelector(
+    (state) => state.catchingSimulator.storyCompleted
+  );
+  const wildPokemonLevel = useAppSelector(
+    (state) => state.catchingSimulator.wildPokemon.level!
+  );
+  const userPokemonLevel = useAppSelector(
+    (state) => state.catchingSimulator.userPokemon.level
+  );
 
-  if (!storyCompleted) {
+  if (!storyCompleted && userPokemonLevel < wildPokemonLevel) {
     return 410 / 4096;
   } else {
     return 1;

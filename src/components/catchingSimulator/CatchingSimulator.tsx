@@ -8,6 +8,7 @@ import UserPokemonSettings from './Settings/UserPokemon/UserPokemonSettings';
 import BattleSettings from './Settings/Battle/BattleSettings';
 import PokemonEncounter from './PokemonEncounter';
 import { useState } from 'react';
+import OtherSettings from './Settings/Other/OtherSettings';
 
 function CatchingSimulator() {
   const [encounterInProgress, setEncounterInProgress] = useState(false);
@@ -26,6 +27,7 @@ function CatchingSimulator() {
           <BattleSettings />
           <WildPokemonSettings />
           <UserPokemonSettings />
+          <OtherSettings />
         </>
       )}
       {encounterInProgress && (
