@@ -1,6 +1,10 @@
 import { capitalize } from '../../utilityFunctions';
 import { ChangeEvent, useEffect, useState } from 'react';
-import { getAllPokemon, getPokedexEntry } from '../../API/pokemon';
+import {
+  getAllPokemon,
+  getPokedexEntry,
+  getSpeciesDetails,
+} from '../../API/pokemon';
 import { setCatchingPokemonID } from '../../redux/catchingSimulatorSlice';
 import { setPokemonList } from '../../redux/pokedexSlice';
 import { useAppDispatch, useAppSelector } from '../../hooks';
@@ -17,13 +21,9 @@ function CatchingPokemonList(props: CatchingPokemonListTypes) {
   const pokemonList = useAppSelector((state) => state.pokedex.pokemonList);
 
   useEffect(() => {
-    getAllPokemon().then((allPokemon) => dispatch(setPokemonList(allPokemon)));
-
-    if (pokemonID !== '') {
-      getPokedexEntry(pokemonID).then((pokedexEntry) =>
-        dispatch(
-          setCatchingPokemonID({ pokemon: pokedexEntry, isWild: props.isWild })
-        )
+    if (pokemonList === null) {
+      getAllPokemon().then((allPokemon) =>
+        dispatch(setPokemonList(allPokemon))
       );
     }
   }, [pokemonID]);
@@ -61,6 +61,18 @@ function CatchingPokemonList(props: CatchingPokemonListTypes) {
               key={pokemon.name}
               onMouseDown={() => {
                 setPokemonID(pokemon.name);
+                getPokedexEntry(pokemon.name).then((pokedexEntry) =>
+                  getSpeciesDetails(pokemon.name).then((speciesDetails) => {
+                    pokedexEntry.weight = (pokedexEntry.weight * 100) / 1000;
+                    dispatch(
+                      setCatchingPokemonID({
+                        pokemon: pokedexEntry,
+                        captureRate: speciesDetails.capture_rate,
+                        isWild: props.isWild,
+                      })
+                    );
+                  })
+                );
               }}
             >
               <img

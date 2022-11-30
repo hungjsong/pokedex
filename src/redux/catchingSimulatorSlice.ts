@@ -150,14 +150,19 @@ export const catchingSimulatorSlice = createSlice({
     },
     setCatchingPokemonID: (
       state,
-      action: PayloadAction<{ pokemon: PokemonEntry; isWild: boolean }>
+      action: PayloadAction<{
+        pokemon: PokemonEntry;
+        captureRate: number;
+        isWild: boolean;
+      }>
     ) => {
-      const { pokemon, isWild } = action.payload;
+      const { pokemon, captureRate, isWild } = action.payload;
       if (isWild) {
         state.wildPokemon.name = pokemon.name;
         state.wildPokemon.id = pokemon.id;
         state.wildPokemon.types = pokemon.types;
         state.wildPokemon.weight = pokemon.weight;
+        state.wildPokemon.catchRate = captureRate;
         state.wildPokemon.baseStats = {
           hp: pokemon.stats[0].base_stat,
           atk: pokemon.stats[1].base_stat,
