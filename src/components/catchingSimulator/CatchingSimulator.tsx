@@ -34,10 +34,9 @@ function CatchingSimulator() {
           <PokeBallsList />
           <br />
           <SelectedBallCaptureChance />
-          <AllBallsCaptureChances />
         </>
       )}
-
+      <AllBallsCaptureChances />
       <nav>
         <Link to="/">{t('home')}</Link>
       </nav>
