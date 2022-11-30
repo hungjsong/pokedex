@@ -78,6 +78,9 @@ export const calculateStatValues = (pokemon: Pokemon, level: number) => {
 };
 
 export function calculateBallBonus(ballUsed: string) {
+  const userPokemon = useAppSelector(
+    (state) => state.catchingSimulator.userPokemon
+  );
   const wildPokemon = useAppSelector(
     (state) => state.catchingSimulator.wildPokemon
   );
@@ -90,6 +93,9 @@ export function calculateBallBonus(ballUsed: string) {
   const timeOfDay = useAppSelector(
     (state) => state.catchingSimulator.timeOfDay
   );
+  const numOfTurns = useAppSelector(
+    (state) => state.catchingSimulator.currentTurn
+  );
 
   switch (ballUsed) {
     case 'Heavy Ball':
@@ -97,8 +103,10 @@ export function calculateBallBonus(ballUsed: string) {
         return 30;
       } else if (wildPokemon.weight! >= 200 && wildPokemon.weight! < 300) {
         return 20;
+      } else if (wildPokemon.weight! >= 100 && wildPokemon.weight! < 200) {
+        return 0;
       }
-      return 1;
+      return -20;
     case 'Great Ball':
       return 1.5;
 
@@ -132,32 +140,59 @@ export function calculateBallBonus(ballUsed: string) {
       return 1;
     }
 
-    case 'Repeat Ball':
-      //To implement later. If Pokemon is registered as caught in Pokedex, return 3.5
+    case 'Repeat Ball': {
+      const previouslyCaught = useAppSelector(
+        (state) => state.catchingSimulator.previouslyCaught
+      );
+
+      if (previouslyCaught) {
+        return 3.5;
+      }
       return 1;
-
-    case 'Timer Ball':
-      //To implement later. Requires turns variable.
-      return +(1 + (1 * 1229) / 4096).toPrecision(2);
-
-    case 'Quick Ball':
-      //To Implement later. If first turn, return 5.
-      return 5;
-
-    case 'Level Ball':
-      //To implement later. Requires calculating the difference between the levels of the wild pokemon and trainer's pokemon
+    }
+    case 'Timer Ball': {
+      return numOfTurns < 11
+        ? +(1 + numOfTurns * (1229 / 4096)).toPrecision(2)
+        : 4;
+    }
+    case 'Quick Ball': {
+      if (numOfTurns === 1) {
+        return 5;
+      }
       return 1;
-
-    case 'Love Ball':
-      //To implement later. Requires checking the genders of both the wild pokemon and trainer's pokemon
+    }
+    case 'Level Ball': {
+      if (Math.floor(userPokemon.level / 4) >= wildPokemon.level!) {
+        return 8;
+      } else if (Math.floor(userPokemon.level / 2) >= wildPokemon.level!) {
+        return 4;
+      } else if (userPokemon.level > wildPokemon.level!) {
+        return 2;
+      }
       return 1;
+    }
+    case 'Love Ball': {
+      const userPokemonGender = userPokemon.gender;
+      const userPokemonSpecies = userPokemon.id;
+      const wildPokemonGender = wildPokemon.gender;
+      const wildPokemonSpecies = wildPokemon.id;
+      const sameSpecies = wildPokemonSpecies === userPokemonSpecies;
+      const oppositeGender =
+        wildPokemonGender !== userPokemonGender &&
+        wildPokemonGender !== 'Genderless' &&
+        userPokemonGender !== 'Genderless';
 
-    case 'Lure Ball':
+      if (sameSpecies && oppositeGender) {
+        return 8;
+      }
+      return 1;
+    }
+    case 'Lure Ball': {
       if (encounterMethod === 'Fishing') {
         return 4;
       }
       return 1;
-
+    }
     case 'Moon Ball': {
       const moonStonePokemon = [
         'Nidorina',
@@ -176,19 +211,21 @@ export function calculateBallBonus(ballUsed: string) {
     }
     case 'Beast Ball': {
       const ultraBeastPokemon = [
-        'Nihilego',
-        'Buzzwole',
-        'Pheromosa',
-        'Xurkitree',
-        'Celesteela',
-        'Kartana',
-        'Guzzlord',
-        'Poipole',
-        'Naganadel',
-        'Stakataka',
-        'Blacephalon',
+        'nihilego',
+        'buzzwole',
+        'pheromosa',
+        'xurkitree',
+        'celesteela',
+        'kartana',
+        'guzzlord',
+        'poipole',
+        'naganadel',
+        'stakataka',
+        'blacephalon',
       ];
-      const isUltraBeast = ultraBeastPokemon.includes(wildPokemon.name!);
+      const isUltraBeast = ultraBeastPokemon.includes(
+        wildPokemon.name!.toLowerCase()
+      );
 
       if (isUltraBeast) {
         return 5;
@@ -196,17 +233,18 @@ export function calculateBallBonus(ballUsed: string) {
 
       return 410 / 4096;
     }
-    case 'Dream Ball':
+    case 'Dream Ball': {
       if (statusCondition === 'Asleep') {
         return 4;
       }
       return 1;
-    case 'Dusk Ball':
+    }
+    case 'Dusk Ball': {
       if (timeOfDay === 'Night' || encounterMethod === 'Cave') {
         return 3;
       }
       return 1;
-
+    }
     default:
       return 1;
   }
