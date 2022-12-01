@@ -7,5 +7,6 @@
   "viewPokedex": "View Pokédex Entries",
   "emptyPokedexInput": "*Please enter a Pokémon's number or name",
   "pokedexEntryNotFound": "*No Pokémon with that dex number or name has been found",
-  "teamBuilder": "Team Builder"
+  "teamBuilder": "Team Builder",
+  "catchingSimulator": "Catching Simulator"
 }

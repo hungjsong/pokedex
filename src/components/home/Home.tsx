@@ -10,6 +10,7 @@ function Home() {
       <nav>
         <Link to="/PokedexEntry">{t('viewPokedex')}</Link>
         <Link to="/TeamBuilder">{t('teamBuilder')}</Link>
+        <Link to="/CatchingSimulator">{t('catchingSimulator')}</Link>
       </nav>
     </div>
   );

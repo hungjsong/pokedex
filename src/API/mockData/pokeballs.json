@@ -1,0 +1,28 @@
+{
+  "payload": [
+    { "name": "Poke Ball", "catchRateModifier": 1 },
+    { "name": "Great Ball", "catchRateModifier": 1.5 },
+    { "name": "Ultra Ball", "catchRateModifier": 2 },
+    { "name": "Master Ball", "catchRateModifier": 255 },
+    { "name": "Safari Ball", "catchRateModifier": 1 },
+    { "name": "Fast Ball", "catchRateModifier": 1 },
+    { "name": "Level Ball", "catchRateModifier": 1 },
+    { "name": "Lure Ball", "catchRateModifier": 1 },
+    { "name": "Heavy Ball", "catchRateModifier": 1 },
+    { "name": "Love Ball", "catchRateModifier": 1 },
+    { "name": "Friend Ball", "catchRateModifier": 1 },
+    { "name": "Moon Ball", "catchRateModifier": 1 },
+    { "name": "Net Ball", "catchRateModifier": 1 },
+    { "name": "Dive Ball", "catchRateModifier": 1 },
+    { "name": "Nest Ball", "catchRateModifier": 1 },
+    { "name": "Repeat Ball", "catchRateModifier": 1 },
+    { "name": "Timer Ball", "catchRateModifier": 1.3 },
+    { "name": "Luxury Ball", "catchRateModifier": 1.5 },
+    { "name": "Premier Ball", "catchRateModifier": 1.5 },
+    { "name": "Dusk Ball", "catchRateModifier": 1 },
+    { "name": "Heal Ball", "catchRateModifier": 1 },
+    { "name": "Quick Ball", "catchRateModifier": 1 },
+    { "name": "Dream Ball", "catchRateModifier": 1 },
+    { "name": "Beast Ball", "catchRateModifier": 0.1 }
+  ]
+}

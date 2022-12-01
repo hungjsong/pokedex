@@ -20,6 +20,16 @@ export type PokemonEntry = {
   types: PokemonType[];
   height: number;
   weight: number;
+  stats: APIStats[];
+};
+
+type APIStats = {
+  base_stat: number;
+  effort: number;
+  stat: {
+    name: string;
+    url: string;
+  };
 };
 
 export type Move = {
@@ -45,7 +55,15 @@ export type Pokemon = {
   happiness?: number;
   shiny?: boolean;
   types?: PokemonType[];
-  nature?: string;
+  nature?: PokemonNature;
+  baseStats?: {
+    hp: number;
+    atk: number;
+    def: number;
+    spAtk: number;
+    spDef: number;
+    spd: number;
+  };
   iv?: {
     hp: number;
     atk: number;
@@ -62,6 +80,8 @@ export type Pokemon = {
     spDef: number;
     spd: number;
   };
+  catchRate?: number;
+  weight?: number;
 };
 
 export type Genus = {
@@ -85,4 +105,11 @@ export type PokemonNature = {
 export type Item = {
   name: string;
   description: string;
+};
+
+export type statType = 'hp' | 'atk' | 'def' | 'spAtk' | 'spDef' | 'spd';
+
+export type PokeBall = {
+  name: string;
+  catchRateModifier: number;
 };
