@@ -53,7 +53,7 @@ function AllBallsCaptureChances() {
           </tr>
         </TableHead>
         {allBallsCaptureChances.map((ball, allBallsIndex) => (
-          <TableBody index={allBallsIndex}>
+          <TableBody index={allBallsIndex} key={ball.name}>
             {ball.conditions.map((condition, index) => {
               const successRate =
                 condition.captureChances[4].chance > 100
@@ -62,7 +62,7 @@ function AllBallsCaptureChances() {
 
               if (index === 0) {
                 return (
-                  <tr>
+                  <tr key={condition.description + index}>
                     <HeaderCell rowSpan={ball.conditions.length}>
                       <PokeBallIcon
                         src={
@@ -84,7 +84,7 @@ function AllBallsCaptureChances() {
                 );
               } else {
                 return (
-                  <tr>
+                  <tr key={condition.description + index}>
                     <TableCell>
                       <CaptureChancesBars
                         captureChances={condition.captureChances}
