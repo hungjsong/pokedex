@@ -64,7 +64,7 @@ function PokedexEntry() {
     <div>
       <>
         <h1>
-          {capitalize(pokedexEntry.name)} #{('00' + pokedexEntry.id).slice(-3)}
+          {capitalize(pokedexEntry.name)} #{`00${pokedexEntry.id}`.slice(-3)}
         </h1>
         <h3>{getEnglishGenera(speciesDetails).genus}</h3>
       </>
@@ -85,8 +85,8 @@ function PokedexEntry() {
       </>
       <>
         <h3>{t('biometrics')}</h3>
-        {(pokedexEntry.height * 0.1).toFixed(1) + 'm'}{' '}
-        {(pokedexEntry.weight * 0.1).toFixed(1) + 'kg'}
+        {`${(pokedexEntry.height * 0.1).toFixed(1)} m 
+          ${(pokedexEntry.weight * 0.1).toFixed(1)} kg`}
       </>
       {errorMessage !== '' && <ErrorMessage>{errorMessage}</ErrorMessage>}
       <form onSubmit={handleSubmit}>

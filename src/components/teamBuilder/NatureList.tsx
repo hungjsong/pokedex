@@ -57,12 +57,12 @@ function NatureList(props: NatureListProps) {
               >
                 {capitalize(nature.name) + ' ('}
                 {nature.increased_stat !== null ? (
-                  <IncreasedStat>{'↑' + nature.increased_stat}</IncreasedStat>
+                  <IncreasedStat>{`↑ ${nature.increased_stat}`}</IncreasedStat>
                 ) : (
                   ''
                 )}
                 {nature.decreased_stat !== null ? (
-                  <DecreasedStat>{' ↓' + nature.decreased_stat}</DecreasedStat>
+                  <DecreasedStat>{` ↓ ${nature.decreased_stat}`}</DecreasedStat>
                 ) : (
                   'No Effect'
                 )}

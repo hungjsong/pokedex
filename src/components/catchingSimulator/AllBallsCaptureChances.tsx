@@ -37,7 +37,9 @@ const TableHead = styled.thead`
 `;
 
 function AllBallsCaptureChances() {
-  const turn = useAppSelector((state) => state.catchingSimulator.currentTurn);
+  const currentTurn = useAppSelector(
+    (state) => state.catchingSimulator.currentTurn
+  );
   const wildPokemon = useAppSelector(
     (state) => state.catchingSimulator.wildPokemon
   );
@@ -343,11 +345,10 @@ function AllBallsCaptureChances() {
         name: 'Timer Ball',
         conditions: [
           {
-            description:
-              'Capture chance scales with number of turns passed in battle. Caps at turn 11 (Current turn: ' +
-              turn +
-              ')',
-            captureChances: calculateCaptureChances(1 + (turn * 1229) / 4096),
+            description: `Capture chance scales with number of turns passed in battle. Caps at turn 11 (Current turn: ${currentTurn})`,
+            captureChances: calculateCaptureChances(
+              1 + (currentTurn * 1229) / 4096
+            ),
           },
         ],
       },

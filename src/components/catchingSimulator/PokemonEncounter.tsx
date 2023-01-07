@@ -67,7 +67,7 @@ function PokemonEncounter(props: PokemonEncounterProps) {
     'Aww! It appeared to be caught!',
     'Aargh! Almost had it!',
     'Gah! It was so close, too!',
-    'Gotcha! ' + wildPokemon.name + ' was caught!',
+    `Gotcha! ${wildPokemon.name} was caught!`,
   ];
 
   useEffect(() => {
@@ -85,9 +85,7 @@ function PokemonEncounter(props: PokemonEncounterProps) {
     let pokeBallStillHolding = true;
     let ballHoldingMessage = '.';
 
-    dispatch(
-      setDialogBoxMessage({ message: 'You used one ' + ballUsed + '!' })
-    );
+    dispatch(setDialogBoxMessage({ message: `You used one ${ballUsed}!` }));
 
     const shakeInterval = setInterval(function () {
       const shakeCheck = Math.floor(Math.random() * CAPTURE_RNG_RATE);

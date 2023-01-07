@@ -46,57 +46,49 @@ function CaptureChancesBars(props: CaptureChanceBarsProps) {
     'Aww! It appeared to be caught!',
     'Aargh! Almost had it!',
     'Gah! It was so close, too!',
-    'Gotcha! ' + wildPokemon.name + ' was caught!',
+    `Gotcha! ${wildPokemon.name} was caught!`,
   ];
 
   function displayCaptureChances() {
     return (
       <>
         <CaptureRateBar
-          title={
-            'Success: ' +
-            (props.captureChances[4].chance > 100
-              ? 100
-              : props.captureChances[4].chance) +
-            '% ' +
-            captureQuotes[4]
-          }
+          title={`Success: 
+            ${
+              props.captureChances[4].chance > 100
+                ? 100
+                : props.captureChances[4].chance
+            }
+            % 
+            ${captureQuotes[4]}`}
         >
           <Wobbles0
             barWidth={props.captureChances[0].chance}
-            title={
-              '0 Shakes: ' +
-              props.captureChances[0].chance +
-              '% ' +
-              captureQuotes[0]
-            }
+            title={`0 Shakes: 
+              ${props.captureChances[0].chance} 
+              % 
+              ${captureQuotes[0]}`}
           />
           <Wobbles1
             barWidth={props.captureChances[1].chance}
-            title={
-              '1 Shake: ' +
-              props.captureChances[1].chance +
-              '% ' +
-              captureQuotes[1]
-            }
+            title={`1 Shake: 
+              ${props.captureChances[1].chance} 
+              % 
+              ${captureQuotes[1]}`}
           />
           <Wobbles2
             barWidth={props.captureChances[2].chance}
-            title={
-              '2 Shakes: ' +
-              props.captureChances[2].chance +
-              '% ' +
-              captureQuotes[2]
-            }
+            title={`2 Shakes: 
+              ${props.captureChances[2].chance}
+              % 
+              ${captureQuotes[2]}`}
           />
           <Wobbles3
             barWidth={props.captureChances[3].chance}
-            title={
-              '3 Shakes: ' +
-              props.captureChances[3].chance +
-              '% ' +
-              captureQuotes[3]
-            }
+            title={`3 Shakes: 
+              ${props.captureChances[3].chance} 
+              % 
+              ${captureQuotes[3]}`}
           />
         </CaptureRateBar>
       </>
