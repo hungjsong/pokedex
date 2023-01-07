@@ -2,6 +2,7 @@ import CaptureChancesBars from './CaptureChancesBars';
 import styled from 'styled-components';
 import { useAppSelector } from '../../hooks';
 import { calculateFinalCaptureRateGen8 } from '../../utilityFunctions';
+import { CAPTURE_RNG_RATE } from '../../constants';
 
 const AllBallsCaptureChancesTable = styled.table`
   margin-left: auto;
@@ -105,7 +106,8 @@ function AllBallsCaptureChances() {
   function calculateCaptureChances(ballBonus: number) {
     const finalCaptureRate = calculateFinalCaptureRateGen8(ballBonus);
     const shakeHoldSuccessRate =
-      Math.floor(65536 / Math.pow(255 / finalCaptureRate, 3 / 16)) / 65536;
+      Math.floor(CAPTURE_RNG_RATE / Math.pow(255 / finalCaptureRate, 3 / 16)) /
+      CAPTURE_RNG_RATE;
 
     return [
       {

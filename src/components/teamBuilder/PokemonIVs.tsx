@@ -2,6 +2,10 @@ import { ChangeEvent } from 'react';
 import { useDispatch } from 'react-redux';
 import { setIV } from '../../redux/teamBuilderSlice';
 import { useAppSelector } from '../../hooks';
+import {
+  MAXIMUM_INDIVIDUAL_VALUES,
+  MINIMUM_INDIVIDUAL_VALUES,
+} from '../../constants';
 
 type PokemonIVsProps = {
   teamSlotNumber: number;
@@ -38,48 +42,48 @@ function PokemonIVs(props: PokemonIVsProps) {
         <input
           id="hp"
           type="number"
-          min="0"
-          max="31"
+          min={MINIMUM_INDIVIDUAL_VALUES}
+          max={MAXIMUM_INDIVIDUAL_VALUES}
           value={hpIV}
           onChange={handleIVChange}
         />
         <input
           id="atk"
           type="number"
-          min="0"
-          max="31"
+          min={MINIMUM_INDIVIDUAL_VALUES}
+          max={MAXIMUM_INDIVIDUAL_VALUES}
           value={atkIV}
           onChange={handleIVChange}
         />
         <input
           id="def"
           type="number"
-          min="0"
-          max="31"
+          min={MINIMUM_INDIVIDUAL_VALUES}
+          max={MAXIMUM_INDIVIDUAL_VALUES}
           value={defIV}
           onChange={handleIVChange}
         />
         <input
           id="spAtk"
           type="number"
-          min="0"
-          max="31"
+          min={MINIMUM_INDIVIDUAL_VALUES}
+          max={MAXIMUM_INDIVIDUAL_VALUES}
           value={spAtkIV}
           onChange={handleIVChange}
         />
         <input
           id="spDef"
           type="number"
-          min="0"
-          max="31"
+          min={MINIMUM_INDIVIDUAL_VALUES}
+          max={MAXIMUM_INDIVIDUAL_VALUES}
           value={spDefIV}
           onChange={handleIVChange}
         />
         <input
           id="spd"
           type="number"
-          min="0"
-          max="31"
+          min={MINIMUM_INDIVIDUAL_VALUES}
+          max={MAXIMUM_INDIVIDUAL_VALUES}
           value={spdIV}
           onChange={handleIVChange}
         />

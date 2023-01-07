@@ -7,6 +7,7 @@ import {
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import DialogBox from './DialogBox';
 import styled from 'styled-components';
+import { CAPTURE_RNG_RATE } from '../../constants';
 
 const GrassTerain = styled.span`
   display: block;
@@ -89,7 +90,7 @@ function PokemonEncounter(props: PokemonEncounterProps) {
     );
 
     const shakeInterval = setInterval(function () {
-      const shakeCheck = Math.floor(Math.random() * 65536);
+      const shakeCheck = Math.floor(Math.random() * CAPTURE_RNG_RATE);
       if (shakeCheck < shakeHoldSuccessRate) {
         numOfShakes > 0 ? (ballHoldingMessage = ballHoldingMessage + ' .') : '';
         dispatch(setDialogBoxMessage({ message: ballHoldingMessage }));

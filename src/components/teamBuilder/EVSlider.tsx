@@ -1,5 +1,6 @@
 import { ChangeEvent } from 'react';
 import { useDispatch } from 'react-redux';
+import { MAXIMUM_EFFORT_VALUES, MINIMUM_EFFORT_VALUES } from '../../constants';
 import { setEV } from '../../redux/teamBuilderSlice';
 
 type EVSliderProps = {
@@ -34,16 +35,16 @@ function EVSlider(props: EVSliderProps) {
       <input
         id={props.evName}
         type="number"
-        min="0"
-        max="252"
+        min={MINIMUM_EFFORT_VALUES}
+        max={MAXIMUM_EFFORT_VALUES}
         value={props.evStatValue}
         onChange={changeEV}
       />
       <input
         id={props.evName}
         type="range"
-        min="0"
-        max="252"
+        min={MINIMUM_EFFORT_VALUES}
+        max={MAXIMUM_EFFORT_VALUES}
         value={props.evStatValue}
         step="1"
         onInput={changeEV}

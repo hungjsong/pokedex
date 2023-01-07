@@ -2,6 +2,7 @@ import { calculateShakeHoldSuccessRate } from '../../utilityFunctions';
 import { useAppSelector } from '../../hooks';
 import CaptureChancesBars from './CaptureChancesBars';
 import styled from 'styled-components';
+import { CAPTURE_RNG_RATE } from '../../constants';
 
 const PokeBallIcon = styled.img`
   vertical-align: middle;
@@ -11,7 +12,8 @@ function SelectedBallCaptureChance() {
   const ballUsed = useAppSelector((state) => state.catchingSimulator.pokeball);
 
   function calculateCaptureChances() {
-    const shakeHoldSuccessRate = calculateShakeHoldSuccessRate() / 65536;
+    const shakeHoldSuccessRate =
+      calculateShakeHoldSuccessRate() / CAPTURE_RNG_RATE;
 
     return [
       {

@@ -2,6 +2,7 @@ import { ChangeEvent } from 'react';
 import { useDispatch } from 'react-redux';
 import { setHapppiness } from '../../redux/teamBuilderSlice';
 import { useAppSelector } from '../../hooks';
+import { MAXIMUM_HAPPINESS, MINIMUM_HAPPINESS } from '../../constants';
 
 type PokemonHappinessProps = {
   teamSlotNumber: number;
@@ -31,8 +32,8 @@ function PokemonHappiness(props: PokemonHappinessProps) {
       Happiness:
       <input
         type="number"
-        min="1"
-        max="255"
+        min={MINIMUM_HAPPINESS}
+        max={MAXIMUM_HAPPINESS}
         value={happiness}
         onChange={handleHappinessChange}
       />

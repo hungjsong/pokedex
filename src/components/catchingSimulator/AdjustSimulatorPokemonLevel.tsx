@@ -1,6 +1,7 @@
 import { setLevel } from '../../redux/catchingSimulatorSlice';
 import { useDispatch } from 'react-redux';
 import { useAppSelector } from '../../hooks';
+import { MAXIMUM_LEVEL, MINIMUM_LEVEL } from '../../constants';
 
 type AdjustSimulatorPokemonLevelProps = {
   isWild: boolean;
@@ -20,8 +21,8 @@ function AdjustSimulatorPokemonLevel(props: AdjustSimulatorPokemonLevelProps) {
       Level:
       <input
         type="number"
-        min="1"
-        max="100"
+        min={MINIMUM_LEVEL}
+        max={MAXIMUM_LEVEL}
         value={currentLevel}
         onChange={(event) => {
           const newLevel = +(event.target as HTMLInputElement).value;

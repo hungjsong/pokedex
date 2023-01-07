@@ -1,5 +1,6 @@
 import EVSlider from './EVSlider';
 import { useAppSelector } from '../../hooks';
+import { TOTAL_EFFORT_VALUES } from '../../constants';
 
 type EVSlidersProps = {
   teamSlotNumber: number;
@@ -13,7 +14,8 @@ function EVSliders(props: EVSlidersProps) {
   const spAtkEV = team[props.teamSlotNumber].ev!.spAtk;
   const spDefEV = team[props.teamSlotNumber].ev!.spDef;
   const spdEV = team[props.teamSlotNumber].ev!.spd;
-  const remainingEVs = 510 - (hpEV + atkEV + defEV + spAtkEV + spDefEV + spdEV);
+  const remainingEVs =
+    TOTAL_EFFORT_VALUES - (hpEV + atkEV + defEV + spAtkEV + spDefEV + spdEV);
 
   function displayEVSliders() {
     return (

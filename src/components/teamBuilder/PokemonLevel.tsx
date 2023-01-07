@@ -2,6 +2,7 @@ import { ChangeEvent } from 'react';
 import { useDispatch } from 'react-redux';
 import { setLevel } from '../../redux/teamBuilderSlice';
 import { useAppSelector } from '../../hooks';
+import { MAXIMUM_POKEMON_LEVEL, MINIMUM_POKEMON_LEVEL } from '../../constants';
 
 type PokemonLevelProps = {
   teamSlotNumber: number;
@@ -31,8 +32,8 @@ function PokemonLevel(props: PokemonLevelProps) {
       Level
       <input
         type="number"
-        min="1"
-        max="100"
+        min={MINIMUM_POKEMON_LEVEL}
+        max={MAXIMUM_POKEMON_LEVEL}
         value={level}
         onChange={handleChange}
       />
