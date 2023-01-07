@@ -22,13 +22,14 @@ function PokemonIVs(props: PokemonIVsProps) {
   const dispatch = useDispatch();
 
   function handleIVChange(event: ChangeEvent<HTMLInputElement>) {
-    const inputIV = +event.target.value;
+    const inputIV = Number(event.target.value);
     const validIV =
-      inputIV <= +event.target.max && inputIV >= +event.target.min;
+      inputIV <= Number(event.target.max) &&
+      inputIV >= Number(event.target.min);
     if (validIV) {
       dispatch(
         setIV({
-          ivInputValue: +event.target.value,
+          ivInputValue: Number(event.target.value),
           teamSlotNumber: props.teamSlotNumber,
           ivName: event.target.id,
         })

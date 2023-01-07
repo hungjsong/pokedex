@@ -14,9 +14,10 @@ function PokemonLevel(props: PokemonLevelProps) {
   const dispatch = useDispatch();
 
   function handleChange(event: ChangeEvent<HTMLInputElement>) {
-    const inputLevel = +event.target.value;
+    const inputLevel = Number(event.target.value);
     const validLevel =
-      inputLevel <= +event.target.max && inputLevel >= +event.target.min;
+      inputLevel <= Number(event.target.max) &&
+      inputLevel >= Number(event.target.min);
     if (validLevel) {
       dispatch(
         setLevel({

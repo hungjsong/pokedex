@@ -152,7 +152,7 @@ export function calculateBallBonus(ballUsed: string) {
     }
     case 'Timer Ball': {
       return numOfTurns < 11
-        ? +(1 + numOfTurns * (1229 / 4096)).toPrecision(2)
+        ? Number((1 + numOfTurns * (1229 / 4096)).toPrecision(2))
         : 4;
     }
     case 'Quick Ball': {

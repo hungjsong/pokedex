@@ -14,9 +14,10 @@ function PokemonHappiness(props: PokemonHappinessProps) {
   const dispatch = useDispatch();
 
   function handleHappinessChange(event: ChangeEvent<HTMLInputElement>) {
-    const happiness = +event.target.value;
+    const happiness = Number(event.target.value);
     const validHappinessEntered =
-      happiness <= +event.target.max && happiness >= +event.target.min;
+      happiness <= Number(event.target.max) &&
+      happiness >= Number(event.target.min);
     if (validHappinessEntered) {
       dispatch(
         setHapppiness({

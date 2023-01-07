@@ -17,30 +17,38 @@ function SelectedBallCaptureChance() {
 
     return [
       {
-        chance: +((1 - shakeHoldSuccessRate) * 100).toPrecision(4),
+        chance: Number(((1 - shakeHoldSuccessRate) * 100).toPrecision(4)),
       },
       {
-        chance: +(
-          (shakeHoldSuccessRate - Math.pow(shakeHoldSuccessRate, 2)) *
-          100
-        ).toPrecision(4),
+        chance: Number(
+          (
+            (shakeHoldSuccessRate - Math.pow(shakeHoldSuccessRate, 2)) *
+            100
+          ).toPrecision(4)
+        ),
       },
       {
-        chance: +(
-          (Math.pow(shakeHoldSuccessRate, 2) -
-            Math.pow(shakeHoldSuccessRate, 3)) *
-          100
-        ).toPrecision(4),
+        chance: Number(
+          (
+            (Math.pow(shakeHoldSuccessRate, 2) -
+              Math.pow(shakeHoldSuccessRate, 3)) *
+            100
+          ).toPrecision(4)
+        ),
       },
       {
-        chance: +(
-          (Math.pow(shakeHoldSuccessRate, 3) -
-            Math.pow(shakeHoldSuccessRate, 4)) *
-          100
-        ).toPrecision(4),
+        chance: Number(
+          (
+            (Math.pow(shakeHoldSuccessRate, 3) -
+              Math.pow(shakeHoldSuccessRate, 4)) *
+            100
+          ).toPrecision(4)
+        ),
       },
       {
-        chance: +(Math.pow(shakeHoldSuccessRate, 4) * 100).toPrecision(4),
+        chance: Number(
+          (Math.pow(shakeHoldSuccessRate, 4) * 100).toPrecision(4)
+        ),
       },
     ];
   }

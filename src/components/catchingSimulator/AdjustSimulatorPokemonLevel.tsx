@@ -25,7 +25,7 @@ function AdjustSimulatorPokemonLevel(props: AdjustSimulatorPokemonLevelProps) {
         max={MAXIMUM_LEVEL}
         value={currentLevel}
         onChange={(event) => {
-          const newLevel = +(event.target as HTMLInputElement).value;
+          const newLevel = Number((event.target as HTMLInputElement).value);
           dispatch(setLevel({ level: newLevel, isWild: props.isWild }));
         }}
       />

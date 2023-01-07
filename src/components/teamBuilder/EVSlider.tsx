@@ -14,15 +14,15 @@ function EVSlider(props: EVSliderProps) {
   const dispatch = useDispatch();
 
   function changeEV(event: ChangeEvent<HTMLInputElement>) {
-    const inputEV = +event.target.value;
+    const inputEV = Number(event.target.value);
     const validEV =
-      inputEV <= +event.target.max &&
-      inputEV >= +event.target.min &&
+      inputEV <= Number(event.target.max) &&
+      inputEV >= Number(event.target.min) &&
       inputEV - props.evStatValue <= props.remainingEVs;
     if (validEV) {
       dispatch(
         setEV({
-          evInputValue: +event.target.value,
+          evInputValue: Number(event.target.value),
           teamSlotNumber: props.teamSlotNumber,
           evName: props.evName,
         })

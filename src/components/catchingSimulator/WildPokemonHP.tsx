@@ -11,10 +11,10 @@ function WildPokemonHP() {
 
   function handleChange(event: ChangeEvent<HTMLInputElement>) {
     const validHPValue =
-      +event.target.value >= +event.target.min &&
-      +event.target.value <= +event.target.max;
+      Number(event.target.value) >= Number(event.target.min) &&
+      Number(event.target.value) <= Number(event.target.max);
     if (validHPValue) {
-      dispatch(setCurrentHP({ currentHP: +event.target.value }));
+      dispatch(setCurrentHP({ currentHP: Number(event.target.value) }));
     }
   }
 
