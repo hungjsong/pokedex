@@ -14,20 +14,14 @@ function EncounterMethodsList() {
     );
   }
 
-  function displayEncounterMethods() {
-    return (
+  return (
+    <label>
+      Encounter Method:
       <select onChange={handleChange}>
         {encounterMethods.map((methodName) => (
           <option key={methodName}>{methodName}</option>
         ))}
       </select>
-    );
-  }
-
-  return (
-    <label>
-      Encounter Method:
-      {displayEncounterMethods()}
     </label>
   );
 }

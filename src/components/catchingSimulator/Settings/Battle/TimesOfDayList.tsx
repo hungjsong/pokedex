@@ -14,20 +14,14 @@ function TimesOfDayList() {
     );
   }
 
-  function displayTimesOfDay() {
-    return (
+  return (
+    <label>
+      Time of Day:
       <select onChange={handleChange}>
         {timesOfDay.map((timeOfDay) => (
           <option key={timeOfDay}>{timeOfDay}</option>
         ))}
       </select>
-    );
-  }
-
-  return (
-    <label>
-      Time of Day:
-      {displayTimesOfDay()}
     </label>
   );
 }

@@ -39,62 +39,58 @@ function PokemonIVs(props: PokemonIVsProps) {
     }
   }
 
-  function displayIVs() {
-    return (
-      <>
-        <input
-          id="hp"
-          type="number"
-          min={MINIMUM_INDIVIDUAL_VALUES}
-          max={MAXIMUM_INDIVIDUAL_VALUES}
-          value={hpIV}
-          onChange={handleIVChange}
-        />
-        <input
-          id="atk"
-          type="number"
-          min={MINIMUM_INDIVIDUAL_VALUES}
-          max={MAXIMUM_INDIVIDUAL_VALUES}
-          value={atkIV}
-          onChange={handleIVChange}
-        />
-        <input
-          id="def"
-          type="number"
-          min={MINIMUM_INDIVIDUAL_VALUES}
-          max={MAXIMUM_INDIVIDUAL_VALUES}
-          value={defIV}
-          onChange={handleIVChange}
-        />
-        <input
-          id="spAtk"
-          type="number"
-          min={MINIMUM_INDIVIDUAL_VALUES}
-          max={MAXIMUM_INDIVIDUAL_VALUES}
-          value={spAtkIV}
-          onChange={handleIVChange}
-        />
-        <input
-          id="spDef"
-          type="number"
-          min={MINIMUM_INDIVIDUAL_VALUES}
-          max={MAXIMUM_INDIVIDUAL_VALUES}
-          value={spDefIV}
-          onChange={handleIVChange}
-        />
-        <input
-          id="spd"
-          type="number"
-          min={MINIMUM_INDIVIDUAL_VALUES}
-          max={MAXIMUM_INDIVIDUAL_VALUES}
-          value={spdIV}
-          onChange={handleIVChange}
-        />
-      </>
-    );
-  }
-
-  return displayIVs();
+  return (
+    <>
+      <input
+        id="hp"
+        type="number"
+        min={MINIMUM_INDIVIDUAL_VALUES}
+        max={MAXIMUM_INDIVIDUAL_VALUES}
+        value={hpIV}
+        onChange={handleIVChange}
+      />
+      <input
+        id="atk"
+        type="number"
+        min={MINIMUM_INDIVIDUAL_VALUES}
+        max={MAXIMUM_INDIVIDUAL_VALUES}
+        value={atkIV}
+        onChange={handleIVChange}
+      />
+      <input
+        id="def"
+        type="number"
+        min={MINIMUM_INDIVIDUAL_VALUES}
+        max={MAXIMUM_INDIVIDUAL_VALUES}
+        value={defIV}
+        onChange={handleIVChange}
+      />
+      <input
+        id="spAtk"
+        type="number"
+        min={MINIMUM_INDIVIDUAL_VALUES}
+        max={MAXIMUM_INDIVIDUAL_VALUES}
+        value={spAtkIV}
+        onChange={handleIVChange}
+      />
+      <input
+        id="spDef"
+        type="number"
+        min={MINIMUM_INDIVIDUAL_VALUES}
+        max={MAXIMUM_INDIVIDUAL_VALUES}
+        value={spDefIV}
+        onChange={handleIVChange}
+      />
+      <input
+        id="spd"
+        type="number"
+        min={MINIMUM_INDIVIDUAL_VALUES}
+        max={MAXIMUM_INDIVIDUAL_VALUES}
+        value={spdIV}
+        onChange={handleIVChange}
+      />
+    </>
+  );
 }
 
 export default PokemonIVs;

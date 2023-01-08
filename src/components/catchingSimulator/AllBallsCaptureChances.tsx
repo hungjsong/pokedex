@@ -43,70 +43,6 @@ function AllBallsCaptureChances() {
   const { level } = wildPokemon;
   const allBallsCaptureChances = calculateAllBallsSuccessRate();
 
-  function displayAllBallsSuccessRate() {
-    return (
-      <AllBallsCaptureChancesTable>
-        <TableHead>
-          <tr>
-            <th>Ball Name</th>
-            <th colSpan={2}>Catch Rate</th>
-            <th>Condition</th>
-          </tr>
-        </TableHead>
-        {allBallsCaptureChances.map((ball, allBallsIndex) => {
-          const { conditions, name } = ball;
-          return (
-            <TableBody index={allBallsIndex} key={ball.name}>
-              {conditions.map((condition, index) => {
-                const { captureChances, description } = condition;
-                const successRate =
-                  captureChances[4].chance > 100
-                    ? 100
-                    : captureChances[4].chance;
-
-                if (index === 0) {
-                  return (
-                    <tr key={description + index}>
-                      <HeaderCell rowSpan={conditions.length}>
-                        <PokeBallIcon
-                          src={
-                            'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/' +
-                            name.toLowerCase().split(' ').join('-') +
-                            '.png'
-                          }
-                        />
-                        {name}
-                      </HeaderCell>
-                      <TableCell>
-                        <CaptureChancesBars captureChances={captureChances} />
-                      </TableCell>
-                      <TableCellSuccessRate>
-                        {successRate}%
-                      </TableCellSuccessRate>
-                      <TableCell>{description}</TableCell>
-                    </tr>
-                  );
-                } else {
-                  return (
-                    <tr key={description + index}>
-                      <TableCell>
-                        <CaptureChancesBars captureChances={captureChances} />
-                      </TableCell>
-                      <TableCellSuccessRate>
-                        {successRate}%
-                      </TableCellSuccessRate>
-                      <TableCell>{description}</TableCell>
-                    </tr>
-                  );
-                }
-              })}
-            </TableBody>
-          );
-        })}
-      </AllBallsCaptureChancesTable>
-    );
-  }
-
   function calculateCaptureChances(ballBonus: number) {
     const finalCaptureRate = calculateFinalCaptureRateGen8(ballBonus);
     const shakeHoldSuccessRate =
@@ -428,7 +364,61 @@ function AllBallsCaptureChances() {
     ];
   }
 
-  return displayAllBallsSuccessRate();
+  return (
+    <AllBallsCaptureChancesTable>
+      <TableHead>
+        <tr>
+          <th>Ball Name</th>
+          <th colSpan={2}>Catch Rate</th>
+          <th>Condition</th>
+        </tr>
+      </TableHead>
+      {allBallsCaptureChances.map((ball, allBallsIndex) => {
+        const { conditions, name } = ball;
+        return (
+          <TableBody index={allBallsIndex} key={ball.name}>
+            {conditions.map((condition, index) => {
+              const { captureChances, description } = condition;
+              const successRate =
+                captureChances[4].chance > 100 ? 100 : captureChances[4].chance;
+
+              if (index === 0) {
+                return (
+                  <tr key={description + index}>
+                    <HeaderCell rowSpan={conditions.length}>
+                      <PokeBallIcon
+                        src={
+                          'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/' +
+                          name.toLowerCase().split(' ').join('-') +
+                          '.png'
+                        }
+                      />
+                      {name}
+                    </HeaderCell>
+                    <TableCell>
+                      <CaptureChancesBars captureChances={captureChances} />
+                    </TableCell>
+                    <TableCellSuccessRate>{successRate}%</TableCellSuccessRate>
+                    <TableCell>{description}</TableCell>
+                  </tr>
+                );
+              } else {
+                return (
+                  <tr key={description + index}>
+                    <TableCell>
+                      <CaptureChancesBars captureChances={captureChances} />
+                    </TableCell>
+                    <TableCellSuccessRate>{successRate}%</TableCellSuccessRate>
+                    <TableCell>{description}</TableCell>
+                  </tr>
+                );
+              }
+            })}
+          </TableBody>
+        );
+      })}
+    </AllBallsCaptureChancesTable>
+  );
 }
 
 export default AllBallsCaptureChances;

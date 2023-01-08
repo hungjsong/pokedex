@@ -51,7 +51,9 @@ function CaptureChancesBars(props: CaptureChanceBarsProps) {
     `Gotcha! ${name} was caught!`,
   ];
 
-  function displayCaptureChances() {
+  if (captureChances.length === 0) {
+    return <Loader />;
+  } else {
     return (
       <>
         <CaptureRateBar
@@ -91,12 +93,6 @@ function CaptureChancesBars(props: CaptureChanceBarsProps) {
         </CaptureRateBar>
       </>
     );
-  }
-
-  if (captureChances.length === 0) {
-    return <Loader />;
-  } else {
-    return <>{displayCaptureChances()}</>;
   }
 }
 
