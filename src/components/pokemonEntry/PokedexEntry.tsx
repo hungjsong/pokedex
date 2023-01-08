@@ -25,7 +25,6 @@ function PokedexEntry() {
   const { pokemonEntry: pokedexEntry, speciesDetails } = useAppSelector(
     (state) => state.pokedex
   );
-  const { name, id, sprites, types, height, weight } = pokedexEntry!;
 
   useEffect(() => {
     getSpeciesDetails(pokemonID).then((speciesDetails) => {
@@ -59,6 +58,8 @@ function PokedexEntry() {
   if (pokedexEntry === null || speciesDetails === null) {
     return <Loader />;
   }
+
+  const { name, id, sprites, types, height, weight } = pokedexEntry;
 
   return (
     <div>
