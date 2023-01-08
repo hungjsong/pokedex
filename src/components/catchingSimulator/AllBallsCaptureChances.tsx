@@ -1,7 +1,11 @@
 import CaptureChancesBars from './CaptureChancesBars';
 import styled from 'styled-components';
 import { useAppSelector } from '../../hooks';
-import { calculateFinalCaptureRateGen8 } from '../../utilityFunctions';
+import {
+  calculateCaptureChances,
+  calculateFinalCaptureRateGen8,
+  calculateShakeHoldSuccessRate,
+} from '../../utilityFunctions';
 import { CAPTURE_RNG_RATE } from '../../constants';
 
 const AllBallsCaptureChancesTable = styled.table`
@@ -42,50 +46,6 @@ function AllBallsCaptureChances() {
   );
   const { level } = wildPokemon;
   const allBallsCaptureChances = calculateAllBallsSuccessRate();
-
-  function calculateCaptureChances(ballBonus: number) {
-    const finalCaptureRate = calculateFinalCaptureRateGen8(ballBonus);
-    const shakeHoldSuccessRate =
-      Math.floor(CAPTURE_RNG_RATE / Math.pow(255 / finalCaptureRate, 3 / 16)) /
-      CAPTURE_RNG_RATE;
-
-    return [
-      {
-        chance: Number(((1 - shakeHoldSuccessRate) * 100).toPrecision(4)),
-      },
-      {
-        chance: Number(
-          (
-            (shakeHoldSuccessRate - Math.pow(shakeHoldSuccessRate, 2)) *
-            100
-          ).toPrecision(4)
-        ),
-      },
-      {
-        chance: Number(
-          (
-            (Math.pow(shakeHoldSuccessRate, 2) -
-              Math.pow(shakeHoldSuccessRate, 3)) *
-            100
-          ).toPrecision(4)
-        ),
-      },
-      {
-        chance: Number(
-          (
-            (Math.pow(shakeHoldSuccessRate, 3) -
-              Math.pow(shakeHoldSuccessRate, 4)) *
-            100
-          ).toPrecision(4)
-        ),
-      },
-      {
-        chance: Number(
-          (Math.pow(shakeHoldSuccessRate, 4) * 100).toPrecision(4)
-        ),
-      },
-    ];
-  }
 
   function calculateAllBallsSuccessRate() {
     return [

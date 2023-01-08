@@ -6,6 +6,7 @@ import {
   statType,
 } from './types/pokemonTypes';
 import { useAppSelector } from './hooks';
+import { CAPTURE_RNG_RATE } from './constants';
 
 export const capitalize = (word: string) => {
   return word.charAt(0).toUpperCase() + word.slice(1);
@@ -285,9 +286,7 @@ export function calculateDifficultyModifier() {
   }
 }
 
-export function calculateFinalCaptureRateGen8(
-  ballBonusParameter: number | null = null
-) {
+export function calculateFinalCaptureRateGen8(ballBonusParameter?: number) {
   const ballUsed = useAppSelector((state) => state.catchingSimulator.pokeball);
   const currentHP = useAppSelector(
     (state) => state.catchingSimulator.hp.currentHP
@@ -299,10 +298,7 @@ export function calculateFinalCaptureRateGen8(
     (state) => state.catchingSimulator.wildPokemon
   );
 
-  const ballBonus =
-    ballBonusParameter === null
-      ? calculateBallBonus(ballUsed)
-      : ballBonusParameter;
+  const ballBonus = ballBonusParameter ?? calculateBallBonus(ballUsed);
   const difficultyModifier = calculateDifficultyModifier();
   const statusConditionModifier = calculateStatusConditionModifier();
   const catchRate = wildPokemon.catchRate;
@@ -328,12 +324,51 @@ export function calculateFinalCaptureRateGen8(
   return finalCaptureRate;
 }
 
-export function calculateShakeHoldSuccessRate() {
-  const finalCaptureRate = calculateFinalCaptureRateGen8();
-
+export function calculateShakeHoldSuccessRate(ballBonus?: number) {
+  const finalCaptureRate = calculateFinalCaptureRateGen8(ballBonus);
   const shakeHoldSuccessRate = Math.floor(
-    65536 / Math.pow(255 / finalCaptureRate, 3 / 16)
+    CAPTURE_RNG_RATE / Math.pow(255 / finalCaptureRate, 3 / 16)
   );
 
   return shakeHoldSuccessRate;
+}
+
+export function calculateCaptureChances(ballBonus?: number) {
+  const shakeHoldSuccessRate =
+    calculateShakeHoldSuccessRate(ballBonus) / CAPTURE_RNG_RATE;
+
+  return [
+    {
+      chance: Number(((1 - shakeHoldSuccessRate) * 100).toPrecision(4)),
+    },
+    {
+      chance: Number(
+        (
+          (shakeHoldSuccessRate - Math.pow(shakeHoldSuccessRate, 2)) *
+          100
+        ).toPrecision(4)
+      ),
+    },
+    {
+      chance: Number(
+        (
+          (Math.pow(shakeHoldSuccessRate, 2) -
+            Math.pow(shakeHoldSuccessRate, 3)) *
+          100
+        ).toPrecision(4)
+      ),
+    },
+    {
+      chance: Number(
+        (
+          (Math.pow(shakeHoldSuccessRate, 3) -
+            Math.pow(shakeHoldSuccessRate, 4)) *
+          100
+        ).toPrecision(4)
+      ),
+    },
+    {
+      chance: Number((Math.pow(shakeHoldSuccessRate, 4) * 100).toPrecision(4)),
+    },
+  ];
 }
