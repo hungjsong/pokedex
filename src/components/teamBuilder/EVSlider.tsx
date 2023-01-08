@@ -12,19 +12,21 @@ type EVSliderProps = {
 
 function EVSlider(props: EVSliderProps) {
   const dispatch = useDispatch();
+  const { evName, evStatValue, teamSlotNumber, remainingEVs } = props;
 
   function changeEV(event: ChangeEvent<HTMLInputElement>) {
-    const inputEV = Number(event.target.value);
+    const { max, min, value } = event.target;
+    const inputEV = Number(value);
     const validEV =
-      inputEV <= Number(event.target.max) &&
-      inputEV >= Number(event.target.min) &&
-      inputEV - props.evStatValue <= props.remainingEVs;
+      inputEV <= Number(max) &&
+      inputEV >= Number(min) &&
+      inputEV - evStatValue <= remainingEVs;
     if (validEV) {
       dispatch(
         setEV({
-          evInputValue: Number(event.target.value),
-          teamSlotNumber: props.teamSlotNumber,
-          evName: props.evName,
+          evInputValue: Number(value),
+          teamSlotNumber: teamSlotNumber,
+          evName: evName,
         })
       );
     }
@@ -33,19 +35,19 @@ function EVSlider(props: EVSliderProps) {
   return (
     <>
       <input
-        id={props.evName}
+        id={evName}
         type="number"
         min={MINIMUM_EFFORT_VALUES}
         max={MAXIMUM_EFFORT_VALUES}
-        value={props.evStatValue}
+        value={evStatValue}
         onChange={changeEV}
       />
       <input
-        id={props.evName}
+        id={evName}
         type="range"
         min={MINIMUM_EFFORT_VALUES}
         max={MAXIMUM_EFFORT_VALUES}
-        value={props.evStatValue}
+        value={evStatValue}
         step="1"
         onInput={changeEV}
       />

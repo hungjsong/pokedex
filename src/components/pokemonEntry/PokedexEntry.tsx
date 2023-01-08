@@ -22,10 +22,10 @@ function PokedexEntry() {
   const dispatch = useDispatch();
   const [pokemonID, setPokemonID] = useState(1);
   const [errorMessage, setErrorMessage] = useState('');
-  const pokedexEntry = useAppSelector((state) => state.pokedex.pokemonEntry);
-  const speciesDetails = useAppSelector(
-    (state) => state.pokedex.speciesDetails
+  const { pokemonEntry: pokedexEntry, speciesDetails } = useAppSelector(
+    (state) => state.pokedex
   );
+  const { name, id, sprites, types, height, weight } = pokedexEntry!;
 
   useEffect(() => {
     getSpeciesDetails(pokemonID).then((speciesDetails) => {
@@ -64,16 +64,16 @@ function PokedexEntry() {
     <div>
       <>
         <h1>
-          {capitalize(pokedexEntry.name)} #{`00${pokedexEntry.id}`.slice(-3)}
+          {capitalize(name)} #{`00${id}`.slice(-3)}
         </h1>
         <h3>{getEnglishGenera(speciesDetails).genus}</h3>
       </>
       <>
         <img
           src={
-            pokedexEntry.sprites === undefined
+            sprites === undefined
               ? 'https://archives.bulbagarden.net/media/upload/8/8e/Spr_3r_000.png'
-              : pokedexEntry.sprites.other['official-artwork'].front_default
+              : sprites.other['official-artwork'].front_default
           }
           height="10%"
           width="10%"
@@ -81,12 +81,12 @@ function PokedexEntry() {
       </>
       <>
         <h3>{t('type')}</h3>
-        {<p>{getPokemonTypes(pokedexEntry.types)}</p>}
+        {<p>{getPokemonTypes(types)}</p>}
       </>
       <>
         <h3>{t('biometrics')}</h3>
-        {`${(pokedexEntry.height * 0.1).toFixed(1)} m 
-          ${(pokedexEntry.weight * 0.1).toFixed(1)} kg`}
+        {`${(height * 0.1).toFixed(1)} m 
+          ${(weight * 0.1).toFixed(1)} kg`}
       </>
       {errorMessage !== '' && <ErrorMessage>{errorMessage}</ErrorMessage>}
       <form onSubmit={handleSubmit}>

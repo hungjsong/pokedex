@@ -12,6 +12,7 @@ type PokemonMoveProps = {
 };
 
 function PokemonMove(props: PokemonMoveProps) {
+  const { moveSlotNumber, selectedMoves, teamSlotNumber } = props;
   const [searchTerm, setSearchTerm] = useState('');
   const [displayList, setDisplayList] = useState(false);
   const [pokemonMoves, setPokemonMoves] = useState<Move[]>([]);
@@ -24,8 +25,9 @@ function PokemonMove(props: PokemonMoveProps) {
   }, []);
 
   function handleChange(event: ChangeEvent<HTMLInputElement>) {
-    setSearchTerm(event.target.value);
-    if (event.target.value === '') {
+    const { value } = event.target;
+    setSearchTerm(value);
+    if (value === '') {
       dispatch(
         setMove({
           selectedMove: {
@@ -40,8 +42,8 @@ function PokemonMove(props: PokemonMoveProps) {
               chance: null,
             },
           },
-          teamSlotNumber: props.teamSlotNumber,
-          moveSlotNumber: props.moveSlotNumber,
+          teamSlotNumber: teamSlotNumber,
+          moveSlotNumber: moveSlotNumber,
         })
       );
     }
@@ -60,52 +62,55 @@ function PokemonMove(props: PokemonMoveProps) {
           )
           .filter(
             (pokemonMove) =>
-              !props.selectedMoves
+              !selectedMoves
                 .filter(
                   (selectedMove) => selectedMove.name === pokemonMove.name
                 )
                 .includes(pokemonMove)
           )
-          .map((pokemonMove) => (
-            <li
-              key={pokemonMove.name}
-              onMouseDown={() => {
-                setSearchTerm(pokemonMove.name);
-                dispatch(
-                  setMove({
-                    selectedMove: pokemonMoves.filter((move) =>
-                      move.name.includes(pokemonMove.name)
-                    )[0],
-                    teamSlotNumber: props.teamSlotNumber,
-                    moveSlotNumber: props.moveSlotNumber,
-                  })
-                );
-              }}
-            >
-              <img
-                src={
-                  'https://play.pokemonshowdown.com/sprites/types/' +
-                  pokemonMove.type +
-                  '.png'
-                }
-              />
-              <img
-                src={
-                  'https://play.pokemonshowdown.com/sprites/categories/' +
-                  pokemonMove.category +
-                  '.png'
-                }
-              />
-              {pokemonMove.name}
-            </li>
-          ))}
+          .map((pokemonMove) => {
+            const { category, name, type } = pokemonMove;
+            return (
+              <li
+                key={name}
+                onMouseDown={() => {
+                  setSearchTerm(name);
+                  dispatch(
+                    setMove({
+                      selectedMove: pokemonMoves.filter((move) =>
+                        move.name.includes(name)
+                      )[0],
+                      teamSlotNumber: teamSlotNumber,
+                      moveSlotNumber: moveSlotNumber,
+                    })
+                  );
+                }}
+              >
+                <img
+                  src={
+                    'https://play.pokemonshowdown.com/sprites/types/' +
+                    type +
+                    '.png'
+                  }
+                />
+                <img
+                  src={
+                    'https://play.pokemonshowdown.com/sprites/categories/' +
+                    category +
+                    '.png'
+                  }
+                />
+                {name}
+              </li>
+            );
+          })}
       </ul>
     );
   }
 
   return (
     <>
-      <h3>Move {props.moveSlotNumber + 1}</h3>
+      <h3>Move {moveSlotNumber + 1}</h3>
       <input
         type="search"
         autoComplete="off"

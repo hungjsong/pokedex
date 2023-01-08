@@ -37,12 +37,10 @@ const TableHead = styled.thead`
 `;
 
 function AllBallsCaptureChances() {
-  const currentTurn = useAppSelector(
-    (state) => state.catchingSimulator.currentTurn
+  const { currentTurn, wildPokemon } = useAppSelector(
+    (state) => state.catchingSimulator
   );
-  const wildPokemon = useAppSelector(
-    (state) => state.catchingSimulator.wildPokemon
-  );
+  const { level } = wildPokemon;
   const allBallsCaptureChances = calculateAllBallsSuccessRate();
 
   function displayAllBallsSuccessRate() {
@@ -55,52 +53,56 @@ function AllBallsCaptureChances() {
             <th>Condition</th>
           </tr>
         </TableHead>
-        {allBallsCaptureChances.map((ball, allBallsIndex) => (
-          <TableBody index={allBallsIndex} key={ball.name}>
-            {ball.conditions.map((condition, index) => {
-              const successRate =
-                condition.captureChances[4].chance > 100
-                  ? 100
-                  : condition.captureChances[4].chance;
+        {allBallsCaptureChances.map((ball, allBallsIndex) => {
+          const { conditions, name } = ball;
+          return (
+            <TableBody index={allBallsIndex} key={ball.name}>
+              {conditions.map((condition, index) => {
+                const { captureChances, description } = condition;
+                const successRate =
+                  captureChances[4].chance > 100
+                    ? 100
+                    : captureChances[4].chance;
 
-              if (index === 0) {
-                return (
-                  <tr key={condition.description + index}>
-                    <HeaderCell rowSpan={ball.conditions.length}>
-                      <PokeBallIcon
-                        src={
-                          'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/' +
-                          ball.name.toLowerCase().split(' ').join('-') +
-                          '.png'
-                        }
-                      />
-                      {ball.name}
-                    </HeaderCell>
-                    <TableCell>
-                      <CaptureChancesBars
-                        captureChances={condition.captureChances}
-                      />
-                    </TableCell>
-                    <TableCellSuccessRate>{successRate}%</TableCellSuccessRate>
-                    <TableCell>{condition.description}</TableCell>
-                  </tr>
-                );
-              } else {
-                return (
-                  <tr key={condition.description + index}>
-                    <TableCell>
-                      <CaptureChancesBars
-                        captureChances={condition.captureChances}
-                      />
-                    </TableCell>
-                    <TableCellSuccessRate>{successRate}%</TableCellSuccessRate>
-                    <TableCell>{condition.description}</TableCell>
-                  </tr>
-                );
-              }
-            })}
-          </TableBody>
-        ))}
+                if (index === 0) {
+                  return (
+                    <tr key={description + index}>
+                      <HeaderCell rowSpan={conditions.length}>
+                        <PokeBallIcon
+                          src={
+                            'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/' +
+                            name.toLowerCase().split(' ').join('-') +
+                            '.png'
+                          }
+                        />
+                        {name}
+                      </HeaderCell>
+                      <TableCell>
+                        <CaptureChancesBars captureChances={captureChances} />
+                      </TableCell>
+                      <TableCellSuccessRate>
+                        {successRate}%
+                      </TableCellSuccessRate>
+                      <TableCell>{description}</TableCell>
+                    </tr>
+                  );
+                } else {
+                  return (
+                    <tr key={description + index}>
+                      <TableCell>
+                        <CaptureChancesBars captureChances={captureChances} />
+                      </TableCell>
+                      <TableCellSuccessRate>
+                        {successRate}%
+                      </TableCellSuccessRate>
+                      <TableCell>{description}</TableCell>
+                    </tr>
+                  );
+                }
+              })}
+            </TableBody>
+          );
+        })}
       </AllBallsCaptureChancesTable>
     );
   }
@@ -319,7 +321,7 @@ function AllBallsCaptureChances() {
             description:
               "Wild Pokemon's level is < 31 (more effective against lower levels)",
             captureChances: calculateCaptureChances(
-              wildPokemon.level! < 31 ? (41 - wildPokemon.level!) / 10 : 1
+              level! < 31 ? (41 - level!) / 10 : 1
             ),
           },
           {

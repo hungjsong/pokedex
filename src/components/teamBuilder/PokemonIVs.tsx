@@ -12,26 +12,28 @@ type PokemonIVsProps = {
 };
 
 function PokemonIVs(props: PokemonIVsProps) {
-  const team = useAppSelector((state) => state.teamBuilder.team);
-  const hpIV = team[props.teamSlotNumber].iv!.hp;
-  const atkIV = team[props.teamSlotNumber].iv!.atk;
-  const defIV = team[props.teamSlotNumber].iv!.def;
-  const spAtkIV = team[props.teamSlotNumber].iv!.spAtk;
-  const spDefIV = team[props.teamSlotNumber].iv!.spDef;
-  const spdIV = team[props.teamSlotNumber].iv!.spd;
+  const { teamSlotNumber } = props;
+  const { team } = useAppSelector((state) => state.teamBuilder);
+  const {
+    hp: hpIV,
+    atk: atkIV,
+    def: defIV,
+    spAtk: spAtkIV,
+    spDef: spDefIV,
+    spd: spdIV,
+  } = team[props.teamSlotNumber].iv!;
   const dispatch = useDispatch();
 
   function handleIVChange(event: ChangeEvent<HTMLInputElement>) {
-    const inputIV = Number(event.target.value);
-    const validIV =
-      inputIV <= Number(event.target.max) &&
-      inputIV >= Number(event.target.min);
+    const { max, min, value, id } = event.target;
+    const inputIV = Number(value);
+    const validIV = inputIV <= Number(max) && inputIV >= Number(min);
     if (validIV) {
       dispatch(
         setIV({
-          ivInputValue: Number(event.target.value),
-          teamSlotNumber: props.teamSlotNumber,
-          ivName: event.target.id,
+          ivInputValue: Number(value),
+          teamSlotNumber: teamSlotNumber,
+          ivName: id,
         })
       );
     }

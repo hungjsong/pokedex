@@ -23,6 +23,7 @@ function NatureList(props: NatureListProps) {
   const [displayList, setDisplayList] = useState(false);
   const [inputNature, setInputNature] = useState('');
   const dispatch = useDispatch();
+  const { teamSlotNumber } = props;
 
   useEffect(() => {
     getPokemonNatures().then((response) => {
@@ -41,35 +42,38 @@ function NatureList(props: NatureListProps) {
           .filter((nature) =>
             nature.name.toLowerCase().includes(inputNature.toLowerCase())
           )
-          .map((nature) => (
-            <>
-              <li
-                key={nature.name}
-                onMouseDown={() => {
-                  dispatch(
-                    setNature({
-                      nature: nature.name,
-                      teamSlotNumber: slotNumber,
-                    })
-                  );
-                  setInputNature(nature.name);
-                }}
-              >
-                {capitalize(nature.name) + ' ('}
-                {nature.increased_stat !== null ? (
-                  <IncreasedStat>{`↑ ${nature.increased_stat}`}</IncreasedStat>
-                ) : (
-                  ''
-                )}
-                {nature.decreased_stat !== null ? (
-                  <DecreasedStat>{` ↓ ${nature.decreased_stat}`}</DecreasedStat>
-                ) : (
-                  'No Effect'
-                )}
-                {')'}
-              </li>
-            </>
-          ))}
+          .map((nature) => {
+            const { decreased_stat, increased_stat, name } = nature;
+            return (
+              <>
+                <li
+                  key={name}
+                  onMouseDown={() => {
+                    dispatch(
+                      setNature({
+                        nature: name,
+                        teamSlotNumber: slotNumber,
+                      })
+                    );
+                    setInputNature(name);
+                  }}
+                >
+                  {capitalize(name) + ' ('}
+                  {increased_stat !== null ? (
+                    <IncreasedStat>{`↑ ${increased_stat}`}</IncreasedStat>
+                  ) : (
+                    ''
+                  )}
+                  {decreased_stat !== null ? (
+                    <DecreasedStat>{` ↓ ${decreased_stat}`}</DecreasedStat>
+                  ) : (
+                    'No Effect'
+                  )}
+                  {')'}
+                </li>
+              </>
+            );
+          })}
       </ul>
     );
   }
@@ -89,7 +93,7 @@ function NatureList(props: NatureListProps) {
         }}
         onChange={handleChange}
       />
-      {displayList && displayListOfNatures(props.teamSlotNumber)}
+      {displayList && displayListOfNatures(teamSlotNumber)}
     </>
   );
 }

@@ -9,20 +9,20 @@ type PokemonLevelProps = {
 };
 
 function PokemonLevel(props: PokemonLevelProps) {
-  const team = useAppSelector((state) => state.teamBuilder.team);
-  const level = team[props.teamSlotNumber].level;
+  const { teamSlotNumber } = props;
+  const { team } = useAppSelector((state) => state.teamBuilder);
+  const { level } = team[teamSlotNumber];
   const dispatch = useDispatch();
 
   function handleChange(event: ChangeEvent<HTMLInputElement>) {
-    const inputLevel = Number(event.target.value);
-    const validLevel =
-      inputLevel <= Number(event.target.max) &&
-      inputLevel >= Number(event.target.min);
+    const { max, min, value } = event.target;
+    const inputLevel = Number(value);
+    const validLevel = inputLevel <= Number(max) && inputLevel >= Number(min);
     if (validLevel) {
       dispatch(
         setLevel({
           level: inputLevel,
-          teamSlotNumber: props.teamSlotNumber,
+          teamSlotNumber: teamSlotNumber,
         })
       );
     }

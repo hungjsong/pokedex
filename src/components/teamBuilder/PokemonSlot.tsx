@@ -14,18 +14,19 @@ type PokemonSlotProps = {
 };
 
 function PokemonSlot(props: PokemonSlotProps) {
+  const { teamSlotNumber } = props;
   return (
     <>
-      <PokemonList slotNumber={props.teamSlotNumber} />
-      <ItemList slotNumber={props.teamSlotNumber} />
-      <PokemonShiny teamSlotNumber={props.teamSlotNumber} />
-      <PokemonLevel teamSlotNumber={props.teamSlotNumber} />
-      <PokemonHappiness teamSlotNumber={props.teamSlotNumber} />
-      <NatureList teamSlotNumber={props.teamSlotNumber} />
-      <EVSliders teamSlotNumber={props.teamSlotNumber} />
-      <PokemonMoves teamSlotNumber={props.teamSlotNumber} />
-      <PokemonGender teamSlotNumber={props.teamSlotNumber} />
-      <PokemonIVs teamSlotNumber={props.teamSlotNumber} />
+      <PokemonList teamSlotNumber={teamSlotNumber} />
+      <ItemList teamSlotNumber={teamSlotNumber} />
+      <PokemonShiny teamSlotNumber={teamSlotNumber} />
+      <PokemonLevel teamSlotNumber={teamSlotNumber} />
+      <PokemonHappiness teamSlotNumber={teamSlotNumber} />
+      <NatureList teamSlotNumber={teamSlotNumber} />
+      <EVSliders teamSlotNumber={teamSlotNumber} />
+      <PokemonMoves teamSlotNumber={teamSlotNumber} />
+      <PokemonGender teamSlotNumber={teamSlotNumber} />
+      <PokemonIVs teamSlotNumber={teamSlotNumber} />
     </>
   );
 }

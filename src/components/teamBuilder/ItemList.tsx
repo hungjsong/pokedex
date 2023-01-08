@@ -6,7 +6,7 @@ import Loader from '../common/Loader';
 import { setItem } from '../../redux/teamBuilderSlice';
 
 type ItemListProps = {
-  slotNumber: number;
+  teamSlotNumber: number;
 };
 
 function ItemList(props: ItemListProps) {
@@ -14,6 +14,7 @@ function ItemList(props: ItemListProps) {
   const [itemID, setItemID] = useState('');
   const [pokemonItems, setPokemonItems] = useState<Item[]>([]);
   const dispatch = useDispatch();
+  const { teamSlotNumber } = props;
 
   useEffect(() => {
     getPokemonItems().then((allItems) => setPokemonItems(allItems.payload));
@@ -34,26 +35,26 @@ function ItemList(props: ItemListProps) {
           .filter((item) =>
             item.name.toLowerCase().includes(itemID.toLowerCase())
           )
-          .map((item) => (
-            <li
-              key={item.name}
-              onMouseDown={() => {
-                dispatch(
-                  setItem({ item: item.name, teamSlotNumber: slotNumber })
-                );
-                setItemID(item.name);
-              }}
-            >
-              <img
-                src={
-                  'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/' +
-                  item.name.toLowerCase().split(' ').join('-') +
-                  '.png'
-                }
-              ></img>
-              {item.name}
-            </li>
-          ))}
+          .map(({ name }) => {
+            return (
+              <li
+                key={name}
+                onMouseDown={() => {
+                  dispatch(setItem({ item: name, teamSlotNumber: slotNumber }));
+                  setItemID(name);
+                }}
+              >
+                <img
+                  src={
+                    'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/' +
+                    name.toLowerCase().split(' ').join('-') +
+                    '.png'
+                  }
+                ></img>
+                {name}
+              </li>
+            );
+          })}
       </ul>
     );
   }
@@ -77,7 +78,7 @@ function ItemList(props: ItemListProps) {
           setItemID((event.target as HTMLInputElement).value.toLowerCase());
         }}
       />
-      {displayList && displayListOfItems(props.slotNumber)}
+      {displayList && displayListOfItems(teamSlotNumber)}
     </div>
   );
 }

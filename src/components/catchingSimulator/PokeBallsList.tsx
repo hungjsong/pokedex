@@ -31,29 +31,33 @@ function PokeBallsList(props: PokeBallsListProps) {
     return (
       <ul>
         {pokeBalls
-          .filter((pokeBall) =>
-            pokeBall.name.toLowerCase().includes(selectedPokeBall.toLowerCase())
-          )
-          .map((pokeBall) => (
-            <>
-              <li
-                key={pokeBall.name}
-                onMouseDown={() => {
-                  setSelectedPokeBall(pokeBall.name);
-                  dispatch(setPokeBall({ pokeBall: pokeBall.name }));
-                }}
-              >
-                <img
-                  src={
-                    'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/' +
-                    pokeBall.name.toLowerCase().split(' ').join('-') +
-                    '.png'
-                  }
-                ></img>
-                {pokeBall.name === 'Poke Ball' ? 'Poké Ball' : pokeBall.name}
-              </li>
-            </>
-          ))}
+          .filter((pokeBall) => {
+            const { name } = pokeBall;
+            return name.toLowerCase().includes(selectedPokeBall.toLowerCase());
+          })
+          .map((pokeBall) => {
+            const { name } = pokeBall;
+            return (
+              <>
+                <li
+                  key={name}
+                  onMouseDown={() => {
+                    setSelectedPokeBall(name);
+                    dispatch(setPokeBall({ pokeBall: name }));
+                  }}
+                >
+                  <img
+                    src={
+                      'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/' +
+                      name.toLowerCase().split(' ').join('-') +
+                      '.png'
+                    }
+                  ></img>
+                  {name === 'Poke Ball' ? 'Poké Ball' : name}
+                </li>
+              </>
+            );
+          })}
       </ul>
     );
   }

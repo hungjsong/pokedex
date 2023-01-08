@@ -9,12 +9,12 @@ type AdjustSimulatorPokemonLevelProps = {
 
 function AdjustSimulatorPokemonLevel(props: AdjustSimulatorPokemonLevelProps) {
   const dispatch = useDispatch();
-  const pokemon = useAppSelector((state) =>
-    props.isWild === true
-      ? state.catchingSimulator.wildPokemon
-      : state.catchingSimulator.userPokemon
+  const { isWild } = props;
+  const { userPokemon, wildPokemon } = useAppSelector(
+    (state) => state.catchingSimulator
   );
-  const currentLevel = pokemon.level!;
+  const pokemon = isWild === true ? wildPokemon : userPokemon;
+  const { level: currentLevel } = pokemon;
 
   return (
     <label>
@@ -26,7 +26,7 @@ function AdjustSimulatorPokemonLevel(props: AdjustSimulatorPokemonLevelProps) {
         value={currentLevel}
         onChange={(event) => {
           const newLevel = Number((event.target as HTMLInputElement).value);
-          dispatch(setLevel({ level: newLevel, isWild: props.isWild }));
+          dispatch(setLevel({ level: newLevel, isWild: isWild }));
         }}
       />
     </label>

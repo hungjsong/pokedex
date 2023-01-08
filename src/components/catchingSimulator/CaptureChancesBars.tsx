@@ -41,12 +41,14 @@ function CaptureChancesBars(props: CaptureChanceBarsProps) {
   const wildPokemon = useAppSelector(
     (state) => state.catchingSimulator.wildPokemon
   );
+  const { captureChances } = props;
+  const { name } = wildPokemon;
   const captureQuotes = [
     'Oh no! The Pokémon broke free!',
     'Aww! It appeared to be caught!',
     'Aargh! Almost had it!',
     'Gah! It was so close, too!',
-    `Gotcha! ${wildPokemon.name} was caught!`,
+    `Gotcha! ${name} was caught!`,
   ];
 
   function displayCaptureChances() {
@@ -54,39 +56,35 @@ function CaptureChancesBars(props: CaptureChanceBarsProps) {
       <>
         <CaptureRateBar
           title={`Success: 
-            ${
-              props.captureChances[4].chance > 100
-                ? 100
-                : props.captureChances[4].chance
-            }
+            ${captureChances[4].chance > 100 ? 100 : captureChances[4].chance}
             % 
             ${captureQuotes[4]}`}
         >
           <Wobbles0
-            barWidth={props.captureChances[0].chance}
+            barWidth={captureChances[0].chance}
             title={`0 Shakes: 
-              ${props.captureChances[0].chance} 
+              ${captureChances[0].chance} 
               % 
               ${captureQuotes[0]}`}
           />
           <Wobbles1
-            barWidth={props.captureChances[1].chance}
+            barWidth={captureChances[1].chance}
             title={`1 Shake: 
-              ${props.captureChances[1].chance} 
+              ${captureChances[1].chance} 
               % 
               ${captureQuotes[1]}`}
           />
           <Wobbles2
-            barWidth={props.captureChances[2].chance}
+            barWidth={captureChances[2].chance}
             title={`2 Shakes: 
-              ${props.captureChances[2].chance}
+              ${captureChances[2].chance}
               % 
               ${captureQuotes[2]}`}
           />
           <Wobbles3
-            barWidth={props.captureChances[3].chance}
+            barWidth={captureChances[3].chance}
             title={`3 Shakes: 
-              ${props.captureChances[3].chance} 
+              ${captureChances[3].chance} 
               % 
               ${captureQuotes[3]}`}
           />
@@ -95,7 +93,7 @@ function CaptureChancesBars(props: CaptureChanceBarsProps) {
     );
   }
 
-  if (props.captureChances.length === 0) {
+  if (captureChances.length === 0) {
     return <Loader />;
   } else {
     return <>{displayCaptureChances()}</>;

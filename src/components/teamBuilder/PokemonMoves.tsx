@@ -7,8 +7,9 @@ type PokemonMovesProps = {
 };
 
 function PokemonMoves(props: PokemonMovesProps) {
-  const team = useAppSelector((state) => state.teamBuilder.team);
-  const selectedMoves = team[props.teamSlotNumber].moves;
+  const { teamSlotNumber } = props;
+  const { team } = useAppSelector((state) => state.teamBuilder);
+  const { moves: selectedMoves } = team[teamSlotNumber];
 
   function displayMoves() {
     if (selectedMoves === undefined) {
@@ -20,22 +21,22 @@ function PokemonMoves(props: PokemonMovesProps) {
         <PokemonMove
           moveSlotNumber={0}
           selectedMoves={selectedMoves}
-          teamSlotNumber={props.teamSlotNumber}
+          teamSlotNumber={teamSlotNumber}
         />
         <PokemonMove
           moveSlotNumber={1}
           selectedMoves={selectedMoves}
-          teamSlotNumber={props.teamSlotNumber}
+          teamSlotNumber={teamSlotNumber}
         />
         <PokemonMove
           moveSlotNumber={2}
           selectedMoves={selectedMoves}
-          teamSlotNumber={props.teamSlotNumber}
+          teamSlotNumber={teamSlotNumber}
         />
         <PokemonMove
           moveSlotNumber={3}
           selectedMoves={selectedMoves}
-          teamSlotNumber={props.teamSlotNumber}
+          teamSlotNumber={teamSlotNumber}
         />
       </>
     );

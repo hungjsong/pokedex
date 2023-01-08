@@ -19,6 +19,7 @@ function CatchingPokemonList(props: CatchingPokemonListTypes) {
   const [pokemonID, setPokemonID] = useState('');
   const dispatch = useAppDispatch();
   const pokemonList = useAppSelector((state) => state.pokedex.pokemonList);
+  const { isWild } = props;
 
   useEffect(() => {
     if (pokemonList === null) {
@@ -56,35 +57,39 @@ function CatchingPokemonList(props: CatchingPokemonListTypes) {
       <ul>
         {pokemonList
           .filter((pokemon) => pokemon.name.includes(pokemonID))
-          .map((pokemon) => (
-            <li
-              key={pokemon.name}
-              onMouseDown={() => {
-                setPokemonID(pokemon.name);
-                getPokedexEntry(pokemon.name).then((pokedexEntry) =>
-                  getSpeciesDetails(pokemon.name).then((speciesDetails) => {
-                    pokedexEntry.weight = (pokedexEntry.weight * 100) / 1000;
-                    dispatch(
-                      setCatchingPokemonID({
-                        pokemon: pokedexEntry,
-                        captureRate: speciesDetails.capture_rate,
-                        isWild: props.isWild,
-                      })
-                    );
-                  })
-                );
-              }}
-            >
-              <img
-                src={
-                  'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-viii/icons/' +
-                  getPokemonID(pokemon.url) +
-                  '.png'
-                }
-              ></img>
-              {capitalize(pokemon.name)}
-            </li>
-          ))}
+          .map((pokemon) => {
+            const { name, url } = pokemon;
+            return (
+              <li
+                key={name}
+                onMouseDown={() => {
+                  setPokemonID(name);
+                  getPokedexEntry(name).then((pokedexEntry) =>
+                    getSpeciesDetails(name).then((speciesDetails) => {
+                      const { capture_rate } = speciesDetails;
+                      pokedexEntry.weight = (pokedexEntry.weight * 100) / 1000;
+                      dispatch(
+                        setCatchingPokemonID({
+                          pokemon: pokedexEntry,
+                          captureRate: capture_rate,
+                          isWild: isWild,
+                        })
+                      );
+                    })
+                  );
+                }}
+              >
+                <img
+                  src={
+                    'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-viii/icons/' +
+                    getPokemonID(url) +
+                    '.png'
+                  }
+                ></img>
+                {capitalize(name)}
+              </li>
+            );
+          })}
       </ul>
     );
   }
@@ -92,7 +97,7 @@ function CatchingPokemonList(props: CatchingPokemonListTypes) {
   return (
     <div>
       <label>
-        {props.isWild ? 'Select Wild Pokemon:' : 'Select Your Pokemon:'}
+        {isWild ? 'Select Wild Pokemon:' : 'Select Your Pokemon:'}
         <input
           type="search"
           autoComplete="off"

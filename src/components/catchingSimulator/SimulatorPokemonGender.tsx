@@ -17,31 +17,31 @@ const FemalePokemon = styled.span`
 `;
 
 function SimulatorPokemonGender(props: SimulatorPokemonGenderProps) {
-  const pokemon = useAppSelector((state) =>
-    props.isWild === true
-      ? state.catchingSimulator.wildPokemon
-      : state.catchingSimulator.userPokemon
+  const { isWild } = props;
+  const { userPokemon, wildPokemon } = useAppSelector(
+    (state) => state.catchingSimulator
   );
-  const gender = pokemon.gender;
-  const pokemonID = pokemon.id;
+  const pokemon = isWild === true ? wildPokemon : userPokemon;
+  const { gender, id: pokemonID } = pokemon;
   const [genderRate, setGenderRate] = useState(1);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
     if (pokemonID !== undefined) {
-      getSpeciesDetails(pokemonID!).then((response) => {
-        setGenderRate(response.gender_rate);
+      getSpeciesDetails(pokemonID!).then((speciesDetails) => {
+        const { gender_rate } = speciesDetails;
+        setGenderRate(gender_rate);
         const gender =
-          response.gender_rate === -1
+          gender_rate === -1
             ? 'Genderless'
-            : response.gender_rate === 8
+            : gender_rate === 8
             ? 'Female'
             : 'Male';
 
         dispatch(
           setGender({
             gender: gender,
-            isWild: props.isWild,
+            isWild: isWild,
           })
         );
       });
@@ -52,7 +52,7 @@ function SimulatorPokemonGender(props: SimulatorPokemonGenderProps) {
     dispatch(
       setGender({
         gender: event.target.value,
-        isWild: props.isWild,
+        isWild: isWild,
       })
     );
   }
@@ -79,9 +79,7 @@ function SimulatorPokemonGender(props: SimulatorPokemonGenderProps) {
         <input
           type="radio"
           value="Male"
-          name={
-            props.isWild === true ? 'wildPokemon' : 'userPokemon' + 'Gender'
-          }
+          name={isWild === true ? 'wildPokemon' : 'userPokemon' + 'Gender'}
           checked={gender === 'Male' ? true : false}
           onChange={handleChange}
         />
@@ -89,9 +87,7 @@ function SimulatorPokemonGender(props: SimulatorPokemonGenderProps) {
         <input
           type="radio"
           value="Female"
-          name={
-            props.isWild === true ? 'wildPokemon' : 'userPokemon' + 'gender'
-          }
+          name={isWild === true ? 'wildPokemon' : 'userPokemon' + 'gender'}
           checked={gender === 'Female' ? true : false}
           onChange={handleChange}
         />

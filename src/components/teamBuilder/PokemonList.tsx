@@ -8,14 +8,17 @@ import { setPokemonList } from '../../redux/pokedexSlice';
 import { useAppSelector } from '../../hooks';
 
 type PokemonListProps = {
-  slotNumber: number;
+  teamSlotNumber: number;
 };
 
 function PokemonList(props: PokemonListProps) {
   const [displayList, setDisplayList] = useState(false);
   const [pokemonID, setPokemonID] = useState('');
   const dispatch = useDispatch();
-  const pokedexEntry = useAppSelector((state) => state.pokedex.pokemonList);
+  const { pokemonList: pokedexEntry } = useAppSelector(
+    (state) => state.pokedex
+  );
+  const { teamSlotNumber } = props;
 
   useEffect(() => {
     getAllPokemon().then((allPokemon) => dispatch(setPokemonList(allPokemon)));
@@ -49,38 +52,41 @@ function PokemonList(props: PokemonListProps) {
       <ul>
         {pokedexEntry
           .filter((pokemon) => pokemon.name.includes(pokemonID))
-          .map((pokemon) => (
-            <li
-              key={pokemon.name}
-              onMouseDown={() => {
-                getPokemonID(pokemon.url);
-                dispatch(
-                  setPokemon({
-                    name: pokemon.name,
-                    pokemonID: parseInt(getPokemonID(pokemon.url)),
-                    teamSlotNumber: slotNumber,
-                  })
-                );
-                setPokemonID(pokemon.name);
-              }}
-            >
-              <img
-                src={
-                  'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-viii/icons/' +
-                  getPokemonID(pokemon.url) +
-                  '.png'
-                }
-              ></img>
-              {capitalize(pokemon.name)}
-            </li>
-          ))}
+          .map((pokemon) => {
+            const { name, url } = pokemon;
+            return (
+              <li
+                key={name}
+                onMouseDown={() => {
+                  getPokemonID(url);
+                  dispatch(
+                    setPokemon({
+                      name: name,
+                      pokemonID: parseInt(getPokemonID(url)),
+                      teamSlotNumber: slotNumber,
+                    })
+                  );
+                  setPokemonID(name);
+                }}
+              >
+                <img
+                  src={
+                    'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-viii/icons/' +
+                    getPokemonID(url) +
+                    '.png'
+                  }
+                ></img>
+                {capitalize(name)}
+              </li>
+            );
+          })}
       </ul>
     );
   }
 
   return (
     <div>
-      <h3>Slot {props.slotNumber + 1}</h3>
+      <h3>Slot {teamSlotNumber + 1}</h3>
       <input
         type="search"
         autoComplete="off"
@@ -97,7 +103,7 @@ function PokemonList(props: PokemonListProps) {
           setPokemonID((event.target as HTMLInputElement).value.toLowerCase());
         }}
       />
-      {displayList && displayListOfPokemon(props.slotNumber)}
+      {displayList && displayListOfPokemon(teamSlotNumber)}
     </div>
   );
 }

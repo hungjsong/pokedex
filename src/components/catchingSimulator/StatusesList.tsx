@@ -25,22 +25,26 @@ function StatusesList(props: StatusesListProps) {
     return (
       <ul>
         {statuses
-          .filter((status) =>
-            status.name.toLowerCase().includes(selectedStatus.toLowerCase())
-          )
-          .map((status) => (
-            <>
-              <li
-                key={status.name}
-                onMouseDown={() => {
-                  setSelectedStatus(status.name);
-                  dispatch(setStatus({ status: status.name }));
-                }}
-              >
-                {status.name}
-              </li>
-            </>
-          ))}
+          .filter((status) => {
+            const { name } = status;
+            return name.toLowerCase().includes(selectedStatus.toLowerCase());
+          })
+          .map((status) => {
+            const { name } = status;
+            return (
+              <>
+                <li
+                  key={name}
+                  onMouseDown={() => {
+                    setSelectedStatus(name);
+                    dispatch(setStatus({ status: name }));
+                  }}
+                >
+                  {name}
+                </li>
+              </>
+            );
+          })}
       </ul>
     );
   }
