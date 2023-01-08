@@ -17,8 +17,8 @@ export const getPokemonTypes = (types: PokemonType[]) => {
     return '';
   }
   const pokemonTypes: string[] = [];
-  types.forEach((type: PokemonType) => {
-    const capitalizedType = capitalize(type.type.name);
+  types.forEach(({ type: { name } }: PokemonType) => {
+    const capitalizedType = capitalize(name);
     pokemonTypes.push(capitalizedType);
   });
 
@@ -32,18 +32,13 @@ export const getEnglishGenera = (speciesDetails: SpeciesDetails): Genus => {
 };
 
 export const calculateStatValues = (pokemon: Pokemon, level: number) => {
-  const ivValues = pokemon.iv;
-  const evValues = pokemon.ev;
-  const baseStats = pokemon.baseStats;
-  const nature = pokemon.nature;
+  const { baseStats, ev: evValues, iv: ivValues, nature } = pokemon;
+  const { decreased_stat, increased_stat } = nature!;
+
   const increasedStatType =
-    nature!.increased_stat === null
-      ? ''
-      : nature!.increased_stat!.replace('.', '');
+    increased_stat === null ? '' : increased_stat.replace('.', '');
   const decreasedStatType =
-    nature!.decreased_stat === null
-      ? ''
-      : nature!.decreased_stat!.replace('.', '');
+    decreased_stat === null ? '' : decreased_stat!.replace('.', '');
   const statTypes: statType[] = ['hp', 'atk', 'def', 'spAtk', 'spDef', 'spd'];
   const pokemonStats = { hp: 0, atk: 0, def: 0, spAtk: 0, spDef: 0, spd: 0 };
 
@@ -79,32 +74,35 @@ export const calculateStatValues = (pokemon: Pokemon, level: number) => {
 };
 
 export function calculateBallBonus(ballUsed: string) {
-  const userPokemon = useAppSelector(
-    (state) => state.catchingSimulator.userPokemon
-  );
-  const wildPokemon = useAppSelector(
-    (state) => state.catchingSimulator.wildPokemon
-  );
-  const encounterMethod = useAppSelector(
-    (state) => state.catchingSimulator.encounterMethod
-  );
-  const statusCondition = useAppSelector(
-    (state) => state.catchingSimulator.status
-  );
-  const timeOfDay = useAppSelector(
-    (state) => state.catchingSimulator.timeOfDay
-  );
-  const numOfTurns = useAppSelector(
-    (state) => state.catchingSimulator.currentTurn
-  );
+  const {
+    currentTurn: numOfTurns,
+    encounterMethod,
+    status: statusCondition,
+    timeOfDay,
+    userPokemon,
+    wildPokemon,
+  } = useAppSelector((state) => state.catchingSimulator);
+  const {
+    weight,
+    types,
+    level: wildPokemonLevel,
+    id: wildPokemonSpecies,
+    gender: wildPokemonGender,
+    name,
+  } = wildPokemon;
+  const {
+    level: userPokemonLevel,
+    gender: userPokemonGender,
+    id: userPokemonSpecies,
+  } = userPokemon;
 
   switch (ballUsed) {
     case 'Heavy Ball':
-      if (wildPokemon.weight! >= 300) {
+      if (weight! >= 300) {
         return 30;
-      } else if (wildPokemon.weight! >= 200 && wildPokemon.weight! < 300) {
+      } else if (weight! >= 200 && weight! < 300) {
         return 20;
-      } else if (wildPokemon.weight! >= 100 && wildPokemon.weight! < 200) {
+      } else if (weight! >= 100 && weight! < 200) {
         return 0;
       }
       return -20;
@@ -119,8 +117,8 @@ export function calculateBallBonus(ballUsed: string) {
 
     case 'Net Ball': {
       const pokemonIsBugOrWaterType =
-        wildPokemon.types!.filter(
-          (type) => type.type.name === 'water' || type.type.name === 'bug'
+        types!.filter(
+          ({ type: { name } }) => name === 'water' || name === 'bug'
         ).length !== 0;
 
       if (pokemonIsBugOrWaterType) {
@@ -135,8 +133,8 @@ export function calculateBallBonus(ballUsed: string) {
       return 1;
 
     case 'Nest Ball': {
-      if (wildPokemon.level! < 31) {
-        return (41 - wildPokemon.level!) / 10;
+      if (wildPokemonLevel! < 31) {
+        return (41 - wildPokemonLevel!) / 10;
       }
       return 1;
     }
@@ -163,20 +161,16 @@ export function calculateBallBonus(ballUsed: string) {
       return 1;
     }
     case 'Level Ball': {
-      if (Math.floor(userPokemon.level / 4) >= wildPokemon.level!) {
+      if (Math.floor(userPokemonLevel / 4) >= wildPokemonLevel!) {
         return 8;
-      } else if (Math.floor(userPokemon.level / 2) >= wildPokemon.level!) {
+      } else if (Math.floor(userPokemonLevel / 2) >= wildPokemonLevel!) {
         return 4;
-      } else if (userPokemon.level > wildPokemon.level!) {
+      } else if (userPokemonLevel > wildPokemonLevel!) {
         return 2;
       }
       return 1;
     }
     case 'Love Ball': {
-      const userPokemonGender = userPokemon.gender;
-      const userPokemonSpecies = userPokemon.id;
-      const wildPokemonGender = wildPokemon.gender;
-      const wildPokemonSpecies = wildPokemon.id;
       const sameSpecies = wildPokemonSpecies === userPokemonSpecies;
       const oppositeGender =
         wildPokemonGender !== userPokemonGender &&
@@ -203,7 +197,7 @@ export function calculateBallBonus(ballUsed: string) {
         'Skitty',
         'Munna',
       ];
-      const isMoonStonepokemon = moonStonePokemon.includes(wildPokemon.name!);
+      const isMoonStonepokemon = moonStonePokemon.includes(name!);
 
       if (isMoonStonepokemon) {
         return 4;
@@ -224,9 +218,7 @@ export function calculateBallBonus(ballUsed: string) {
         'stakataka',
         'blacephalon',
       ];
-      const isUltraBeast = ultraBeastPokemon.includes(
-        wildPokemon.name!.toLowerCase()
-      );
+      const isUltraBeast = ultraBeastPokemon.includes(name!.toLowerCase());
 
       if (isUltraBeast) {
         return 5;
@@ -269,17 +261,13 @@ export function calculateStatusConditionModifier() {
 }
 
 export function calculateDifficultyModifier() {
-  const storyCompleted = useAppSelector(
-    (state) => state.catchingSimulator.storyCompleted
-  );
-  const wildPokemonLevel = useAppSelector(
-    (state) => state.catchingSimulator.wildPokemon.level!
-  );
-  const userPokemonLevel = useAppSelector(
-    (state) => state.catchingSimulator.userPokemon.level
-  );
+  const {
+    storyCompleted,
+    wildPokemon: { level: wildPokemonLevel },
+    userPokemon: { level: userPokemonLevel },
+  } = useAppSelector((state) => state.catchingSimulator);
 
-  if (!storyCompleted && userPokemonLevel < wildPokemonLevel) {
+  if (!storyCompleted && userPokemonLevel < wildPokemonLevel!) {
     return 410 / 4096;
   } else {
     return 1;
@@ -287,16 +275,13 @@ export function calculateDifficultyModifier() {
 }
 
 export function calculateFinalCaptureRateGen8(ballBonusParameter?: number) {
-  const ballUsed = useAppSelector((state) => state.catchingSimulator.pokeball);
-  const currentHP = useAppSelector(
-    (state) => state.catchingSimulator.hp.currentHP
-  );
-  const maximumHP = useAppSelector(
-    (state) => state.catchingSimulator.hp.maximumHP
-  );
-  const wildPokemon = useAppSelector(
-    (state) => state.catchingSimulator.wildPokemon
-  );
+  const {
+    pokeball: ballUsed,
+    hp,
+    wildPokemon,
+  } = useAppSelector((state) => state.catchingSimulator);
+  const { currentHP, maximumHP } = hp;
+  const { level } = wildPokemon;
 
   const ballBonus = ballBonusParameter ?? calculateBallBonus(ballUsed);
   const difficultyModifier = calculateDifficultyModifier();
@@ -304,8 +289,7 @@ export function calculateFinalCaptureRateGen8(ballBonusParameter?: number) {
   const catchRate = wildPokemon.catchRate;
   const grassModifier = 1;
   const isHeavyBall = [-20, 0, 20, 30].includes(ballBonus);
-  const lowLevelModifier =
-    wildPokemon.level! < 20 ? (30 - wildPokemon.level!) / 10 : 1;
+  const lowLevelModifier = level! < 20 ? (30 - level!) / 10 : 1;
 
   const finalCaptureRate =
     (((3 * maximumHP - 2 * currentHP) *
