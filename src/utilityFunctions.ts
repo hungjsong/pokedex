@@ -337,38 +337,31 @@ export function calculateCaptureChances(ballBonus?: number) {
   const shakeHoldSuccessRate =
     calculateShakeHoldSuccessRate(ballBonus) / CAPTURE_RNG_RATE;
 
+  function convertToPercentage(shakeHoldSuccessRate: number) {
+    return Number((shakeHoldSuccessRate * 100).toPrecision(4));
+  }
+
   return [
     {
-      chance: Number(((1 - shakeHoldSuccessRate) * 100).toPrecision(4)),
+      chance: convertToPercentage(1 - shakeHoldSuccessRate),
     },
     {
-      chance: Number(
-        (
-          (shakeHoldSuccessRate - Math.pow(shakeHoldSuccessRate, 2)) *
-          100
-        ).toPrecision(4)
+      chance: convertToPercentage(
+        shakeHoldSuccessRate - Math.pow(shakeHoldSuccessRate, 2)
       ),
     },
     {
-      chance: Number(
-        (
-          (Math.pow(shakeHoldSuccessRate, 2) -
-            Math.pow(shakeHoldSuccessRate, 3)) *
-          100
-        ).toPrecision(4)
+      chance: convertToPercentage(
+        Math.pow(shakeHoldSuccessRate, 2) - Math.pow(shakeHoldSuccessRate, 3)
       ),
     },
     {
-      chance: Number(
-        (
-          (Math.pow(shakeHoldSuccessRate, 3) -
-            Math.pow(shakeHoldSuccessRate, 4)) *
-          100
-        ).toPrecision(4)
+      chance: convertToPercentage(
+        Math.pow(shakeHoldSuccessRate, 3) - Math.pow(shakeHoldSuccessRate, 4)
       ),
     },
     {
-      chance: Number((Math.pow(shakeHoldSuccessRate, 4) * 100).toPrecision(4)),
+      chance: convertToPercentage(Math.pow(shakeHoldSuccessRate, 4)),
     },
   ];
 }
