@@ -63,32 +63,24 @@ function PokedexEntry() {
 
   return (
     <div>
-      <>
-        <h1>
-          {capitalize(name)} #{`00${id}`.slice(-3)}
-        </h1>
-        <h3>{getEnglishGenera(speciesDetails).genus}</h3>
-      </>
-      <>
-        <img
-          src={
-            sprites === undefined
-              ? 'https://archives.bulbagarden.net/media/upload/8/8e/Spr_3r_000.png'
-              : sprites.other['official-artwork'].front_default
-          }
-          height="10%"
-          width="10%"
-        />
-      </>
-      <>
-        <h3>{t('type')}</h3>
-        {<p>{getPokemonTypes(types)}</p>}
-      </>
-      <>
-        <h3>{t('biometrics')}</h3>
-        {`${(height * 0.1).toFixed(1)} m 
+      <h1>
+        {capitalize(name)} #{`00${id}`.slice(-3)}
+      </h1>
+      <h3>{getEnglishGenera(speciesDetails).genus}</h3>
+      <img
+        src={
+          sprites === undefined
+            ? 'https://archives.bulbagarden.net/media/upload/8/8e/Spr_3r_000.png'
+            : sprites.other['official-artwork'].front_default
+        }
+        height="10%"
+        width="10%"
+      />
+      <h3>{t('type')}</h3>
+      <p>{getPokemonTypes(types)}</p>
+      <h3>{t('biometrics')}</h3>
+      {`${(height * 0.1).toFixed(1)} m 
           ${(weight * 0.1).toFixed(1)} kg`}
-      </>
       {errorMessage !== '' && <ErrorMessage>{errorMessage}</ErrorMessage>}
       <form onSubmit={handleSubmit}>
         <label>

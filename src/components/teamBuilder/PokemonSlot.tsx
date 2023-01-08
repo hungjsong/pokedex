@@ -16,7 +16,7 @@ type PokemonSlotProps = {
 function PokemonSlot(props: PokemonSlotProps) {
   const { teamSlotNumber } = props;
   return (
-    <>
+    <div>
       <PokemonList teamSlotNumber={teamSlotNumber} />
       <ItemList teamSlotNumber={teamSlotNumber} />
       <PokemonShiny teamSlotNumber={teamSlotNumber} />
@@ -27,7 +27,7 @@ function PokemonSlot(props: PokemonSlotProps) {
       <PokemonMoves teamSlotNumber={teamSlotNumber} />
       <PokemonGender teamSlotNumber={teamSlotNumber} />
       <PokemonIVs teamSlotNumber={teamSlotNumber} />
-    </>
+    </div>
   );
 }
 

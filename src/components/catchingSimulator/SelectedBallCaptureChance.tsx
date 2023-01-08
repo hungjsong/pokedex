@@ -54,7 +54,7 @@ function SelectedBallCaptureChance() {
   }
 
   return (
-    <>
+    <div>
       <PokeBallIcon
         src={
           'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/' +
@@ -65,7 +65,7 @@ function SelectedBallCaptureChance() {
       {ballUsed}'s Capture Chances
       <br />
       <CaptureChancesBars captureChances={calculateCaptureChances()} />
-    </>
+    </div>
   );
 }
 

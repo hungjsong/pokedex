@@ -62,15 +62,15 @@ function SimulatorPokemonGender(props: SimulatorPokemonGenderProps) {
       return <>Genderless</>;
     } else if (genderRate === 0) {
       return (
-        <>
+        <div>
           <MalePokemon>♂</MalePokemon> Male
-        </>
+        </div>
       );
     } else if (genderRate === 8) {
       return (
-        <>
+        <div>
           <FemalePokemon>♀</FemalePokemon> Female
-        </>
+        </div>
       );
     }
 

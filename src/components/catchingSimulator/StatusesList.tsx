@@ -32,7 +32,7 @@ function StatusesList(props: StatusesListProps) {
           .map((status) => {
             const { name } = status;
             return (
-              <>
+              <div>
                 <li
                   key={name}
                   onMouseDown={() => {
@@ -42,7 +42,7 @@ function StatusesList(props: StatusesListProps) {
                 >
                   {name}
                 </li>
-              </>
+              </div>
             );
           })}
       </ul>

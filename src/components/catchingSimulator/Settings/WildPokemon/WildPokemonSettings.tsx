@@ -6,7 +6,7 @@ import WildPokemonHP from '../../WildPokemonHP';
 
 function WildPokemonSettings() {
   return (
-    <>
+    <div>
       <h3>Wild Pokemon Settings</h3>
       <CatchingPokemonList isWild={true} />
       <StatusesList />
@@ -16,7 +16,7 @@ function WildPokemonSettings() {
       <AdjustSimulatorPokemonLevel isWild={true} />
       <br />
       <SimulatorPokemonGender isWild={true} />
-    </>
+    </div>
   );
 }
 

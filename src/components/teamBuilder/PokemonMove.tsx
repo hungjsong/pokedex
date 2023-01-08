@@ -109,7 +109,7 @@ function PokemonMove(props: PokemonMoveProps) {
   }
 
   return (
-    <>
+    <div>
       <h3>Move {moveSlotNumber + 1}</h3>
       <input
         type="search"
@@ -127,7 +127,7 @@ function PokemonMove(props: PokemonMoveProps) {
         }}
       />
       {displayList && displayListOfMoves()}
-    </>
+    </div>
   );
 }
 

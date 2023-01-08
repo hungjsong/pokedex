@@ -109,7 +109,7 @@ function PokemonEncounter(props: PokemonEncounterProps) {
   }
 
   return (
-    <>
+    <div>
       Turn {turn}
       <GrassTerain>
         <WildPokemon pokemonID={wildPokemonID!} />
@@ -121,7 +121,7 @@ function PokemonEncounter(props: PokemonEncounterProps) {
       <button onClick={runAway}>
         {catchSuccessful === true ? 'Return to Menu' : 'Run'}
       </button>
-    </>
+    </div>
   );
 }
 

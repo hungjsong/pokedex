@@ -38,7 +38,7 @@ function PokeBallsList(props: PokeBallsListProps) {
           .map((pokeBall) => {
             const { name } = pokeBall;
             return (
-              <>
+              <div>
                 <li
                   key={name}
                   onMouseDown={() => {
@@ -55,7 +55,7 @@ function PokeBallsList(props: PokeBallsListProps) {
                   ></img>
                   {name === 'Poke Ball' ? 'Poké Ball' : name}
                 </li>
-              </>
+              </div>
             );
           })}
       </ul>
@@ -63,7 +63,7 @@ function PokeBallsList(props: PokeBallsListProps) {
   }
 
   return (
-    <>
+    <div>
       <input
         type="search"
         autoComplete="off"
@@ -83,7 +83,7 @@ function PokeBallsList(props: PokeBallsListProps) {
         }}
       />
       {displayList && displayListOfPokeBalls()}
-    </>
+    </div>
   );
 }
 

@@ -15,7 +15,7 @@ function PokemonMoves(props: PokemonMovesProps) {
     return <Loader />;
   }
   return (
-    <>
+    <div>
       <PokemonMove
         moveSlotNumber={0}
         selectedMoves={selectedMoves}
@@ -36,7 +36,7 @@ function PokemonMoves(props: PokemonMovesProps) {
         selectedMoves={selectedMoves}
         teamSlotNumber={teamSlotNumber}
       />
-    </>
+    </div>
   );
 }
 

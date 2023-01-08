@@ -55,7 +55,7 @@ function CaptureChancesBars(props: CaptureChanceBarsProps) {
     return <Loader />;
   } else {
     return (
-      <>
+      <div>
         <CaptureRateBar
           title={`Success: 
             ${captureChances[4].chance > 100 ? 100 : captureChances[4].chance}
@@ -91,7 +91,7 @@ function CaptureChancesBars(props: CaptureChanceBarsProps) {
               ${captureQuotes[3]}`}
           />
         </CaptureRateBar>
-      </>
+      </div>
     );
   }
 }

@@ -33,7 +33,7 @@ function EVSlider(props: EVSliderProps) {
   }
 
   return (
-    <>
+    <div>
       <input
         id={evName}
         type="number"
@@ -51,7 +51,7 @@ function EVSlider(props: EVSliderProps) {
         step="1"
         onInput={changeEV}
       />
-    </>
+    </div>
   );
 }
 

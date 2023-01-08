@@ -43,18 +43,18 @@ function PokemonGender(props: PokemonGenderProps) {
 
   function displayGenderOptions(genderRate: number) {
     if (genderRate === -1) {
-      return <>Genderless</>;
+      return <p>Genderless</p>;
     } else if (genderRate === 0) {
       return (
-        <>
+        <p>
           <MalePokemon>♂</MalePokemon> Male
-        </>
+        </p>
       );
     } else if (genderRate === 8) {
       return (
-        <>
+        <p>
           <FemalePokemon>♀</FemalePokemon> Female
-        </>
+        </p>
       );
     }
 

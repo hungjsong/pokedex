@@ -45,33 +45,31 @@ function NatureList(props: NatureListProps) {
           .map((nature) => {
             const { decreased_stat, increased_stat, name } = nature;
             return (
-              <>
-                <li
-                  key={name}
-                  onMouseDown={() => {
-                    dispatch(
-                      setNature({
-                        nature: name,
-                        teamSlotNumber: slotNumber,
-                      })
-                    );
-                    setInputNature(name);
-                  }}
-                >
-                  {capitalize(name) + ' ('}
-                  {increased_stat !== null ? (
-                    <IncreasedStat>{`↑ ${increased_stat}`}</IncreasedStat>
-                  ) : (
-                    ''
-                  )}
-                  {decreased_stat !== null ? (
-                    <DecreasedStat>{` ↓ ${decreased_stat}`}</DecreasedStat>
-                  ) : (
-                    'No Effect'
-                  )}
-                  {')'}
-                </li>
-              </>
+              <li
+                key={name}
+                onMouseDown={() => {
+                  dispatch(
+                    setNature({
+                      nature: name,
+                      teamSlotNumber: slotNumber,
+                    })
+                  );
+                  setInputNature(name);
+                }}
+              >
+                {capitalize(name) + ' ('}
+                {increased_stat !== null ? (
+                  <IncreasedStat>{`↑ ${increased_stat}`}</IncreasedStat>
+                ) : (
+                  ''
+                )}
+                {decreased_stat !== null ? (
+                  <DecreasedStat>{` ↓ ${decreased_stat}`}</DecreasedStat>
+                ) : (
+                  'No Effect'
+                )}
+                {')'}
+              </li>
             );
           })}
       </ul>
@@ -79,7 +77,7 @@ function NatureList(props: NatureListProps) {
   }
 
   return (
-    <>
+    <div>
       <input
         type="search"
         autoComplete="off"
@@ -94,7 +92,7 @@ function NatureList(props: NatureListProps) {
         onChange={handleChange}
       />
       {displayList && displayListOfNatures(teamSlotNumber)}
-    </>
+    </div>
   );
 }
 

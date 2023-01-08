@@ -40,7 +40,7 @@ function PokemonIVs(props: PokemonIVsProps) {
   }
 
   return (
-    <>
+    <div>
       <input
         id="hp"
         type="number"
@@ -89,7 +89,7 @@ function PokemonIVs(props: PokemonIVsProps) {
         value={spdIV}
         onChange={handleIVChange}
       />
-    </>
+    </div>
   );
 }
 

@@ -18,7 +18,7 @@ function WildPokemonHP() {
   }
 
   return (
-    <>
+    <div>
       <label>
         Current HP:
         <input
@@ -30,7 +30,7 @@ function WildPokemonHP() {
         />
         /{maximumHP}
       </label>
-    </>
+    </div>
   );
 }
 

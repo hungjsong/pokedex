@@ -21,7 +21,7 @@ function EVSliders(props: EVSlidersProps) {
     TOTAL_EFFORT_VALUES - (hpEV + atkEV + defEV + spAtkEV + spDefEV + spdEV);
 
   return (
-    <>
+    <div>
       <h4>Remaining EVs {remainingEVs}</h4>
       <h4>HP</h4>
       <EVSlider
@@ -65,7 +65,7 @@ function EVSliders(props: EVSlidersProps) {
         teamSlotNumber={teamSlotNumber}
         remainingEVs={remainingEVs}
       />
-    </>
+    </div>
   );
 }
 
