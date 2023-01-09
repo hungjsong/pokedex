@@ -1,7 +1,49 @@
+import { useTranslation } from 'react-i18next';
+import { Link } from 'react-router-dom';
+import styled from 'styled-components';
+
 type HeaderProps = {};
 
+const NavBarItem = styled.li`
+  display: inline-block;
+  padding: 0.5rem 1rem;
+`;
+
+const NavBarList = styled.ul`
+  list-style-type: none;
+  padding-left: 0;
+  margin-block-start: 0em;
+  margin-block-end: 0em;
+`;
+
+const NavBar = styled.nav`
+  background-color: #f5aa42;
+  padding: 1rem 1rem;
+`;
+
 function Header(props: HeaderProps) {
-  return <div></div>;
+  const { t } = useTranslation();
+
+  return (
+    <header>
+      <NavBar>
+        <NavBarList>
+          <NavBarItem>
+            <Link to="/">{t('home')}</Link>
+          </NavBarItem>
+          <NavBarItem>
+            <Link to="/PokedexEntry">{t('viewPokedex')}</Link>
+          </NavBarItem>
+          <NavBarItem>
+            <Link to="/TeamBuilder">{t('teamBuilder')}</Link>
+          </NavBarItem>
+          <NavBarItem>
+            <Link to="/CatchingSimulator">{t('catchingSimulator')}</Link>
+          </NavBarItem>
+        </NavBarList>
+      </NavBar>
+    </header>
+  );
 }
 
 export default Header;
