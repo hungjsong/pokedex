@@ -50,7 +50,7 @@ function NatureList(props: NatureListProps) {
                 onMouseDown={() => {
                   dispatch(
                     setNature({
-                      nature: name,
+                      nature: nature,
                       teamSlotNumber: slotNumber,
                     })
                   );

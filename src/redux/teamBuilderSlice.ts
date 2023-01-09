@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { Move, Pokemon } from '../types/pokemonTypes';
+import { Move, Pokemon, PokemonNature } from '../types/pokemonTypes';
 
 interface TeamBuilderState {
   team: Pokemon[];
@@ -208,7 +208,7 @@ export const teamBuilderSlice = createSlice({
     setNature: (
       state,
       action: PayloadAction<{
-        nature: string;
+        nature: PokemonNature;
         teamSlotNumber: number;
       }>
     ) => {
