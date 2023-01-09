@@ -1,4 +1,3 @@
-import { Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { useState, useEffect, FormEvent } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -89,9 +88,6 @@ function PokedexEntry() {
         </label>
         <input type="submit" value="Submit" />
       </form>
-      <nav>
-        <Link to="/">{t('home')}</Link>
-      </nav>
     </div>
   );
 }

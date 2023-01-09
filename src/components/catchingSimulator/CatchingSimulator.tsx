@@ -1,4 +1,3 @@
-import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import PokeBallsList from './PokeBallsList';
 import AllBallsCaptureChances from './AllBallsCaptureChances';
@@ -39,9 +38,6 @@ function CatchingSimulator() {
         </div>
       )}
       <AllBallsCaptureChances />
-      <nav>
-        <Link to="/">{t('home')}</Link>
-      </nav>
     </div>
   );
 }
