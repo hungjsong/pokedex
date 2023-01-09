@@ -20,17 +20,31 @@ const FemalePokemon = styled.span`
 function PokemonGender(props: PokemonGenderProps) {
   const team = useAppSelector((state) => state.teamBuilder.team);
   const { teamSlotNumber } = props;
-  const { gender, id } = team[teamSlotNumber];
+  const { gender, id: pokemonID } = team[teamSlotNumber];
   const [genderRate, setGenderRate] = useState(1);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (id !== undefined) {
-      getSpeciesDetails(id).then((response) => {
-        setGenderRate(response.gender_rate);
+    if (pokemonID !== undefined) {
+      getSpeciesDetails(pokemonID).then((speciesDetails) => {
+        const { gender_rate } = speciesDetails;
+        setGenderRate(gender_rate);
+        const gender =
+          gender_rate === -1
+            ? 'Genderless'
+            : gender_rate === 8
+            ? 'Female'
+            : 'Male';
+
+        dispatch(
+          setGender({
+            gender: gender,
+            teamSlotNumber: teamSlotNumber,
+          })
+        );
       });
     }
-  }, [team[teamSlotNumber]]);
+  }, [pokemonID]);
 
   function handleChange(event: ChangeEvent<HTMLInputElement>) {
     dispatch(
