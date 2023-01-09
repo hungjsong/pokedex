@@ -8,15 +8,17 @@ type PokemonShinyProps = {
 };
 
 function PokemonShiny(props: PokemonShinyProps) {
-  const team = useAppSelector((state) => state.teamBuilder.team);
-  const isShiny = team[props.teamSlotNumber].shiny;
+  const { teamSlotNumber } = props;
+  const { team } = useAppSelector((state) => state.teamBuilder);
+  const { shiny: isShiny } = team[teamSlotNumber];
   const dispatch = useDispatch();
 
   function handleChange(event: ChangeEvent<HTMLInputElement>) {
+    const { checked } = event.target;
     dispatch(
       setShiny({
-        isShiny: event.target.checked,
-        teamSlotNumber: props.teamSlotNumber,
+        isShiny: checked,
+        teamSlotNumber: teamSlotNumber,
       })
     );
   }

@@ -3,35 +3,34 @@ import { useAppDispatch, useAppSelector } from '../../hooks';
 import { setCurrentHP } from '../../redux/catchingSimulatorSlice';
 
 function WildPokemonHP() {
-  const maxHP = useAppSelector((state) => state.catchingSimulator.hp.maximumHP);
-  const currentHP = useAppSelector(
-    (state) => state.catchingSimulator.hp.currentHP
+  const { currentHP, maximumHP } = useAppSelector(
+    (state) => state.catchingSimulator.hp
   );
   const dispatch = useAppDispatch();
 
   function handleChange(event: ChangeEvent<HTMLInputElement>) {
+    const { max, min, value } = event.target;
     const validHPValue =
-      +event.target.value >= +event.target.min &&
-      +event.target.value <= +event.target.max;
+      Number(value) >= Number(min) && Number(value) <= Number(max);
     if (validHPValue) {
-      dispatch(setCurrentHP({ currentHP: +event.target.value }));
+      dispatch(setCurrentHP({ currentHP: Number(value) }));
     }
   }
 
   return (
-    <>
+    <div>
       <label>
         Current HP:
         <input
           type="number"
           min={1}
-          max={maxHP}
+          max={maximumHP}
           value={currentHP}
           onChange={handleChange}
         />
-        /{maxHP}
+        /{maximumHP}
       </label>
-    </>
+    </div>
   );
 }
 

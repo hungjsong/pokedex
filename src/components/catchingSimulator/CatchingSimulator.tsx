@@ -19,30 +19,30 @@ function CatchingSimulator() {
   }
 
   return (
-    <>
+    <div>
       <h1>Catching Simulator</h1>
       {!encounterInProgress && (
-        <>
+        <div>
           <button onClick={startEncounter}>Start Encounter</button>
           <BattleSettings />
           <WildPokemonSettings />
           <UserPokemonSettings />
           <OtherSettings />
-        </>
+        </div>
       )}
       {encounterInProgress && (
-        <>
+        <div>
           <PokemonEncounter endEncounter={setEncounterInProgress} />
           <PokeBallsList />
           <br />
           <SelectedBallCaptureChance />
-        </>
+        </div>
       )}
       <AllBallsCaptureChances />
       <nav>
         <Link to="/">{t('home')}</Link>
       </nav>
-    </>
+    </div>
   );
 }
 

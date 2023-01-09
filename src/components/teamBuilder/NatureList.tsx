@@ -23,6 +23,7 @@ function NatureList(props: NatureListProps) {
   const [displayList, setDisplayList] = useState(false);
   const [inputNature, setInputNature] = useState('');
   const dispatch = useDispatch();
+  const { teamSlotNumber } = props;
 
   useEffect(() => {
     getPokemonNatures().then((response) => {
@@ -41,41 +42,42 @@ function NatureList(props: NatureListProps) {
           .filter((nature) =>
             nature.name.toLowerCase().includes(inputNature.toLowerCase())
           )
-          .map((nature) => (
-            <>
+          .map((nature) => {
+            const { decreased_stat, increased_stat, name } = nature;
+            return (
               <li
-                key={nature.name}
+                key={name}
                 onMouseDown={() => {
                   dispatch(
                     setNature({
-                      nature: nature.name,
+                      nature: name,
                       teamSlotNumber: slotNumber,
                     })
                   );
-                  setInputNature(nature.name);
+                  setInputNature(name);
                 }}
               >
-                {capitalize(nature.name) + ' ('}
-                {nature.increased_stat !== null ? (
-                  <IncreasedStat>{'↑' + nature.increased_stat}</IncreasedStat>
+                {capitalize(name) + ' ('}
+                {increased_stat !== null ? (
+                  <IncreasedStat>{`↑ ${increased_stat}`}</IncreasedStat>
                 ) : (
                   ''
                 )}
-                {nature.decreased_stat !== null ? (
-                  <DecreasedStat>{' ↓' + nature.decreased_stat}</DecreasedStat>
+                {decreased_stat !== null ? (
+                  <DecreasedStat>{` ↓ ${decreased_stat}`}</DecreasedStat>
                 ) : (
                   'No Effect'
                 )}
                 {')'}
               </li>
-            </>
-          ))}
+            );
+          })}
       </ul>
     );
   }
 
   return (
-    <>
+    <div>
       <input
         type="search"
         autoComplete="off"
@@ -89,8 +91,8 @@ function NatureList(props: NatureListProps) {
         }}
         onChange={handleChange}
       />
-      {displayList && displayListOfNatures(props.teamSlotNumber)}
-    </>
+      {displayList && displayListOfNatures(teamSlotNumber)}
+    </div>
   );
 }
 

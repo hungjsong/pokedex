@@ -7,6 +7,7 @@ import {
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import DialogBox from './DialogBox';
 import styled from 'styled-components';
+import { CAPTURE_RNG_RATE } from '../../constants';
 
 const GrassTerain = styled.span`
   display: block;
@@ -53,20 +54,21 @@ function PokemonEncounter(props: PokemonEncounterProps) {
   const dispatch = useAppDispatch();
   const shakeHoldSuccessRate = calculateShakeHoldSuccessRate();
   const [catchSuccessful, setCatchSuccessful] = useState(false);
-  const [turn, setTurn] = useState(1);
-  const ballUsed = useAppSelector((state) => state.catchingSimulator.pokeball);
-  const wildPokemon = useAppSelector(
-    (state) => state.catchingSimulator.wildPokemon
-  );
-  const userPokemon = useAppSelector(
-    (state) => state.catchingSimulator.userPokemon
-  );
+  const {
+    pokeball: ballUsed,
+    wildPokemon,
+    userPokemon,
+    currentTurn: turn,
+  } = useAppSelector((state) => state.catchingSimulator);
+  const { name, id: wildPokemonID } = wildPokemon;
+  const { id: userPokemonID } = userPokemon;
+  const { endEncounter } = props;
   const captureQuotes = [
     'Oh no! The Pokémon broke free!',
     'Aww! It appeared to be caught!',
     'Aargh! Almost had it!',
     'Gah! It was so close, too!',
-    'Gotcha! ' + wildPokemon.name + ' was caught!',
+    `Gotcha! ${name} was caught!`,
   ];
 
   useEffect(() => {
@@ -74,8 +76,8 @@ function PokemonEncounter(props: PokemonEncounterProps) {
   }, [turn]);
 
   function runAway() {
-    setTurn(1);
-    props.endEncounter(false);
+    dispatch(setCurrentTurn({ turn: 1 }));
+    endEncounter(false);
     dispatch(setDialogBoxMessage({ message: 'What will you do?' }));
   }
 
@@ -84,12 +86,10 @@ function PokemonEncounter(props: PokemonEncounterProps) {
     let pokeBallStillHolding = true;
     let ballHoldingMessage = '.';
 
-    dispatch(
-      setDialogBoxMessage({ message: 'You used one ' + ballUsed + '!' })
-    );
+    dispatch(setDialogBoxMessage({ message: `You used one ${ballUsed}!` }));
 
     const shakeInterval = setInterval(function () {
-      const shakeCheck = Math.floor(Math.random() * 65536);
+      const shakeCheck = Math.floor(Math.random() * CAPTURE_RNG_RATE);
       if (shakeCheck < shakeHoldSuccessRate) {
         numOfShakes > 0 ? (ballHoldingMessage = ballHoldingMessage + ' .') : '';
         dispatch(setDialogBoxMessage({ message: ballHoldingMessage }));
@@ -97,7 +97,7 @@ function PokemonEncounter(props: PokemonEncounterProps) {
       } else {
         dispatch(setDialogBoxMessage({ message: captureQuotes[numOfShakes] }));
         pokeBallStillHolding = false;
-        setTurn(turn + 1);
+        dispatch(setCurrentTurn({ turn: turn + 1 }));
         clearInterval(shakeInterval);
       }
       if (numOfShakes === 4 && pokeBallStillHolding === true) {
@@ -109,11 +109,11 @@ function PokemonEncounter(props: PokemonEncounterProps) {
   }
 
   return (
-    <>
+    <div>
       Turn {turn}
       <GrassTerain>
-        <WildPokemon pokemonID={wildPokemon.id!} />
-        <UserPokemon pokemonID={userPokemon.id} />
+        <WildPokemon pokemonID={wildPokemonID!} />
+        <UserPokemon pokemonID={userPokemonID} />
       </GrassTerain>
       <br />
       <DialogBox />
@@ -121,7 +121,7 @@ function PokemonEncounter(props: PokemonEncounterProps) {
       <button onClick={runAway}>
         {catchSuccessful === true ? 'Return to Menu' : 'Run'}
       </button>
-    </>
+    </div>
   );
 }
 

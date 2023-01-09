@@ -1,7 +1,12 @@
 import CaptureChancesBars from './CaptureChancesBars';
 import styled from 'styled-components';
 import { useAppSelector } from '../../hooks';
-import { calculateFinalCaptureRateGen8 } from '../../utilityFunctions';
+import {
+  calculateCaptureChances,
+  calculateFinalCaptureRateGen8,
+  calculateShakeHoldSuccessRate,
+} from '../../utilityFunctions';
+import { CAPTURE_RNG_RATE } from '../../constants';
 
 const AllBallsCaptureChancesTable = styled.table`
   margin-left: auto;
@@ -36,106 +41,11 @@ const TableHead = styled.thead`
 `;
 
 function AllBallsCaptureChances() {
-  const turn = useAppSelector((state) => state.catchingSimulator.currentTurn);
-  const wildPokemon = useAppSelector(
-    (state) => state.catchingSimulator.wildPokemon
+  const { currentTurn, wildPokemon } = useAppSelector(
+    (state) => state.catchingSimulator
   );
+  const { level } = wildPokemon;
   const allBallsCaptureChances = calculateAllBallsSuccessRate();
-
-  function displayAllBallsSuccessRate() {
-    return (
-      <AllBallsCaptureChancesTable>
-        <TableHead>
-          <tr>
-            <th>Ball Name</th>
-            <th colSpan={2}>Catch Rate</th>
-            <th>Condition</th>
-          </tr>
-        </TableHead>
-        {allBallsCaptureChances.map((ball, allBallsIndex) => (
-          <TableBody index={allBallsIndex} key={ball.name}>
-            {ball.conditions.map((condition, index) => {
-              const successRate =
-                condition.captureChances[4].chance > 100
-                  ? 100
-                  : condition.captureChances[4].chance;
-
-              if (index === 0) {
-                return (
-                  <tr key={condition.description + index}>
-                    <HeaderCell rowSpan={ball.conditions.length}>
-                      <PokeBallIcon
-                        src={
-                          'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/' +
-                          ball.name.toLowerCase().split(' ').join('-') +
-                          '.png'
-                        }
-                      />
-                      {ball.name}
-                    </HeaderCell>
-                    <TableCell>
-                      <CaptureChancesBars
-                        captureChances={condition.captureChances}
-                      />
-                    </TableCell>
-                    <TableCellSuccessRate>{successRate}%</TableCellSuccessRate>
-                    <TableCell>{condition.description}</TableCell>
-                  </tr>
-                );
-              } else {
-                return (
-                  <tr key={condition.description + index}>
-                    <TableCell>
-                      <CaptureChancesBars
-                        captureChances={condition.captureChances}
-                      />
-                    </TableCell>
-                    <TableCellSuccessRate>{successRate}%</TableCellSuccessRate>
-                    <TableCell>{condition.description}</TableCell>
-                  </tr>
-                );
-              }
-            })}
-          </TableBody>
-        ))}
-      </AllBallsCaptureChancesTable>
-    );
-  }
-
-  function calculateCaptureChances(ballBonus: number) {
-    const finalCaptureRate = calculateFinalCaptureRateGen8(ballBonus);
-    const shakeHoldSuccessRate =
-      Math.floor(65536 / Math.pow(255 / finalCaptureRate, 3 / 16)) / 65536;
-
-    return [
-      {
-        chance: +((1 - shakeHoldSuccessRate) * 100).toPrecision(4),
-      },
-      {
-        chance: +(
-          (shakeHoldSuccessRate - Math.pow(shakeHoldSuccessRate, 2)) *
-          100
-        ).toPrecision(4),
-      },
-      {
-        chance: +(
-          (Math.pow(shakeHoldSuccessRate, 2) -
-            Math.pow(shakeHoldSuccessRate, 3)) *
-          100
-        ).toPrecision(4),
-      },
-      {
-        chance: +(
-          (Math.pow(shakeHoldSuccessRate, 3) -
-            Math.pow(shakeHoldSuccessRate, 4)) *
-          100
-        ).toPrecision(4),
-      },
-      {
-        chance: +(Math.pow(shakeHoldSuccessRate, 4) * 100).toPrecision(4),
-      },
-    ];
-  }
 
   function calculateAllBallsSuccessRate() {
     return [
@@ -307,7 +217,7 @@ function AllBallsCaptureChances() {
             description:
               "Wild Pokemon's level is < 31 (more effective against lower levels)",
             captureChances: calculateCaptureChances(
-              wildPokemon.level! < 31 ? (41 - wildPokemon.level!) / 10 : 1
+              level! < 31 ? (41 - level!) / 10 : 1
             ),
           },
           {
@@ -333,11 +243,10 @@ function AllBallsCaptureChances() {
         name: 'Timer Ball',
         conditions: [
           {
-            description:
-              'Capture chance scales with number of turns passed in battle. Caps at turn 11 (Current turn: ' +
-              turn +
-              ')',
-            captureChances: calculateCaptureChances(1 + (turn * 1229) / 4096),
+            description: `Capture chance scales with number of turns passed in battle. Caps at turn 11 (Current turn: ${currentTurn})`,
+            captureChances: calculateCaptureChances(
+              1 + (currentTurn * 1229) / 4096
+            ),
           },
         ],
       },
@@ -415,7 +324,61 @@ function AllBallsCaptureChances() {
     ];
   }
 
-  return displayAllBallsSuccessRate();
+  return (
+    <AllBallsCaptureChancesTable>
+      <TableHead>
+        <tr>
+          <th>Ball Name</th>
+          <th colSpan={2}>Catch Rate</th>
+          <th>Condition</th>
+        </tr>
+      </TableHead>
+      {allBallsCaptureChances.map((ball, allBallsIndex) => {
+        const { conditions, name } = ball;
+        return (
+          <TableBody index={allBallsIndex} key={ball.name}>
+            {conditions.map((condition, index) => {
+              const { captureChances, description } = condition;
+              const successRate =
+                captureChances[4].chance > 100 ? 100 : captureChances[4].chance;
+
+              if (index === 0) {
+                return (
+                  <tr key={description + index}>
+                    <HeaderCell rowSpan={conditions.length}>
+                      <PokeBallIcon
+                        src={
+                          'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/' +
+                          name.toLowerCase().split(' ').join('-') +
+                          '.png'
+                        }
+                      />
+                      {name}
+                    </HeaderCell>
+                    <TableCell>
+                      <CaptureChancesBars captureChances={captureChances} />
+                    </TableCell>
+                    <TableCellSuccessRate>{successRate}%</TableCellSuccessRate>
+                    <TableCell>{description}</TableCell>
+                  </tr>
+                );
+              } else {
+                return (
+                  <tr key={description + index}>
+                    <TableCell>
+                      <CaptureChancesBars captureChances={captureChances} />
+                    </TableCell>
+                    <TableCellSuccessRate>{successRate}%</TableCellSuccessRate>
+                    <TableCell>{description}</TableCell>
+                  </tr>
+                );
+              }
+            })}
+          </TableBody>
+        );
+      })}
+    </AllBallsCaptureChancesTable>
+  );
 }
 
 export default AllBallsCaptureChances;

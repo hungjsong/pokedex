@@ -1,5 +1,6 @@
 import { ChangeEvent } from 'react';
 import { useDispatch } from 'react-redux';
+import { MAXIMUM_EFFORT_VALUES, MINIMUM_EFFORT_VALUES } from '../../constants';
 import { setEV } from '../../redux/teamBuilderSlice';
 
 type EVSliderProps = {
@@ -11,44 +12,46 @@ type EVSliderProps = {
 
 function EVSlider(props: EVSliderProps) {
   const dispatch = useDispatch();
+  const { evName, evStatValue, teamSlotNumber, remainingEVs } = props;
 
   function changeEV(event: ChangeEvent<HTMLInputElement>) {
-    const inputEV = +event.target.value;
+    const { max, min, value } = event.target;
+    const inputEV = Number(value);
     const validEV =
-      inputEV <= +event.target.max &&
-      inputEV >= +event.target.min &&
-      inputEV - props.evStatValue <= props.remainingEVs;
+      inputEV <= Number(max) &&
+      inputEV >= Number(min) &&
+      inputEV - evStatValue <= remainingEVs;
     if (validEV) {
       dispatch(
         setEV({
-          evInputValue: +event.target.value,
-          teamSlotNumber: props.teamSlotNumber,
-          evName: props.evName,
+          evInputValue: Number(value),
+          teamSlotNumber: teamSlotNumber,
+          evName: evName,
         })
       );
     }
   }
 
   return (
-    <>
+    <div>
       <input
-        id={props.evName}
+        id={evName}
         type="number"
-        min="0"
-        max="252"
-        value={props.evStatValue}
+        min={MINIMUM_EFFORT_VALUES}
+        max={MAXIMUM_EFFORT_VALUES}
+        value={evStatValue}
         onChange={changeEV}
       />
       <input
-        id={props.evName}
+        id={evName}
         type="range"
-        min="0"
-        max="252"
-        value={props.evStatValue}
+        min={MINIMUM_EFFORT_VALUES}
+        max={MAXIMUM_EFFORT_VALUES}
+        value={evStatValue}
         step="1"
         onInput={changeEV}
       />
-    </>
+    </div>
   );
 }
 
