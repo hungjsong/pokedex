@@ -1,4 +1,3 @@
-import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import PokemonSlot from './PokemonSlot';
 
@@ -14,9 +13,6 @@ function TeamBuilder() {
       <PokemonSlot teamSlotNumber={3} />
       <PokemonSlot teamSlotNumber={4} />
       <PokemonSlot teamSlotNumber={5} />
-      <nav>
-        <Link to="/">{t('home')}</Link>
-      </nav>
     </div>
   );
 }
