@@ -33,7 +33,7 @@ function EVSlider(props: EVSliderProps) {
   }
 
   return (
-    <div>
+    <div data-testid="evSlider">
       <input
         id={evName}
         type="number"
@@ -41,6 +41,7 @@ function EVSlider(props: EVSliderProps) {
         max={MAXIMUM_EFFORT_VALUES}
         value={evStatValue}
         onChange={changeEV}
+        data-testid="evSliderNumberValue"
       />
       <input
         id={evName}
@@ -50,6 +51,7 @@ function EVSlider(props: EVSliderProps) {
         value={evStatValue}
         step="1"
         onInput={changeEV}
+        data-testid="evSliderStepValue"
       />
     </div>
   );
