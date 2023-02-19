@@ -7,6 +7,7 @@ import './App.css';
 import Header from './components/Header';
 import Login from './components/login/Login';
 import SignUp from './components/signUp/SignUp';
+import TeamSelect from './components/teamBuilder/TeamSelect';
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/PokedexEntry" element={<PokedexEntry />} />
         <Route path="/TeamBuilder" element={<TeamBuilder />} />
+        <Route path="/TeamSelect" element={<TeamSelect />} />
         <Route path="/CatchingSimulator" element={<CatchingSimulator />} />
         <Route path="/Login" element={<Login />} />
         <Route path="/SignUp" element={<SignUp />} />
