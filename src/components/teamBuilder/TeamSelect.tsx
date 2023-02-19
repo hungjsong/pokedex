@@ -1,25 +1,22 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-
-/*
- 1 user  can have many teams
- A team belongs to only 1 user
- a team can have many Pokemon (max 6)
- a pokemon can only belong to one team
-*/
+import { createNewTeamReq, loadUserTeams } from '../../API/teamBuilder';
 
 function TeamSelect() {
   const [teams, setTeams] = useState([]);
   const navigate = useNavigate();
+  const userID = localStorage.getItem('userID');
 
   useEffect(() => {
-    /*
-        Check the DB to see if the user has any teams.
-          If there are teams, set state value teams to the returned teams list.
-      */
+    if (userID !== null) {
+      loadUserTeams(userID).then((teams) => setTeams(teams));
+    }
   }, []);
 
   function createNewTeam() {
+    if (userID !== null) {
+      createNewTeamReq(userID);
+    }
     navigate('/TeamBuilder');
   }
 
@@ -35,6 +32,13 @@ function TeamSelect() {
       {teams.length === 0 && (
         <div>
           <p>Hey seems like you don't have any teams. Why not make one?</p>
+        </div>
+      )}
+      {teams.length !== 0 && (
+        <div>
+          {teams.map((team, index) => {
+            return <h1>team {index + 1}</h1>;
+          })}
         </div>
       )}
       <button onClick={createNewTeam}>Add New Team</button>
