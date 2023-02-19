@@ -5,6 +5,8 @@ import PokedexEntry from './components/pokemonEntry/PokedexEntry';
 import TeamBuilder from './components/teamBuilder/TeamBuilder';
 import './App.css';
 import Header from './components/Header';
+import Login from './components/login/Login';
+import SignUp from './components/signUp/SignUp';
 
 function App() {
   return (
@@ -15,6 +17,8 @@ function App() {
         <Route path="/PokedexEntry" element={<PokedexEntry />} />
         <Route path="/TeamBuilder" element={<TeamBuilder />} />
         <Route path="/CatchingSimulator" element={<CatchingSimulator />} />
+        <Route path="/Login" element={<Login />} />
+        <Route path="/SignUp" element={<SignUp />} />
       </Routes>
     </div>
   );
