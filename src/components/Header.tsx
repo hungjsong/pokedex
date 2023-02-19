@@ -1,5 +1,5 @@
 import { useTranslation } from 'react-i18next';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
 type HeaderProps = {};
@@ -23,6 +23,8 @@ const NavBar = styled.nav`
 
 function Header(props: HeaderProps) {
   const { t } = useTranslation();
+  const userID = localStorage.getItem('userID');
+  const navigate = useNavigate();
 
   return (
     <header>
@@ -40,6 +42,23 @@ function Header(props: HeaderProps) {
           <NavBarItem>
             <Link to="/CatchingSimulator">{t('catchingSimulator')}</Link>
           </NavBarItem>
+          {userID === null && (
+            <NavBarItem>
+              <Link to="/Login">{t('loginSignUp')}</Link>
+            </NavBarItem>
+          )}
+          {userID !== null && (
+            <NavBarItem>
+              <Link
+                to="/"
+                onClick={() => {
+                  localStorage.clear();
+                }}
+              >
+                Logout
+              </Link>
+            </NavBarItem>
+          )}
         </NavBarList>
       </NavBar>
     </header>

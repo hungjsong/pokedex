@@ -8,5 +8,8 @@
   "emptyPokedexInput": "*Please enter a Pokémon's number or name",
   "pokedexEntryNotFound": "*No Pokémon with that dex number or name has been found",
   "teamBuilder": "Team Builder",
-  "catchingSimulator": "Catching Simulator"
+  "catchingSimulator": "Catching Simulator",
+  "loginSignUp": "Login/Sign Up",
+  "login": "Login",
+  "signUp": "Sign Up"
 }
