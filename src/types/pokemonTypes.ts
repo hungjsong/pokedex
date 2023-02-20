@@ -46,6 +46,7 @@ export type Move = {
 };
 
 export type Pokemon = {
+  dbID?: number | string;
   name?: string;
   id?: number;
   moves?: Move[];

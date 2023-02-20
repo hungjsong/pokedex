@@ -152,6 +152,7 @@ export const teamBuilderSlice = createSlice({
     },
     addTeamPokemon: (state, action: PayloadAction<{}>) => {
       state.team.push({
+        dbID: undefined,
         name: 'Bulbasaur',
         id: 1,
         moves: [],

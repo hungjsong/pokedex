@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, useLocation } from 'react-router-dom';
-import { saveTeam } from '../../API/teamBuilder';
+import { getTeamByID, saveTeam } from '../../API/teamBuilder';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { addTeamPokemon, initializeTeam } from '../../redux/teamBuilderSlice';
 import PokemonSlot from './PokemonSlot';
@@ -13,7 +13,13 @@ function TeamBuilder() {
   const { state } = useLocation();
   const { teamID } = state;
 
-  useEffect(() => {}, [team]);
+  useEffect(() => {
+    const responseTeam = getTeamByID(teamID);
+    responseTeam.then((response) => {
+      console.log(response.data);
+      dispatch(initializeTeam({ team: response.data }));
+    });
+  }, []);
 
   function saveBuiltTeam() {
     const savedTeam = saveTeam(team, teamID);
