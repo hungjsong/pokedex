@@ -20,3 +20,15 @@ export const loadUserTeams = async (userID: string) => {
       return response.data;
     });
 };
+
+export const saveTeam = async (team: Pokemon[], teamID: number) => {
+  return await axios
+    .post('http://localhost:5000/api/pokemon/saveTeam/', {
+      team: team,
+      teamID: teamID,
+    })
+    .then((response) => {
+      console.log(response.data);
+      return response.data;
+    });
+};

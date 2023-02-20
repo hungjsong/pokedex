@@ -15,9 +15,13 @@ function TeamSelect() {
 
   function createNewTeam() {
     if (userID !== null) {
-      createNewTeamReq(userID);
+      const teamID = createNewTeamReq(userID);
+      teamID.then(function (result) {
+        navigate('/TeamBuilder', { state: { teamID: result.data } });
+      });
+    } else {
+      navigate('/TeamBuilder');
     }
-    navigate('/TeamBuilder');
   }
 
   function selectedTeam() {

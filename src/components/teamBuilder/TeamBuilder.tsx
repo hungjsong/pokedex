@@ -1,18 +1,41 @@
+import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
+import { Link, useLocation } from 'react-router-dom';
+import { saveTeam } from '../../API/teamBuilder';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { addTeamPokemon, initializeTeam } from '../../redux/teamBuilderSlice';
 import PokemonSlot from './PokemonSlot';
 
 function TeamBuilder() {
   const { t } = useTranslation();
+  const dispatch = useAppDispatch();
+  const team = useAppSelector((state) => state.teamBuilder.team);
+  const { state } = useLocation();
+  const { teamID } = state;
+
+  useEffect(() => {}, [team]);
+
+  function saveBuiltTeam() {
+    const savedTeam = saveTeam(team, teamID);
+    savedTeam.then((response) => {
+      console.log(response.data);
+      dispatch(initializeTeam({ team: response.data }));
+    });
+  }
+
+  function addPokemon() {
+    dispatch(addTeamPokemon({}));
+  }
 
   return (
     <div>
       <h1>{t('teamBuilder')}</h1>
-      <PokemonSlot teamSlotNumber={0} />
-      <PokemonSlot teamSlotNumber={1} />
-      <PokemonSlot teamSlotNumber={2} />
-      <PokemonSlot teamSlotNumber={3} />
-      <PokemonSlot teamSlotNumber={4} />
-      <PokemonSlot teamSlotNumber={5} />
+      {team.map((pokemon, index) => {
+        return <PokemonSlot teamSlotNumber={index} />;
+      })}
+      <button onClick={addPokemon}>Add Pokemon</button>
+      {team.length > 0 && <button onClick={saveBuiltTeam}>Save Team</button>}
+      <Link to="/TeamSelect">Return</Link>
     </div>
   );
 }
