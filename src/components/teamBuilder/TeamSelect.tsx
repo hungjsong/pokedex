@@ -24,12 +24,6 @@ function TeamSelect() {
     }
   }
 
-  function selectedTeam() {
-    /*
-      Dispatch to teamBuilder store and initialize the team
-    */
-  }
-
   return (
     <div>
       <h1>All teams</h1>
@@ -40,8 +34,16 @@ function TeamSelect() {
       )}
       {teams.length !== 0 && (
         <div>
-          {teams.map((team, index) => {
-            return <h1>team {index + 1}</h1>;
+          {teams.map((team: { id: number; userID: number }, index) => {
+            return (
+              <h1
+                onClick={() => {
+                  navigate('/TeamBuilder', { state: { teamID: team.id } });
+                }}
+              >
+                team {index + 1}
+              </h1>
+            );
           })}
         </div>
       )}
