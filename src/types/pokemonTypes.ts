@@ -39,16 +39,14 @@ export type Move = {
   accuracy: number;
   powerPoint: number;
   power: number | null;
-  additional_effect: {
-    description: string | null;
-    chance: number | null;
-  };
+  effect_chance: number | null;
+  effect_description: string | null;
 };
 
 export type Pokemon = {
   dbID?: number | string;
   name?: string;
-  id?: number;
+  id: number;
   moves?: Move[];
   item?: string;
   level?: number;
