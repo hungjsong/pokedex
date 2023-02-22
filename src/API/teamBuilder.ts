@@ -42,3 +42,13 @@ export const getTeamByID = async (teamID: number) => {
       return response.data;
     });
 };
+
+export const getAllLearnableMoves = async (pokemonID: number) => {
+  return await axios
+    .post('http://localhost:5000/api/pokemon/getAllLearnableMoves/', {
+      pokemonID: pokemonID,
+    })
+    .then((response) => {
+      return response.data;
+    });
+};
