@@ -1,9 +1,10 @@
 import { ChangeEvent, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { getPokemonItems } from '../../API/pokemon';
 import { Item } from '../../types/pokemonTypes';
 import Loader from '../common/Loader';
 import { setItem } from '../../redux/teamBuilderSlice';
+import { getAllHoldableItems } from '../../API/teamBuilder';
+import { useAppSelector } from '../../hooks';
 
 type ItemListProps = {
   teamSlotNumber: number;
@@ -15,9 +16,13 @@ function ItemList(props: ItemListProps) {
   const [pokemonItems, setPokemonItems] = useState<Item[]>([]);
   const dispatch = useDispatch();
   const { teamSlotNumber } = props;
+  const { item } = useAppSelector(
+    (state) => state.teamBuilder.team[teamSlotNumber]
+  );
 
   useEffect(() => {
-    getPokemonItems().then((allItems) => setPokemonItems(allItems.payload));
+    getAllHoldableItems().then((allItems) => setPokemonItems(allItems.data));
+    setItemID(item?.name ?? '');
   }, []);
 
   function handleChange(event: ChangeEvent<HTMLInputElement>) {
@@ -35,23 +40,27 @@ function ItemList(props: ItemListProps) {
           .filter((item) =>
             item.name.toLowerCase().includes(itemID.toLowerCase())
           )
-          .map(({ name }) => {
+          .map(({ id, name, description, spriteURL }) => {
             return (
               <li
                 key={name}
                 onMouseDown={() => {
-                  dispatch(setItem({ item: name, teamSlotNumber: slotNumber }));
+                  dispatch(
+                    setItem({
+                      id: id,
+                      item: name,
+                      description: description,
+                      spriteURL: spriteURL,
+                      teamSlotNumber: slotNumber,
+                    })
+                  );
                   setItemID(name);
                 }}
               >
-                <img
-                  src={
-                    'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/' +
-                    name.toLowerCase().split(' ').join('-') +
-                    '.png'
-                  }
-                ></img>
+                <img src={spriteURL}></img>
                 {name}
+                <br />
+                {description}
               </li>
             );
           })}

@@ -19,9 +19,13 @@ function PokemonList(props: PokemonListProps) {
     (state) => state.pokedex
   );
   const { teamSlotNumber } = props;
+  const { name } = useAppSelector(
+    (state) => state.teamBuilder.team[teamSlotNumber]
+  );
 
   useEffect(() => {
     getAllPokemon().then((allPokemon) => dispatch(setPokemonList(allPokemon)));
+    setPokemonID(name!);
   }, []);
 
   function handleChange(event: ChangeEvent<HTMLInputElement>) {

@@ -1,13 +1,15 @@
 import { ChangeEvent, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { getPokemonMoves } from '../../API/pokemon';
 import Loader from '../common/Loader';
 import { Move } from '../../types/pokemonTypes';
 import { setMove } from '../../redux/teamBuilderSlice';
+import { getAllLearnableMoves } from '../../API/teamBuilder';
+import { useAppSelector } from '../../hooks';
+import { capitalize } from '../../utilityFunctions';
 
 type PokemonMoveProps = {
   moveSlotNumber: number;
-  selectedMoves: Move[];
+  selectedMoves: (Move | null)[];
   teamSlotNumber: number;
 };
 
@@ -16,13 +18,23 @@ function PokemonMove(props: PokemonMoveProps) {
   const [searchTerm, setSearchTerm] = useState('');
   const [displayList, setDisplayList] = useState(false);
   const [pokemonMoves, setPokemonMoves] = useState<Move[]>([]);
+  const pokemon = useAppSelector(
+    (state) => state.teamBuilder.team[teamSlotNumber]
+  );
+  const { id, moves } = pokemon;
   const dispatch = useDispatch();
 
   useEffect(() => {
-    getPokemonMoves().then((response) => {
-      setPokemonMoves(response.payload);
+    getAllLearnableMoves(id!).then((response) => {
+      setPokemonMoves(response.data);
     });
-  }, []);
+
+    setSearchTerm(
+      moves![moveSlotNumber]?.name === undefined
+        ? ''
+        : moves![moveSlotNumber]!.name
+    );
+  }, [id]);
 
   function handleChange(event: ChangeEvent<HTMLInputElement>) {
     const { value } = event.target;
@@ -30,18 +42,7 @@ function PokemonMove(props: PokemonMoveProps) {
     if (value === '') {
       dispatch(
         setMove({
-          selectedMove: {
-            name: '',
-            type: 'Normal',
-            category: 'Physical',
-            accuracy: 0,
-            powerPoint: 0,
-            power: 0,
-            additional_effect: {
-              description: null,
-              chance: null,
-            },
-          },
+          selectedMove: null,
           teamSlotNumber: teamSlotNumber,
           moveSlotNumber: moveSlotNumber,
         })
@@ -63,13 +64,18 @@ function PokemonMove(props: PokemonMoveProps) {
           .filter(
             (pokemonMove) =>
               !selectedMoves
-                .filter(
-                  (selectedMove) => selectedMove.name === pokemonMove.name
-                )
+                .filter((selectedMove) => {
+                  if (selectedMove === null) {
+                    return '';
+                  } else {
+                    return selectedMove!.name === pokemonMove.name;
+                  }
+                })
                 .includes(pokemonMove)
           )
           .map((pokemonMove) => {
-            const { category, name, type } = pokemonMove;
+            const { category, name, type, power, powerPoint, accuracy } =
+              pokemonMove;
             return (
               <li
                 key={name}
@@ -86,21 +92,18 @@ function PokemonMove(props: PokemonMoveProps) {
                   );
                 }}
               >
-                <img
-                  src={
-                    'https://play.pokemonshowdown.com/sprites/types/' +
-                    type +
-                    '.png'
-                  }
-                />
-                <img
-                  src={
-                    'https://play.pokemonshowdown.com/sprites/categories/' +
-                    category +
-                    '.png'
-                  }
-                />
                 {name}
+                <img
+                  src={`https://play.pokemonshowdown.com/sprites/types/${capitalize(
+                    type
+                  )}.png`}
+                />
+                <img
+                  src={`https://play.pokemonshowdown.com/sprites/categories/${capitalize(
+                    category
+                  )}.png`}
+                />
+                Power: {power} | PP: {powerPoint} | Accuracy: {accuracy}
               </li>
             );
           })}

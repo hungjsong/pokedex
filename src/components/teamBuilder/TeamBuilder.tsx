@@ -16,7 +16,6 @@ function TeamBuilder() {
   useEffect(() => {
     const responseTeam = getTeamByID(teamID);
     responseTeam.then((response) => {
-      console.log(response.data);
       dispatch(initializeTeam({ team: response.data }));
     });
   }, []);
@@ -24,7 +23,6 @@ function TeamBuilder() {
   function saveBuiltTeam() {
     const savedTeam = saveTeam(team, teamID);
     savedTeam.then((response) => {
-      console.log(response.data);
       dispatch(initializeTeam({ team: response.data }));
     });
   }

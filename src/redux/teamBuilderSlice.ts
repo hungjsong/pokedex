@@ -32,7 +32,7 @@ export const teamBuilderSlice = createSlice({
       action: PayloadAction<{
         teamSlotNumber: number;
         moveSlotNumber: number;
-        selectedMove: Move;
+        selectedMove: Move | null;
       }>
     ) => {
       const { teamSlotNumber, moveSlotNumber, selectedMove } = action.payload;
