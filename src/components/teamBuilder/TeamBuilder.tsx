@@ -37,8 +37,8 @@ function TeamBuilder() {
       {team.map((pokemon, index) => {
         return <PokemonSlot teamSlotNumber={index} />;
       })}
-      <button onClick={addPokemon}>Add Pokemon</button>
-      {team.length > 0 && <button onClick={saveBuiltTeam}>Save Team</button>}
+      {team.length < 6 && <button onClick={addPokemon}>Add Pokemon</button>}
+      <button onClick={saveBuiltTeam}>Save Team</button>
       <Link to="/TeamSelect">Return</Link>
     </div>
   );

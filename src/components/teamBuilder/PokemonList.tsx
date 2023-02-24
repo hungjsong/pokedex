@@ -90,7 +90,6 @@ function PokemonList(props: PokemonListProps) {
 
   return (
     <div>
-      <h3>Slot {teamSlotNumber + 1}</h3>
       <input
         type="search"
         autoComplete="off"

@@ -193,6 +193,16 @@ export const teamBuilderSlice = createSlice({
         },
       });
     },
+    removeTeamPokemon: (
+      state,
+      action: PayloadAction<{ teamSlotNumber: number }>
+    ) => {
+      const { teamSlotNumber } = action.payload;
+      const updatedTeam = state.team;
+      state.team = updatedTeam.filter(
+        (pokemon, index) => index !== teamSlotNumber
+      );
+    },
     initializeTeam: (state, action: PayloadAction<{ team: Pokemon[] }>) => {
       const { team } = action.payload;
       state.team = team;
@@ -213,5 +223,6 @@ export const {
   setItem,
   initializeTeam,
   addTeamPokemon,
+  removeTeamPokemon,
 } = teamBuilderSlice.actions;
 export default teamBuilderSlice.reducer;
