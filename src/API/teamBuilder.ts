@@ -28,7 +28,6 @@ export const saveTeam = async (team: Pokemon[], teamID: number) => {
       teamID: teamID,
     })
     .then((response) => {
-      console.log(response.data);
       return response.data;
     });
 };
@@ -48,6 +47,14 @@ export const getAllLearnableMoves = async (pokemonID: number) => {
     .post('http://localhost:5000/api/pokemon/getAllLearnableMoves/', {
       pokemonID: pokemonID,
     })
+    .then((response) => {
+      return response.data;
+    });
+};
+
+export const getAllHoldableItems = async () => {
+  return await axios
+    .post('http://localhost:5000/api/pokemon/getAllHoldableItems/')
     .then((response) => {
       return response.data;
     });
