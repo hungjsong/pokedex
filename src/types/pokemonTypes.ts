@@ -33,6 +33,7 @@ type APIStats = {
 };
 
 export type Move = {
+  id: number;
   name: string;
   type: string;
   category: string;
@@ -47,14 +48,14 @@ export type Pokemon = {
   dbID?: number | string;
   name?: string;
   id: number;
-  moves?: Move[];
-  item?: string;
+  moves?: (Move | null)[];
+  item?: Item;
   level?: number;
   gender?: string;
   happiness?: number;
   shiny?: boolean;
   types?: PokemonType[];
-  nature?: PokemonNature;
+  nature: PokemonNature;
   baseStats?: {
     hp: number;
     atk: number;
@@ -102,8 +103,10 @@ export type PokemonNature = {
 };
 
 export type Item = {
+  id: number;
   name: string;
   description: string;
+  spriteURL: string;
 };
 
 export type statType = 'hp' | 'atk' | 'def' | 'spAtk' | 'spDef' | 'spd';
