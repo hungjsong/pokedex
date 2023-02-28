@@ -5,6 +5,7 @@ import { capitalize } from '../../utilityFunctions';
 import { getPokemonNatures } from '../../API/pokemon';
 import { PokemonNature } from '../../types/pokemonTypes';
 import { setNature } from '../../redux/teamBuilderSlice';
+import { useAppSelector } from '../../hooks';
 
 type NatureListProps = {
   teamSlotNumber: number;
@@ -24,11 +25,15 @@ function NatureList(props: NatureListProps) {
   const [inputNature, setInputNature] = useState('');
   const dispatch = useDispatch();
   const { teamSlotNumber } = props;
+  const { nature } = useAppSelector(
+    (state) => state.teamBuilder.team[teamSlotNumber]
+  );
 
   useEffect(() => {
     getPokemonNatures().then((response) => {
       setPokemonNatures(response.payload);
     });
+    setInputNature(nature.name);
   }, []);
 
   function handleChange(event: ChangeEvent<HTMLInputElement>) {

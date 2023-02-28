@@ -3,179 +3,12 @@ import { Move, Pokemon, PokemonNature } from '../types/pokemonTypes';
 
 interface TeamBuilderState {
   team: Pokemon[];
+  teamID: number | undefined;
 }
 
 const initialState: TeamBuilderState = {
-  team: [
-    {
-      name: undefined,
-      id: undefined,
-      moves: [],
-      item: undefined,
-      level: 1,
-      gender: undefined,
-      happiness: 0,
-      shiny: false,
-      types: [],
-      nature: undefined,
-      iv: {
-        hp: 0,
-        atk: 0,
-        def: 0,
-        spAtk: 0,
-        spDef: 0,
-        spd: 0,
-      },
-      ev: {
-        hp: 0,
-        atk: 0,
-        def: 0,
-        spAtk: 0,
-        spDef: 0,
-        spd: 0,
-      },
-    },
-    {
-      name: undefined,
-      id: undefined,
-      moves: [],
-      item: undefined,
-      level: 1,
-      gender: undefined,
-      happiness: 0,
-      shiny: false,
-      types: [],
-      nature: undefined,
-      iv: {
-        hp: 0,
-        atk: 0,
-        def: 0,
-        spAtk: 0,
-        spDef: 0,
-        spd: 0,
-      },
-      ev: {
-        hp: 0,
-        atk: 0,
-        def: 0,
-        spAtk: 0,
-        spDef: 0,
-        spd: 0,
-      },
-    },
-    {
-      name: undefined,
-      id: undefined,
-      moves: [],
-      item: undefined,
-      level: 1,
-      gender: undefined,
-      happiness: 0,
-      shiny: false,
-      types: [],
-      nature: undefined,
-      iv: {
-        hp: 0,
-        atk: 0,
-        def: 0,
-        spAtk: 0,
-        spDef: 0,
-        spd: 0,
-      },
-      ev: {
-        hp: 0,
-        atk: 0,
-        def: 0,
-        spAtk: 0,
-        spDef: 0,
-        spd: 0,
-      },
-    },
-    {
-      name: undefined,
-      id: undefined,
-      moves: [],
-      item: undefined,
-      level: 1,
-      gender: undefined,
-      happiness: 0,
-      shiny: false,
-      types: [],
-      nature: undefined,
-      iv: {
-        hp: 0,
-        atk: 0,
-        def: 0,
-        spAtk: 0,
-        spDef: 0,
-        spd: 0,
-      },
-      ev: {
-        hp: 0,
-        atk: 0,
-        def: 0,
-        spAtk: 0,
-        spDef: 0,
-        spd: 0,
-      },
-    },
-    {
-      name: undefined,
-      id: undefined,
-      moves: [],
-      item: undefined,
-      level: 1,
-      gender: undefined,
-      happiness: 0,
-      shiny: false,
-      types: [],
-      nature: undefined,
-      iv: {
-        hp: 0,
-        atk: 0,
-        def: 0,
-        spAtk: 0,
-        spDef: 0,
-        spd: 0,
-      },
-      ev: {
-        hp: 0,
-        atk: 0,
-        def: 0,
-        spAtk: 0,
-        spDef: 0,
-        spd: 0,
-      },
-    },
-    {
-      name: undefined,
-      id: undefined,
-      moves: [],
-      item: undefined,
-      level: 1,
-      gender: undefined,
-      happiness: 0,
-      shiny: false,
-      types: [],
-      nature: undefined,
-      iv: {
-        hp: 0,
-        atk: 0,
-        def: 0,
-        spAtk: 0,
-        spDef: 0,
-        spd: 0,
-      },
-      ev: {
-        hp: 0,
-        atk: 0,
-        def: 0,
-        spAtk: 0,
-        spDef: 0,
-        spd: 0,
-      },
-    },
-  ],
+  team: [],
+  teamID: undefined,
 };
 
 export const teamBuilderSlice = createSlice({
@@ -199,7 +32,7 @@ export const teamBuilderSlice = createSlice({
       action: PayloadAction<{
         teamSlotNumber: number;
         moveSlotNumber: number;
-        selectedMove: Move;
+        selectedMove: Move | null;
       }>
     ) => {
       const { teamSlotNumber, moveSlotNumber, selectedMove } = action.payload;
@@ -312,10 +145,67 @@ export const teamBuilderSlice = createSlice({
     },
     setItem: (
       state,
-      action: PayloadAction<{ item: string; teamSlotNumber: number }>
+      action: PayloadAction<{
+        id: number;
+        item: string;
+        description: string;
+        spriteURL: string;
+        teamSlotNumber: number;
+      }>
     ) => {
-      const { item, teamSlotNumber } = action.payload;
-      state.team[teamSlotNumber].item = item;
+      const { id, item, description, spriteURL, teamSlotNumber } =
+        action.payload;
+      state.team[teamSlotNumber].item = {
+        id: id,
+        name: item,
+        description: description,
+        spriteURL: spriteURL,
+      };
+    },
+    addTeamPokemon: (state, action: PayloadAction<{}>) => {
+      state.team.push({
+        dbID: undefined,
+        name: 'Bulbasaur',
+        id: 1,
+        moves: [],
+        item: undefined,
+        level: 1,
+        gender: 'male',
+        happiness: 0,
+        shiny: false,
+        types: [],
+        nature: { name: 'hardy', increased_stat: null, decreased_stat: null },
+        iv: {
+          hp: 0,
+          atk: 0,
+          def: 0,
+          spAtk: 0,
+          spDef: 0,
+          spd: 0,
+        },
+        ev: {
+          hp: 0,
+          atk: 0,
+          def: 0,
+          spAtk: 0,
+          spDef: 0,
+          spd: 0,
+        },
+      });
+    },
+    removeTeamPokemon: (
+      state,
+      action: PayloadAction<{ teamSlotNumber: number }>
+    ) => {
+      const { teamSlotNumber } = action.payload;
+      const updatedTeam = state.team;
+      state.team = updatedTeam.filter(
+        (pokemon, index) => index !== teamSlotNumber
+      );
+    },
+    initializeTeam: (state, action: PayloadAction<{ team: Pokemon[] }>) => {
+      const { team } = action.payload;
+      state.team = team;
     },
   },
 });
@@ -331,5 +221,8 @@ export const {
   setIV,
   setHapppiness,
   setItem,
+  initializeTeam,
+  addTeamPokemon,
+  removeTeamPokemon,
 } = teamBuilderSlice.actions;
 export default teamBuilderSlice.reducer;

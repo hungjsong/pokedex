@@ -37,7 +37,7 @@ function Header(props: HeaderProps) {
             <Link to="/PokedexEntry">{t('viewPokedex')}</Link>
           </NavBarItem>
           <NavBarItem>
-            <Link to="/TeamBuilder">{t('teamBuilder')}</Link>
+            <Link to="/TeamSelect">{t('teamBuilder')}</Link>
           </NavBarItem>
           <NavBarItem>
             <Link to="/CatchingSimulator">{t('catchingSimulator')}</Link>

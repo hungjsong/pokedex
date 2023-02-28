@@ -1,3 +1,5 @@
+import { useAppDispatch } from '../../hooks';
+import { removeTeamPokemon } from '../../redux/teamBuilderSlice';
 import EVSliders from './EVSliders';
 import ItemList from './ItemList';
 import NatureList from './NatureList';
@@ -15,8 +17,16 @@ type PokemonSlotProps = {
 
 function PokemonSlot(props: PokemonSlotProps) {
   const { teamSlotNumber } = props;
+  const dispatch = useAppDispatch();
+
+  function removePokemon() {
+    dispatch(removeTeamPokemon({ teamSlotNumber: teamSlotNumber }));
+  }
+
   return (
     <div>
+      <h3>Slot {teamSlotNumber + 1}</h3>
+      <button onClick={removePokemon}>Remove Pokemon</button>
       <PokemonList teamSlotNumber={teamSlotNumber} />
       <ItemList teamSlotNumber={teamSlotNumber} />
       <PokemonShiny teamSlotNumber={teamSlotNumber} />
